@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Макрокоманды — веб-конфигуратор</title>
+<style>
+/* ONE PSIM tokens — transcribed from PrototypeKit src/theme/one-psim.css */
+:root, [data-theme="light"] {
+  --one-font-ui: Inter, Roboto, "Segoe UI", sans-serif;
+  --one-font-mono: "Roboto Mono", Consolas, monospace;
+  --one-canvas:#F7F7F7; --one-surface:#FFFFFF; --one-surface-muted:#F0F0F1; --one-surface-subtle:#E7E7E9;
+  --one-popup:#FFFFFF; --one-dialog:#F7F7F7; --one-fg:#212228; --one-fg-muted:#6A6B71; --one-fg-subtle:#767780;
+  --one-fg-disabled:#A3A4AB; --one-fg-placeholder:#B3B4B7; --one-border:#8E8F96; --one-border-strong:#6E6F77;
+  --one-divider:#FFFFFF; --one-control-bg:#F0F0F1; --one-control-hover:#E7E7E9; --one-control-pressed:#DCDCDF;
+  --one-control-disabled:#F2F2F3; --one-selected-neutral:#DDE3EA; --one-editor-bg:#FFFFFF; --one-editor-hover:#F7F8F9;
+  --one-editor-border:#8E8F96; --one-editor-border-hover:#6E6F77; --one-editor-readonly:#EDEDEF;
+  --one-editor-pressed:#F0F0F1; --one-editor-focus:#FFFFFF; --one-editor-disabled:#F5F5F6;
+  --one-editor-border-pressed:#0070E4; --one-editor-border-focus:#0070E4; --one-nav-selected-text:#005FC2;
+  --one-nav-hover:#E7E7E9; --one-nav-selected-hover:#CBE2F7; --one-table-row-divider:#D2D3D5;
+  --one-accent:#0070E4; --one-accent-hover:#0055AF; --one-accent-pressed:#004886; --one-accent-emphasis:#0070E4;
+  --one-accent-indicator:#0061C6; --one-accent-on:#FFFFFF; --one-accent-soft:#DCEBFA; --one-accent-soft-hover:#CBE2F7;
+  --one-primary-hover:#1A7EE7; --one-primary-pressed:#0055AF; --one-selected-neutral-hover:#D2DAE3;
+  --one-selected-neutral-pressed:#C7D1DC; --one-selected-indicator:#0061C6; --one-button-selected-border:#4A90E8;
+  --one-link:#005FC2; --one-link-hover:#004C9E; --one-selection-outline:#6E6F77; --one-selection-outline-disabled:#8E8F96;
+  --one-switch-off-track:#FFFFFF; --one-switch-off-track-hover:#F7F8F9; --one-switch-off-track-pressed:#F0F0F1;
+  --one-switch-off-border:#8E8F96; --one-switch-off-thumb:#767780;
+  --one-info:#0070E4; --one-info-bg:#DDEBF9; --one-info-text:#14385D; --one-info-icon:#0070E4;
+  --one-success:#20D300; --one-success-bg:#E1F7DD; --one-success-text:#1E5714; --one-success-icon:#137F00;
+  --one-warning:#FF8A00; --one-warning-bg:#FDEEDD; --one-warning-text:#664014; --one-warning-icon:#995300;
+  --one-danger:#D01A1A; --one-danger-bg:#F7E0E0; --one-danger-text:#561C1C; --one-danger-icon:#D01A1A;
+  --one-focus-ring:#0070E4; --one-focus-halo:rgba(0,112,228,.32); --one-scrim:rgba(0,0,0,.32);
+  --one-shadow:0 1px 2px rgba(0,0,0,.06), 0 4px 10px rgba(0,0,0,.08);
+  --one-radius-control:4px; --one-radius-container:6px; --one-radius-window:8px; --one-radius-pill:999px;
+  --one-type-heading-md:600 16px/24px var(--one-font-ui);
+  --one-type-heading-sm:600 14px/20px var(--one-font-ui);
+  --one-type-body-md:400 14px/20px var(--one-font-ui);
+  --one-type-body-md-medium:500 14px/20px var(--one-font-ui);
+  --one-type-body-sm:400 12px/16px var(--one-font-ui);
+  --one-type-label:500 12px/16px var(--one-font-ui);
+  --one-type-caption:400 11px/16px var(--one-font-ui);
+  --one-type-overline:500 11px/16px var(--one-font-ui);
+  --one-palette-red:#CF2F34; --one-palette-teal:#0A858B; --one-palette-purple:#904CCF; --one-palette-magenta:#BE348F; --one-palette-amber:#EDB417;
+  color-scheme:light;
+}
+[data-theme="dark"] {
+  --one-canvas:#141517; --one-surface:#1F2024; --one-surface-muted:#242529; --one-surface-subtle:#28292D;
+  --one-popup:#303136; --one-dialog:#292A2E; --one-fg:#F6F6F6; --one-fg-muted:#B4B4B4; --one-fg-subtle:#8C8C8C;
+  --one-fg-disabled:#6E6E6E; --one-fg-placeholder:#97989C; --one-border:#3A3B40; --one-border-strong:#92939A;
+  --one-divider:#45464B; --one-control-bg:#323338; --one-control-hover:#3B3C41; --one-control-pressed:#44454A;
+  --one-control-disabled:#252629; --one-selected-neutral:#2D3946; --one-editor-bg:#37383D; --one-editor-hover:#3F4045;
+  --one-editor-border:#494A50; --one-editor-border-hover:#5B5C62; --one-editor-readonly:#313236;
+  --one-editor-pressed:#46474C; --one-editor-focus:#37383D; --one-editor-disabled:#2C2D31;
+  --one-editor-border-pressed:#0070E4; --one-editor-border-focus:#0082F7; --one-nav-selected-text:#589FFE;
+  --one-nav-hover:#3B3C41; --one-nav-selected-hover:#163B5F; --one-table-row-divider:#3A3B40;
+  --one-accent:#0070E4; --one-accent-hover:#0055AF; --one-accent-pressed:#004886; --one-accent-emphasis:#0082F7;
+  --one-accent-indicator:#4DA3E8; --one-accent-on:#FFFFFF; --one-accent-soft:#123252; --one-accent-soft-hover:#173D63;
+  --one-primary-hover:#1A7EE7; --one-primary-pressed:#0055AF; --one-selected-neutral-hover:#354352;
+  --one-selected-neutral-pressed:#3D4D5E; --one-selected-indicator:#4DA3E8; --one-button-selected-border:#4A90E8;
+  --one-link:#589FFE; --one-link-hover:#7CB3FE; --one-selection-outline:#92939A; --one-selection-outline-disabled:#3A3B40;
+  --one-switch-off-track:#37383D; --one-switch-off-track-hover:#3F4045; --one-switch-off-track-pressed:#46474C;
+  --one-switch-off-border:#494A50; --one-switch-off-thumb:#B4B4B4;
+  --one-info:#0070E4; --one-info-bg:#06182B; --one-info-text:#ADD1F6; --one-info-icon:#0070E4;
+  --one-success:#20D300; --one-success-bg:#0B2707; --one-success-text:#B7F0AD; --one-success-icon:#20D300;
+  --one-warning:#FF8A00; --one-warning-bg:#2E1C07; --one-warning-text:#FFD9AD; --one-warning-icon:#FF8A00;
+  --one-danger:#FF5A5A; --one-danger-bg:#2E1415; --one-danger-text:#FFCACA; --one-danger-icon:#FF5A5A;
+  --one-focus-ring:#0082F7; --one-focus-halo:rgba(0,130,247,.40); --one-scrim:rgba(0,0,0,.6);
+  --one-shadow:0 1px 2px rgba(0,0,0,.24), 0 4px 10px rgba(0,0,0,.20);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--one-canvas);color:var(--one-fg);font:var(--one-type-body-sm);font-family:var(--one-font-ui);-webkit-font-smoothing:antialiased}
+button{font-family:inherit}
+::selection{background:var(--one-accent-soft)}
+
+/* Buttons — DS ladders, §2.8 */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:28px;padding:0 10px;
+  border:1px solid transparent;border-radius:var(--one-radius-control);background:var(--one-control-bg);color:var(--one-fg);
+  font:var(--one-type-label);cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--one-control-hover);color:var(--one-fg)}
+.btn:active{background:var(--one-control-pressed);color:var(--one-fg)}
+.btn:disabled{background:var(--one-control-disabled);color:var(--one-fg-disabled);cursor:default;pointer-events:none}
+.btn:focus-visible{outline:2px solid var(--one-focus-ring);outline-offset:2px}
+.btn-primary{background:var(--one-accent);color:var(--one-accent-on);border-color:var(--one-accent)}
+.btn-primary:hover{background:var(--one-primary-hover);color:var(--one-accent-on);border-color:var(--one-primary-hover)}
+.btn-primary:active{background:var(--one-primary-pressed);color:var(--one-accent-on);border-color:var(--one-primary-pressed)}
+.btn-primary:disabled{background:var(--one-control-disabled);color:var(--one-fg-disabled);border-color:transparent}
+.btn-outline{background:transparent;border-color:var(--one-border)}
+.btn-outline:hover{background:var(--one-control-hover);border-color:var(--one-border);color:var(--one-fg)}
+.btn-outline:active{background:var(--one-control-pressed)}
+.btn-subtle{background:transparent}
+.btn-subtle:hover{background:var(--one-control-hover)}
+.btn-icon{width:28px;padding:0}
+.btn-danger{background:transparent;border-color:var(--one-border);color:var(--one-palette-red,#CF2F34)}
+.btn-danger:hover{background:color-mix(in srgb, var(--one-palette-red) 16%, var(--one-surface));color:var(--one-palette-red)}
+.btn-sm{height:24px;padding:0 8px}
+
+.seg{display:inline-flex;border:1px solid var(--one-border);border-radius:var(--one-radius-control);overflow:hidden;height:28px}
+.seg > .btn{height:100%;border:0;border-radius:0;background:transparent;color:var(--one-fg)}
+.seg > .btn + .btn{border-left:1px solid var(--one-border)}
+.seg > .btn:hover{background:var(--one-control-hover)}
+.seg > .btn[aria-pressed="true"]{background:var(--one-accent);color:var(--one-accent-on)}
+.seg > .btn[aria-pressed="true"]:hover{background:var(--one-primary-hover);color:var(--one-accent-on)}
+.seg > .btn[aria-pressed="true"]:active{background:var(--one-primary-pressed);color:var(--one-accent-on)}
+
+.field{height:28px;padding:0 8px;border:1px solid var(--one-editor-border);border-radius:var(--one-radius-control);
+  background-color:var(--one-editor-bg);color:var(--one-fg);font:var(--one-type-body-sm);font-family:inherit;width:100%}
+.field:hover:not(:focus):not(:disabled){background-color:var(--one-editor-hover);border-color:var(--one-editor-border-hover)}
+.field:focus{outline:none;background-color:var(--one-editor-focus);border-color:var(--one-editor-border-focus);
+  box-shadow:0 0 0 2px var(--one-focus-halo)}
+.field:disabled{background-color:var(--one-editor-disabled);color:var(--one-fg-disabled)}
+textarea.field{height:auto;padding:6px 8px;resize:vertical;min-height:56px}
+.label{display:block;font:var(--one-type-label);color:var(--one-fg-muted);margin-bottom:4px}
+.helper{font:var(--one-type-caption);color:var(--one-fg-subtle);margin-top:4px}
+
+:where(input[type="checkbox"]:not([role="switch"]), input[type="radio"]){
+  appearance:none;flex:none;position:relative;box-sizing:border-box;margin:0;cursor:pointer;
+  width:1.125rem;height:1.125rem;border:1px solid var(--one-selection-outline);border-radius:var(--one-radius-control);
+  background-color:var(--one-editor-bg);color:var(--one-accent-on);vertical-align:middle}
+:where(input[type="radio"]){border-radius:var(--one-radius-pill)}
+:where(input[type="checkbox"]:not([role="switch"]), input[type="radio"]):hover:not(:disabled){background-color:var(--one-editor-hover)}
+:where(input[type="checkbox"]:not([role="switch"]), input[type="radio"]):is(:checked){background-color:var(--one-accent);border-color:var(--one-accent)}
+:where(input[type="checkbox"]:not([role="switch"]))::before{
+  content:"";position:absolute;inset:-1px;background:currentColor;opacity:0;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.6 8.3l2.9 2.9 5.9-5.9' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round'/%3E%3C/svg%3E") center/100% no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.6 8.3l2.9 2.9 5.9-5.9' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round'/%3E%3C/svg%3E") center/100% no-repeat}
+:where(input[type="checkbox"]:not([role="switch"])):checked::before{opacity:1}
+:where(input[type="checkbox"][role="switch"]){
+  appearance:none;width:2.375rem;height:1.25rem;border:1px solid var(--one-switch-off-border);border-radius:var(--one-radius-pill);
+  background:var(--one-switch-off-track);position:relative;cursor:pointer;vertical-align:middle;flex:none}
+:where(input[type="checkbox"][role="switch"])::before{
+  content:"";position:absolute;top:1px;left:1px;width:1rem;height:1rem;border-radius:var(--one-radius-pill);background:var(--one-switch-off-thumb);transition:transform .12s}
+:where(input[type="checkbox"][role="switch"]):checked{background:var(--one-accent);border-color:var(--one-accent)}
+:where(input[type="checkbox"][role="switch"]):checked::before{background:var(--one-accent-on);transform:translateX(1.125rem)}
+:where(input[type="checkbox"], input[type="radio"]):focus-visible{outline:2px solid var(--one-focus-ring);outline-offset:2px}
+:where(select.field){
+  appearance:none;padding-right:2rem;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238C8C8C' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right .5rem center;background-size:1rem}
+@supports (appearance: base-select){
+  select.field, select.field::picker(select){appearance:base-select !important}
+  select.field::picker-icon{display:none}
+  select.field::picker(select){border:1px solid var(--one-border);border-radius:var(--one-radius-container);background:var(--one-popup);padding:4px;margin-top:4px;box-shadow:var(--one-shadow)}
+  select.field option{padding:6px 10px;border-radius:var(--one-radius-control);color:var(--one-fg)}
+  select.field option::checkmark{display:none}
+  select.field option:is(:hover,:focus){background:var(--one-control-hover);outline:none}
+  select.field option:checked{background:var(--one-accent);color:var(--one-accent-on)}
+  select.field option:checked:hover{background:var(--one-primary-hover)}
+}
+
+.choice{display:flex;align-items:center;gap:8px;min-height:28px;font:var(--one-type-body-sm)}
+.ico{width:16px;height:16px;flex:none}
+.muted{color:var(--one-fg-muted)}
+.subtle{color:var(--one-fg-subtle)}
+.grow{flex:1;min-width:0}
+.row{display:flex;align-items:center;gap:8px}
+.wrap{flex-wrap:wrap}
+.stack{display:flex;flex-direction:column;gap:8px}
+
+.badge{display:inline-flex;align-items:center;gap:4px;height:20px;padding:0 8px;border-radius:var(--one-radius-pill);font:var(--one-type-caption);white-space:nowrap}
+.badge-teal{background:color-mix(in srgb, var(--one-palette-teal) 16%, var(--one-surface));color:color-mix(in srgb, var(--one-palette-teal) 55%, var(--one-fg))}
+.badge-purple{background:color-mix(in srgb, var(--one-palette-purple) 16%, var(--one-surface));color:color-mix(in srgb, var(--one-palette-purple) 55%, var(--one-fg))}
+.badge-magenta{background:color-mix(in srgb, var(--one-palette-magenta) 16%, var(--one-surface));color:color-mix(in srgb, var(--one-palette-magenta) 55%, var(--one-fg))}
+[data-theme="dark"] .badge-teal{background:color-mix(in srgb, var(--one-palette-teal) 30%, var(--one-surface))}
+[data-theme="dark"] .badge-purple{background:color-mix(in srgb, var(--one-palette-purple) 30%, var(--one-surface))}
+[data-theme="dark"] .badge-magenta{background:color-mix(in srgb, var(--one-palette-magenta) 30%, var(--one-surface))}
+.badge-warning{background:var(--one-warning-bg);color:var(--one-warning-text)}
+.badge-info{background:var(--one-info-bg);color:var(--one-info-text)}
+.badge-danger{background:var(--one-danger-bg);color:var(--one-danger-text)}
+.badge-neutral{background:var(--one-surface-muted);color:var(--one-fg-muted)}
+
+.appbar{display:flex;align-items:center;gap:16px;height:44px;padding:0 16px;background:var(--one-surface);
+  border-bottom:1px solid var(--one-surface-subtle)}
+[data-theme="dark"] .appbar{border-bottom-color:var(--one-border)}
+.brand{font:var(--one-type-heading-sm);letter-spacing:-.01em}
+.tabs{display:flex;gap:2px;overflow:auto;scrollbar-width:none}
+.tabs button{height:44px;padding:0 12px;border:0;background:transparent;color:var(--one-fg-muted);font:var(--one-type-body-sm);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+.tabs button:hover{color:var(--one-fg);background:var(--one-nav-hover)}
+.tabs button[aria-current="page"]{color:var(--one-nav-selected-text);border-bottom-color:var(--one-nav-selected-text);font-weight:600}
+
+.shell{display:grid;grid-template-columns:260px 1fr 300px;height:calc(100vh - 44px);min-height:0}
+.pane{min-width:0;min-height:0;overflow:auto;background:var(--one-surface)}
+.side{border-right:1px solid var(--one-surface-subtle);display:flex;flex-direction:column}
+.insp{border-left:1px solid var(--one-surface-subtle);display:flex;flex-direction:column;background:var(--one-surface-muted)}
+[data-theme="dark"] .side,[data-theme="dark"] .insp{border-color:var(--one-border)}
+.pane-h{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--one-surface-subtle)}
+[data-theme="dark"] .pane-h{border-bottom-color:var(--one-border)}
+.pane-h h2{margin:0;font:var(--one-type-heading-sm)}
+.pane-b{padding:10px 12px;display:flex;flex-direction:column;gap:8px;flex:1;min-height:0}
+.side-list{flex:1;overflow:auto;display:flex;flex-direction:column;gap:2px}
+
+.mrow{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border-radius:var(--one-radius-control);cursor:pointer;text-align:left;border:0;background:transparent;color:var(--one-fg);width:100%;font:inherit}
+.mrow:hover{background:var(--one-control-hover)}
+.mrow[aria-selected="true"]{background:var(--one-accent-soft)}
+.mrow.is-never{opacity:1;color:var(--one-fg-muted)}
+.mrow .ttl{font:var(--one-type-body-md-medium);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mrow .meta{font:var(--one-type-caption);color:var(--one-fg-muted);display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.mrow.is-alarm{box-shadow:inset 3px 0 0 var(--one-danger)}
+
+.main{background:var(--one-canvas);display:flex;flex-direction:column;min-width:0}
+.main-h{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--one-surface);border-bottom:1px solid var(--one-surface-subtle)}
+[data-theme="dark"] .main-h{border-bottom-color:var(--one-border)}
+.main-h .name{font:var(--one-type-heading-md);border:0;background:transparent;color:var(--one-fg);width:min(420px,50%);padding:2px 4px;border-radius:var(--one-radius-control)}
+.main-h .name:focus{outline:2px solid var(--one-focus-ring);outline-offset:2px}
+.banner{margin:10px 16px 0;padding:8px 12px;border-radius:var(--one-radius-container);font:var(--one-type-body-sm)}
+.banner-warn{background:var(--one-warning-bg);color:var(--one-warning-text)}
+.banner-info{background:var(--one-info-bg);color:var(--one-info-text)}
+.banner-danger{background:var(--one-danger-bg);color:var(--one-danger-text)}
+.summary{margin:10px 16px 0;padding:10px 12px;background:var(--one-surface);border-radius:var(--one-radius-window);font:var(--one-type-body-md);color:var(--one-fg)}
+.flow{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;align-items:center}
+.recipe{width:min(640px,100%);display:flex;flex-direction:column;align-items:stretch}
+
+.node{background:var(--one-surface);border:1px solid var(--one-border);border-radius:var(--one-radius-window);padding:10px 12px;text-align:left;cursor:pointer;color:var(--one-fg);width:100%}
+.node:hover{background:var(--one-control-hover)}
+.node.is-sel{background:var(--one-accent-soft);border-color:transparent}
+.node-k{font:var(--one-type-caption);color:var(--one-fg-muted);text-transform:uppercase;letter-spacing:.04em}
+.node-t{font:var(--one-type-body-md-medium);margin-top:2px}
+.node-d{font:var(--one-type-caption);color:var(--one-fg-muted);margin-top:2px}
+.node.start .node-k{color:var(--one-nav-selected-text)}
+.arrow{display:flex;justify-content:center;align-items:center;height:28px;color:var(--one-fg-subtle);position:relative}
+.arrow::before{content:"";position:absolute;top:0;bottom:14px;width:1px;background:var(--one-border)}
+.add-slot{width:28px;height:28px;border-radius:var(--one-radius-pill);border:1px dashed var(--one-border);background:var(--one-surface);color:var(--one-fg-muted);display:grid;place-items:center;cursor:pointer;position:relative;z-index:1}
+.add-slot:hover{border-color:var(--one-accent);color:var(--one-accent);background:var(--one-accent-soft)}
+.branches{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;margin-top:4px}
+.branch{background:var(--one-surface-muted);border-radius:var(--one-radius-container);padding:8px;display:flex;flex-direction:column;gap:0}
+.branch-h{font:var(--one-type-label);color:var(--one-fg-muted);padding:4px 6px 8px}
+
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:32px 16px;color:var(--one-fg-muted);text-align:center}
+.skeleton{height:44px;border-radius:var(--one-radius-control);background:linear-gradient(90deg,var(--one-surface-muted),var(--one-surface-subtle),var(--one-surface-muted));background-size:200% 100%;animation:sk 1.2s ease infinite}
+@keyframes sk{to{background-position:-200% 0}}
+
+.insp-empty{padding:24px 16px;color:var(--one-fg-muted);text-align:center;font:var(--one-type-body-sm)}
+.cond{padding:8px;border:1px solid var(--one-border);border-radius:var(--one-radius-control);background:var(--one-surface)}
+.cond + .cond{margin-top:6px}
+.or{text-align:center;font:var(--one-type-caption);color:var(--one-fg-subtle);padding:4px 0}
+
+.menu{position:absolute;z-index:45;min-width:200px;max-width:320px;background:var(--one-popup);border:1px solid var(--one-border);border-radius:var(--one-radius-container);box-shadow:var(--one-shadow);padding:4px}
+.menu-item{display:flex;align-items:center;gap:12px;width:100%;height:32px;padding:0 16px;border:0;background:transparent;color:var(--one-fg);font:var(--one-type-body-sm);text-align:left;cursor:pointer;border-radius:var(--one-radius-control)}
+.menu-item:hover{background:var(--one-control-hover)}
+.menu-item-rich{display:flex;flex-direction:column;align-items:flex-start;gap:2px;height:auto;padding:8px 16px}
+.menu-item-title{font:var(--one-type-body-md)}
+.menu-item-desc{font:var(--one-type-caption);color:var(--one-fg-muted)}
+.menu-subheader{padding:8px 16px 4px;font:var(--one-type-overline);text-transform:uppercase;color:var(--one-fg-muted)}
+.menu-sep{height:1px;background:var(--one-surface-subtle);margin:4px 0}
+
+dialog.dialog{border:1px solid var(--one-border);border-radius:var(--one-radius-window);background:var(--one-dialog);color:var(--one-fg);
+  padding:0;box-shadow:var(--one-shadow);min-width:min(480px,92vw);max-width:640px}
+dialog.dialog::backdrop{background:var(--one-scrim)}
+.dlg-h{font:var(--one-type-heading-md);padding:16px 16px 8px}
+.dlg-b{padding:8px 16px 16px;max-height:60vh;overflow:auto}
+.dlg-f{display:flex;justify-content:flex-end;gap:8px;padding:12px 16px;border-top:1px solid var(--one-surface-subtle)}
+[data-theme="dark"] .dlg-f{border-top-color:var(--one-border)}
+
+.demo{padding:8px 12px 12px;border-top:1px solid var(--one-surface-subtle);font:var(--one-type-caption);color:var(--one-fg-subtle)}
+[data-theme="dark"] .demo{border-top-color:var(--one-border)}
+.dirty-dot{width:8px;height:8px;border-radius:50%;background:var(--one-warning);flex:none}
+.link{color:var(--one-link);text-decoration:underline;text-underline-offset:2px;cursor:pointer;background:none;border:0;font:inherit;padding:0}
+.link:hover{color:var(--one-link-hover)}
+.obj-list{display:flex;flex-direction:column;gap:2px;max-height:180px;overflow:auto;border:1px solid var(--one-border);border-radius:var(--one-radius-control);padding:4px;background:var(--one-surface)}
+.obj-list label{display:flex;align-items:center;gap:8px;padding:4px 6px;border-radius:var(--one-radius-control);cursor:pointer}
+.obj-list label:hover{background:var(--one-control-hover)}
+.cat-grid{display:flex;flex-direction:column;gap:2px}
+
+@media (max-width:1100px){
+  .shell{grid-template-columns:220px 1fr 260px}
+}
+@media (max-width:840px){
+  .shell{grid-template-columns:1fr;grid-template-rows:auto 1fr auto}
+  .side,.insp{max-height:28vh}
+}
+</style>
+</head>
+<body>
+<header class="appbar" id="appbar"></header>
+<div class="shell">
+  <aside class="pane side" id="side"></aside>
+  <main class="main" id="main"></main>
+  <aside class="pane insp" id="insp"></aside>
+</div>
+<dialog class="dialog" id="dlg"></dialog>
+<div class="menu" id="menu" hidden></div>
+<script>
+(function(){
+"use strict";
+
+const TR = {
+  brand:["Веб-конфигуратор","Web configurator"],
+  navAria:["Разделы конфигуратора","Configurator sections"],
+  navDevices:["Устройства","Devices"], navGroups:["Группы","Groups"], navDetectors:["Детекторы","Detectors"],
+  navArchives:["Архивы","Archives"], navRoles:["Роли и пользователи","Roles and users"],
+  navSchedules:["Расписания","Schedules"], navMacros:["Макрокоманды","Macros"],
+  navAudit:["Системный журнал","System log"], navSettings:["Настройки","Settings"],
+  langAria:["Язык интерфейса","Interface language"], themeAria:["Переключить тему","Toggle theme"],
+  macros:["Макрокоманды","Macros"], searchPh:["Поиск макрокоманды","Search macros"],
+  all:["Все","All"], event:["События","Event"], auto:["Авто","Automatic"], cycle:["Цикл","Cycle"],
+  typeEvent:["По событиям","Event rule"], typeAuto:["Автоматическое","Automatic rule"], typeCycle:["Циклическое","Cycle rule"],
+  newMacro:["Создать","Create"], copy:["Копировать","Duplicate"], del:["Удалить","Delete"],
+  save:["Сохранить","Save"], cancel:["Отмена","Cancel"], apply:["Применить","Apply"],
+  close:["Закрыть","Close"], add:["Добавить","Add"],
+  mode:["Режим работы","Working mode"], never:["Никогда","Never"], always:["Всегда","Always"], schedule:["Временная зона","Time schedule"],
+  inMenu:["Добавить в меню раскладки","Add to layout menu"],
+  heartbeat:["Интервал цикла","Heartbeat interval"], random:["Случайный момент в интервале","Random within interval"],
+  unsaved:["Есть несохранённые изменения","Unsaved changes"],
+  start:["Условие запуска","Start condition"], cycleStart:["Запуск по циклу","Cycle start"],
+  actions:["Действия","Actions"], reactions:["Добавить реакцию","Add action"],
+  or:["или","or"], anyOf:["любое из","any of"],
+  noActions:["Нет действий — макрокоманда ничего не сделает","No actions — the macro will do nothing"],
+  addAction:["Добавить реакцию","Add an action"],
+  clickNode:["Выберите узел на схеме, чтобы править параметры.","Select a node in the recipe to edit its parameters."],
+  emptyList:["Нет макрокоманд в этой выборке","No macros in this filter"],
+  resetFilter:["Сбросить фильтр","Reset filter"],
+  loadErr:["Не удалось загрузить список макрокоманд","Could not load macros"],
+  retry:["Повторить","Retry"],
+  demo:["Состояние списка (демо)","List state (demo)"],
+  data:["Данные","Data"], loading:["Загрузка","Loading"], empty:["Пусто","Empty"], error:["Ошибка","Error"],
+  incomplete:["Неполное","Incomplete"], inMenuShort:["в меню","in menu"],
+  leaveTitle:["Несохранённые изменения","Unsaved changes"],
+  leaveBody:["Сохранить изменения в «{0}» перед переключением?","Save changes to “{0}” before switching?"],
+  leave:["Не сохранять","Don't save"], stay:["Остаться","Stay"],
+  delTitle:["Удалить макрокоманду","Delete macro"],
+  delBody:["«{0}» будет удалена. Зависимые объекты в этом прототипе не моделируются.","“{0}” will be deleted. Dependents are not modelled in this prototype."],
+  createType:["Тип новой макрокоманды","New macro type"],
+  pickDet:["Выберите детектор","Choose a detector"],
+  pickDetH:["Автоматическое правило привязано к одному детектору. Условия запуска правятся здесь, создание на вкладке «Детекторы» тоже допустимо.","An automatic rule is bound to one detector. Start conditions are edited here; creating it on the Detectors tab is also valid."],
+  addCond:["Добавить условие","Add condition"],
+  condHint:["Несколько условий соединяются через ИЛИ: сработает любое.","Several conditions are OR-ed: any one starts the macro."],
+  noCond:["Нет условий — запуск только вручную","No conditions — manual start only"],
+  devices:["Устройства и группы","Devices and groups"],
+  initiator:["Камера, инициировавшая запуск","Camera that initiated execution"],
+  threshold:["Порог, с","Threshold, s"], value:["Значение, %","Value, %"], trend:["Тренд","Trend"],
+  trendNone:["Отсутствие","None"], trendLeave:["Окончание","Leaving"], trendUp:["Нарастание","Rising"], trendDown:["Понижение","Falling"],
+  camera:["Камера","Camera"], archive:["Архив","Archive"], priority:["Приоритет тревоги","Alarm priority"],
+  alarmMode:["Режим инициации","Initiation mode"], alarmAlways:["Всегда","Always"], alarmIdle:["Если нет активной","If no active alarm"],
+  timeout:["Таймаут","Timeout"], layout:["Раскладка","Layout"], monitor:["Монитор","Monitor"],
+  to:["Кому","To"], subject:["Тема","Subject"], message:["Сообщение","Message"], url:["URL","URL"],
+  relay:["Реле","Relay"], onOff:["Включить","Turn on"], macro:["Макрокоманда","Macro"],
+  waitYes:["Если событие произошло","If the event occurred"],
+  waitNo:["Если событие не произошло","If no event occurred"],
+  waitPrevYes:["Если предыдущее завершилось","If previous action completed"],
+  waitPrevNo:["Если не завершилось вовремя","If it did not finish in time"],
+  overlap:["Цикл запускает новый экземпляр, даже если предыдущий ещё выполняется. Несколько копий могут работать одновременно.","A cycle starts a new instance even if the previous run is still going. Several copies may run at once."],
+  autoNote:["Автоматическое правило срабатывает на каждое событие выбранного детектора.","An automatic rule runs on every event of the selected detector."],
+  neverHint:["Режим «Никогда»: событийное правило запускается только вручную; циклическое отключено, ручной запуск возможен.","Never: an event rule runs only manually; a cycle rule is disabled but can still be started by hand."],
+  groupSame:["Сгруппировать одинаковые","Group identical events"],
+  scheduleLink:["Расписание «{0}»","Schedule “{0}”"],
+  copySuffix:[" (копия)"," (copy)"],
+  defaultName:["Макрокоманда","Macro"],
+  otherTab:["Этот раздел в прототипе не реализован.","This section is out of scope for the prototype."],
+  evt_cam_alarm:["Тревога инициирована","Alarm initiated"],
+  evt_cam_armed:["Поставлена на охрану","Armed"],
+  evt_cam_disarmed:["Снята с охраны","Disarmed"],
+  evt_det_motion:["Детектор движения: начало срабатывания","Motion detector: triggering start"],
+  evt_det_smoke:["Детектор дыма: начало срабатывания","Smoke detector: triggering start"],
+  evt_det_fire:["Детектор огня: начало срабатывания","Fire detector: triggering start"],
+  evt_det_line:["Пересечение линии: срабатывание","Line crossing: triggering"],
+  evt_arch_start:["Запись начата","Recording started"],
+  evt_arch_stop:["Запись остановлена","Recording stopped"],
+  evt_tz_start:["Временная зона: начало","Time schedule: start"],
+  evt_tz_end:["Временная зона: конец","Time schedule: end"],
+  evt_tech_lost:["Потеря связи с IP-устройством","Connection to IP device lost"],
+  evt_tech_ok:["Восстановление связи с IP-устройством","Connection to IP device restored"],
+  evt_srv_cpu:["Загруженность ЦП","CPU usage"],
+  evt_acfa_sensor:["Датчик: начало срабатывания","Sensor: triggering start"],
+  act_cam_record:["Запись в архив","Start recording to archive"],
+  act_cam_alarm:["Инициировать тревогу","Initiate alarm"],
+  act_cam_arm:["Поставить / снять с охраны","Arm or disarm a camera"],
+  act_cam_view:["Показать камеру","View camera"],
+  act_cam_preset:["Перейти на предустановку","Go to preset"],
+  act_prog_waitT:["Ожидать таймаута","Wait for timeout"],
+  act_prog_waitE:["Ожидать событие","Wait for event"],
+  act_prog_waitP:["Ожидать завершения предыдущего","Wait till previous action finishes"],
+  act_prog_break:["Прервать выполнение","Break execution"],
+  act_prog_run:["Выполнить макрокоманду","Run macro"],
+  act_gen_en:["Включить или выключить компонент","Enable or disable component"],
+  act_gen_web:["Выполнить web-запрос","Execute web query"],
+  act_mon_lay:["Открыть раскладку","Open layout"],
+  act_mon_map:["Показать карту","Show map"],
+  act_ntf_voice:["Голосовое оповещение с клиента","Voice notification from client"],
+  act_ntf_mail:["Отправить e-mail","Send e-mail"],
+  act_ntf_push:["Push-уведомление","Send push notification"],
+  act_acfa_out:["Включить / выключить выход","Switch on/off output"],
+  g_macro:["Макрокоманды","Macros"], g_cam:["Камера","Camera"], g_prog:["Программирование","Programming"],
+  g_gen:["Основные","General"], g_mon:["Монитор","Monitor"], g_ntf:["Оповещение","Notification"], g_acfa:["ACFA","ACFA"],
+  when:["Когда","When"], thenDo:["— сделать","— then"], every:["Каждые {0}","Every {0}"],
+  atRandom:["в случайный момент","at a random moment"],
+  manualOnly:["Только вручную из меню раскладки","Manually from the layout menu only"],
+  onDetector:["на детекторе «{0}» ({1})","on detector “{0}” ({1})"],
+  andMore:["и ещё {0}","and {0} more"],
+  hi:["Высший","Highest"], mid:["Средний","Medium"], lo:["Низкий","Low"],
+  arm:["Поставить на охрану","Arm"], disarm:["Снять с охраны","Disarm"],
+  preset:["Предустановка","Preset"],
+  display:["Режим показа","Display mode"],
+  zoom:["Увеличить","Zoom in"], mark:["Отметить","Mark camera"]
+};
+
+const S = {
+  lang: localStorage.getItem("macros-lang") || "ru",
+  theme: localStorage.getItem("macros-theme") || "light",
+  q: "", type: "all", listState: "data",
+  macros: [], saved: {}, selId: null, node: "start",
+  dirty: false, hist: [], histI: -1,
+  insert: null, menu: null, dlg: null, pending: null
+};
+
+function T(k){ const a = TR[k]; if(!a) return k; return S.lang === "en" ? a[1] : a[0]; }
+function Tf(k,...p){ let s=T(k); p.forEach((v,i)=> s=s.replace("{"+i+"}", v)); return s; }
+function esc(s){ return String(s??"").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c])); }
+function uid(){ return "id"+Math.random().toString(36).slice(2,9); }
+function clone(x){ return JSON.parse(JSON.stringify(x)); }
+
+const ICO = {
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M5 12H3M21 12h-2M6 6l1.4 1.4M16.6 16.6 18 18M18 6l-1.4 1.4M7.4 16.6 6 18"/>',
+  play:'<polygon points="8,6 18,12 8,18"/>',
+  chevron:'<path d="m9 6 6 6-6 6"/>',
+  copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M4 16V6a2 2 0 0 1 2-2h10"/>',
+  trash:'<path d="M5 7h14M10 11v6M14 11v6M8 7V5h8v2M6 7l1 14h10l1-14"/>',
+  x:'<path d="M6 6l12 12M18 6 6 18"/>',
+  alert:'<path d="M12 9v4M12 17h.01"/><path d="M10.3 4.7 2.8 18a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 4.7a2 2 0 0 0-3.4 0z"/>',
+  more:'<circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/>'
+};
+function icon(n){ return `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[n]||""}</svg>`; }
+
+const CAMERAS = [
+  {id:"c17", ru:"Камера 17", en:"Camera 17"},
+  {id:"c18", ru:"Камера 18", en:"Camera 18"},
+  {id:"clobby", ru:"Холл 1", en:"Lobby 1"},
+  {id:"cpark", ru:"Парковка", en:"Parking lot"},
+  {id:"cper", ru:"Периметр 3", en:"Perimeter 3"},
+  {id:"cgate", ru:"Главные ворота", en:"Main gate"}
+];
+const GROUPS = [
+  {id:"gper", ru:"Группа «Периметр»", en:"Group “Perimeter”"},
+  {id:"globby", ru:"Группа «Холл»", en:"Group “Lobby”"}
+];
+const ARCHIVES = [
+  {id:"a1", ru:"Архив 1", en:"Archive 1"},
+  {id:"a2", ru:"Архив 2", en:"Archive 2"}
+];
+const DETECTORS = [
+  {id:"d17m", camera:"c17", ru:"132.118 Камера: 17 Детектор движения", en:"132.118 Camera 17 · Motion detector", event:"det.motion"},
+  {id:"d18s", camera:"c18", ru:"Камера 18 · Детектор дыма", en:"Camera 18 · Smoke detector", event:"det.smoke"},
+  {id:"dparkf", camera:"cpark", ru:"Парковка · Детектор огня", en:"Parking · Fire detector", event:"det.fire"}
+];
+const SCHEDULES = [
+  {id:"sch_after", ru:"Вне рабочих часов", en:"Outside business hours"},
+  {id:"sch_biz", ru:"Рабочие часы 09–18", en:"Business hours 09–18"},
+  {id:"sch_night", ru:"Ночная охрана", en:"Night guard"}
+];
+const LAYOUTS = [
+  {id:"l1", ru:"Раскладка «Периметр»", en:"Layout “Perimeter”"},
+  {id:"l2", ru:"Раскладка «Холл»", en:"Layout “Lobby”"}
+];
+const EVENTS = [
+  {id:"cam.alarm", k:"evt_cam_alarm", extra:null},
+  {id:"cam.armed", k:"evt_cam_armed", extra:null},
+  {id:"cam.disarmed", k:"evt_cam_disarmed", extra:null},
+  {id:"det.motion", k:"evt_det_motion", extra:null},
+  {id:"det.smoke", k:"evt_det_smoke", extra:null},
+  {id:"det.fire", k:"evt_det_fire", extra:null},
+  {id:"det.line", k:"evt_det_line", extra:null},
+  {id:"arch.start", k:"evt_arch_start", extra:null},
+  {id:"arch.stop", k:"evt_arch_stop", extra:null},
+  {id:"tz.start", k:"evt_tz_start", extra:null},
+  {id:"tz.end", k:"evt_tz_end", extra:null},
+  {id:"tech.lost", k:"evt_tech_lost", extra:"threshold"},
+  {id:"tech.ok", k:"evt_tech_ok", extra:"threshold"},
+  {id:"srv.cpu", k:"evt_srv_cpu", extra:"stat"},
+  {id:"acfa.sensor", k:"evt_acfa_sensor", extra:null}
+];
+const ACTS = [
+  {id:"cam.record", g:"g_cam", k:"act_cam_record"},
+  {id:"cam.alarm", g:"g_cam", k:"act_cam_alarm"},
+  {id:"cam.arm", g:"g_cam", k:"act_cam_arm"},
+  {id:"cam.view", g:"g_cam", k:"act_cam_view"},
+  {id:"cam.preset", g:"g_cam", k:"act_cam_preset"},
+  {id:"prog.waitT", g:"g_prog", k:"act_prog_waitT", wait:true},
+  {id:"prog.waitE", g:"g_prog", k:"act_prog_waitE", wait:"event"},
+  {id:"prog.waitP", g:"g_prog", k:"act_prog_waitP", wait:"prev"},
+  {id:"prog.break", g:"g_prog", k:"act_prog_break"},
+  {id:"prog.run", g:"g_macro", k:"act_prog_run"},
+  {id:"gen.en", g:"g_gen", k:"act_gen_en"},
+  {id:"gen.web", g:"g_gen", k:"act_gen_web"},
+  {id:"mon.lay", g:"g_mon", k:"act_mon_lay"},
+  {id:"mon.map", g:"g_mon", k:"act_mon_map"},
+  {id:"ntf.voice", g:"g_ntf", k:"act_ntf_voice"},
+  {id:"ntf.mail", g:"g_ntf", k:"act_ntf_mail"},
+  {id:"ntf.push", g:"g_ntf", k:"act_ntf_push"},
+  {id:"acfa.out", g:"g_acfa", k:"act_acfa_out"}
+];
+
+function loc(list, id){ const o = list.find(x=>x.id===id); return o ? (S.lang==="en"?o.en:o.ru) : id; }
+function objLab(id){
+  if(id==="initiator") return T("initiator");
+  if(GROUPS.some(g=>g.id===id)) return loc(GROUPS,id);
+  return loc(CAMERAS,id);
+}
+function evLab(id){ const e = EVENTS.find(x=>x.id===id); return e ? T(e.k) : id; }
+function actLab(id){ const a = ACTS.find(x=>x.id===id); return a ? T(a.k) : id; }
+function camLab(id){ if(id==="initiator") return T("initiator"); return loc(CAMERAS,id); }
+
+function mkAct(kind, params){
+  const a = {id:uid(), kind, params: params||{}};
+  const spec = ACTS.find(x=>x.id===kind);
+  if(spec && spec.wait==="event"){ a.then=[]; a.else=[]; a.params.timeout=a.params.timeout||"00:00:30"; a.waitEvents=a.waitEvents||[]; }
+  if(spec && spec.wait==="prev"){ a.then=[]; a.else=[]; a.params.timeout=a.params.timeout||"00:10:00"; }
+  if(spec && spec.wait===true){ a.params.timeout=a.params.timeout||"00:00:05"; }
+  return a;
+}
+
+function seed(){
+  const m1 = {
+    id:"m_auto_motion", type:"auto", name:"132.118 Камера: 17 Детектор движения",
+    mode:"always", inMenu:false, detectorId:"d17m",
+    conditions:[{id:uid(), event:"det.motion", devices:["c17"]}],
+    actions:[mkAct("cam.record",{camera:"initiator", archive:"a1"})]
+  };
+  const m2 = {
+    id:"m_smoke", type:"event", name:"Пожар: дым на камере 18",
+    mode:"always", inMenu:false,
+    conditions:[{id:uid(), event:"det.smoke", devices:["c18"]}],
+    actions:[
+      mkAct("cam.alarm",{camera:"c18", priority:"hi", alarmMode:"always"}),
+      mkAct("ntf.voice",{message:"Smoke in hall 18"})
+    ]
+  };
+  const wait = mkAct("prog.waitE",{timeout:"00:00:30"});
+  wait.waitEvents = [{id:uid(), event:"tech.ok", devices:["cgate"], threshold:10}];
+  wait.then = [];
+  wait.else = [mkAct("cam.alarm",{camera:"cgate", priority:"hi", alarmMode:"always"})];
+  const m3 = {
+    id:"m_lost", type:"event", name:"Потеря связи с воротами",
+    mode:"always", inMenu:false,
+    conditions:[{id:uid(), event:"tech.lost", devices:["cgate"], threshold:10}],
+    actions:[wait]
+  };
+  const m4 = {
+    id:"m_cycle", type:"cycle", name:"Ночная проверка записи",
+    mode:"always", inMenu:false, heartbeat:"08:00:00", random:true,
+    conditions:[],
+    actions:[mkAct("cam.record",{camera:"c17", archive:"a1"}), mkAct("gen.en",{enable:true})]
+  };
+  const m5 = {
+    id:"m_manual", type:"event", name:"Патруль: открыть периметр",
+    mode:"never", inMenu:true, conditions:[],
+    actions:[mkAct("mon.lay",{layout:"l1"}), mkAct("cam.view",{camera:"cper", display:"zoom"})]
+  };
+  const m6 = {
+    id:"m_empty", type:"event", name:"Макрокоманда без реакций",
+    mode:"always", inMenu:false,
+    conditions:[{id:uid(), event:"cam.alarm", devices:["clobby"]}],
+    actions:[]
+  };
+  const m7 = {
+    id:"m_sched", type:"event", name:"Снять холл с охраны вечером",
+    mode:"schedule", scheduleId:"sch_after", inMenu:false,
+    conditions:[{id:uid(), event:"tz.start", devices:[]}],
+    actions:[mkAct("cam.arm",{camera:"clobby", arm:false})]
+  };
+  return [m1,m2,m3,m4,m5,m6,m7];
+}
+
+function cur(){ return S.macros.find(m=>m.id===S.selId) || null; }
+function snap(m){ return JSON.stringify(m || cur()); }
+function isIncomplete(m){ return !m.actions || m.actions.length===0; }
+function typeBadge(t){ return t==="auto"?"badge-purple": t==="cycle"?"badge-magenta":"badge-teal"; }
+function typeLab(t){ return t==="auto"?T("typeAuto"): t==="cycle"?T("typeCycle"):T("typeEvent"); }
+
+function remember(){
+  const m = cur(); if(!m) return;
+  const s = snap(m);
+  S.hist = S.hist.slice(0, S.histI+1);
+  S.hist.push(s);
+  if(S.hist.length>60) S.hist.shift();
+  S.histI = S.hist.length-1;
+  S.dirty = s !== S.saved[m.id];
+}
+function restoreHist(i){
+  if(i<0||i>=S.hist.length) return;
+  const m = cur(); if(!m) return;
+  const next = JSON.parse(S.hist[i]);
+  Object.keys(m).forEach(k=>{ if(!(k in next)) delete m[k]; });
+  Object.assign(m, next);
+  S.histI = i;
+  S.dirty = snap(m) !== S.saved[m.id];
+  render();
+}
+
+function walkActs(list, fn){
+  (list||[]).forEach(a=>{
+    fn(a, list);
+    if(a.then) walkActs(a.then, fn);
+    if(a.else) walkActs(a.else, fn);
+  });
+}
+function findAct(id){
+  const m = cur(); if(!m) return null;
+  let found=null;
+  walkActs(m.actions, a=>{ if(a.id===id) found=a; });
+  return found;
+}
+function insertAct(list, afterId, act){
+  if(!afterId){ list.unshift(act); return; }
+  const i = list.findIndex(a=>a.id===afterId);
+  if(i<0) list.push(act); else list.splice(i+1, 0, act);
+}
+function removeAct(id){
+  const m = cur();
+  function rm(list){
+    const i = list.findIndex(a=>a.id===id);
+    if(i>=0){ list.splice(i,1); return true; }
+    return list.some(a => (a.then && rm(a.then)) || (a.else && rm(a.else)));
+  }
+  remember(); rm(m.actions);
+}
+
+function condText(c){
+  const ev = evLab(c.event);
+  const ds = (c.devices||[]).map(objLab).filter(Boolean);
+  let extra="";
+  if(c.threshold!=null && c.threshold!=="") extra = ` · ${T("threshold")} ${c.threshold}`;
+  if(c.event==="srv.cpu"){
+    const tr = ({none:"trendNone",leave:"trendLeave",up:"trendUp",down:"trendDown"})[c.trend||"up"];
+    extra = ` · ${c.value||80}% · ${T(tr)}`;
+  }
+  return ds.length ? `${ev} — ${ds.join(", ")}${extra}` : ev+extra;
+}
+
+function actText(a){
+  const title = actLab(a.kind);
+  const p = a.params||{};
+  const bits=[];
+  if(p.camera) bits.push(camLab(p.camera));
+  if(p.archive) bits.push(loc(ARCHIVES,p.archive));
+  if(p.timeout) bits.push(p.timeout);
+  if(p.layout) bits.push(loc(LAYOUTS,p.layout));
+  if(a.kind==="cam.arm") bits.push(p.arm===false?T("disarm"):T("arm"));
+  return {title, desc: bits.join(" · ")};
+}
+
+function summarize(m){
+  if(!m) return "";
+  const acts = (m.actions||[]).map(a=>actLab(a.kind));
+  const actS = acts.length ? acts.join(", ") : T("noActions");
+  if(m.type==="cycle"){
+    const hb = m.heartbeat||"00:00:00";
+    return `${Tf("every", hb)}${m.random?" "+T("atRandom"):""} ${T("thenDo")} ${actS}.`;
+  }
+  if(m.type==="auto"){
+    const d = DETECTORS.find(x=>x.id===m.detectorId);
+    const dn = d ? (S.lang==="en"?d.en:d.ru) : "";
+    const cam = d ? camLab(d.camera) : "";
+    return `${T("when")} ${evLab((m.conditions[0]||{}).event)} ${Tf("onDetector", dn, cam)} ${T("thenDo")} ${actS}.`;
+  }
+  if(!m.conditions.length){
+    return `${T("manualOnly")} ${T("thenDo")} ${actS}.`;
+  }
+  const cs = m.conditions.map(condText);
+  const condS = cs.length===1 ? cs[0] : T("anyOf")+": "+cs.join("; ");
+  let head = `${T("when")} ${condS}`;
+  if(m.mode==="schedule"){
+    const sc = loc(SCHEDULES, m.scheduleId);
+    head += ` (${Tf("scheduleLink", sc)})`;
+  }
+  return `${head} ${T("thenDo")} ${actS}.`;
+}
+
+function filtered(){
+  let list = S.macros;
+  if(S.type!=="all") list = list.filter(m=>m.type===S.type);
+  if(S.q.trim()){
+    const q = S.q.trim().toLowerCase();
+    list = list.filter(m => m.name.toLowerCase().includes(q) || summarize(m).toLowerCase().includes(q));
+  }
+  return list;
+}
+
+/* ── render ─────────────────────────────────────────────── */
+function render(){
+  document.documentElement.lang = S.lang==="en"?"en":"ru";
+  document.documentElement.dataset.theme = S.theme;
+  renderAppbar(); renderSide(); renderMain(); renderInsp();
+}
+
+function renderAppbar(){
+  const tabs = ["navDevices","navGroups","navDetectors","navArchives","navRoles","navSchedules","navMacros","navAudit","navSettings"];
+  document.getElementById("appbar").innerHTML = `
+    <span class="brand">${esc(T("brand"))}</span>
+    <nav class="tabs" aria-label="${esc(T("navAria"))}">
+      ${tabs.map(k=>`<button type="button" data-act="nav" data-k="${k}" ${k==="navMacros"?"aria-current=page":""}>${esc(T(k))}</button>`).join("")}
+    </nav>
+    <span class="grow"></span>
+    <div class="row">
+      <select class="field" data-act="lang" aria-label="${esc(T("langAria"))}" style="width:auto">
+        <option value="ru" ${S.lang==="ru"?"selected":""}>Русский</option>
+        <option value="en" ${S.lang==="en"?"selected":""}>English</option>
+      </select>
+      <button class="btn btn-icon btn-subtle" data-act="theme" aria-label="${esc(T("themeAria"))}">${icon("sun")}</button>
+    </div>`;
+}
+
+function renderSide(){
+  const list = filtered();
+  let body = "";
+  if(S.listState==="loading"){
+    body = `<div class="stack" aria-busy="true">${[0,1,2,3].map(()=>`<div class="skeleton"></div>`).join("")}</div>`;
+  } else if(S.listState==="error"){
+    body = `<div class="empty">${icon("alert")}<div>${esc(T("loadErr"))}</div><button class="btn btn-outline" data-act="retry">${esc(T("retry"))}</button></div>`;
+  } else if(S.listState==="empty" || !list.length){
+    body = `<div class="empty"><div>${esc(T("emptyList"))}</div><button class="btn btn-outline" data-act="resetQ">${esc(T("resetFilter"))}</button></div>`;
+  } else {
+    body = `<div class="side-list" role="listbox" aria-label="${esc(T("macros"))}">${list.map(m=>{
+      const sel = m.id===S.selId;
+      const alarm = isIncomplete(m);
+      return `<button type="button" class="mrow ${m.mode==="never"?"is-never":""} ${alarm?"is-alarm":""}" role="option" aria-selected="${sel}" data-act="sel" data-id="${m.id}">
+        <div class="grow">
+          <div class="ttl">${esc(m.name)}</div>
+          <div class="meta">
+            <span class="badge ${typeBadge(m.type)}">${esc(typeLab(m.type))}</span>
+            <span>${esc(m.mode==="schedule"?loc(SCHEDULES,m.scheduleId):T(m.mode))}</span>
+            ${m.inMenu?`<span class="badge badge-info">${esc(T("inMenuShort"))}</span>`:""}
+            ${alarm?`<span class="badge badge-warning">${esc(T("incomplete"))}</span>`:""}
+          </div>
+        </div>
+      </button>`;
+    }).join("")}</div>`;
+  }
+  document.getElementById("side").innerHTML = `
+    <div class="pane-h">
+      <h2>${esc(T("macros"))}</h2>
+      <span class="grow"></span>
+      <button class="btn btn-icon btn-primary" data-act="createMenu" aria-label="${esc(T("newMacro"))}">${icon("plus")}</button>
+    </div>
+    <div class="pane-b">
+      <input class="field" data-act="q" value="${esc(S.q)}" placeholder="${esc(T("searchPh"))}" aria-label="${esc(T("searchPh"))}">
+      <div class="seg" role="group">
+        ${[["all","all"],["event","event"],["auto","auto"],["cycle","cycle"]].map(([v,k])=>
+          `<button class="btn" data-act="type" data-v="${v}" aria-pressed="${S.type===v}">${esc(T(k))}</button>`).join("")}
+      </div>
+      ${body}
+    </div>
+    <div class="demo">
+      ${esc(T("demo"))}
+      <div class="seg" style="margin-top:6px;width:100%">
+        ${["data","loading","empty","error"].map(v=>
+          `<button class="btn" data-act="listState" data-v="${v}" aria-pressed="${S.listState===v}">${esc(T(v))}</button>`).join("")}
+      </div>
+    </div>`;
+}
+
+function slot(afterId, branch){
+  return `<div class="arrow"><button type="button" class="add-slot" data-act="addSlot" data-after="${afterId||""}" data-branch="${branch||"root"}" aria-label="${esc(T("addAction"))}">${icon("plus")}</button></div>`;
+}
+
+function renderNode(a, selected){
+  const tx = actText(a);
+  const spec = ACTS.find(x=>x.id===a.kind);
+  let inner = `<div class="node-k">${esc(T(spec?spec.g:"g_cam"))}</div>
+    <div class="node-t">${esc(tx.title)}</div>
+    ${tx.desc?`<div class="node-d">${esc(tx.desc)}</div>`:""}`;
+  let html = `<button type="button" class="node ${selected?"is-sel":""}" data-act="node" data-id="${a.id}">${inner}</button>`;
+  if(a.kind==="prog.waitE" || a.kind==="prog.waitP"){
+    const y = a.kind==="prog.waitE"?T("waitYes"):T("waitPrevYes");
+    const n = a.kind==="prog.waitE"?T("waitNo"):T("waitPrevNo");
+    html += `<div class="branches">
+      <div class="branch"><div class="branch-h">${esc(y)}</div>${renderList(a.then||[], a.id+"-then")}</div>
+      <div class="branch"><div class="branch-h">${esc(n)}</div>${renderList(a.else||[], a.id+"-else")}</div>
+    </div>`;
+  }
+  return html;
+}
+
+function renderList(list, branch){
+  let out = slot(branch+"|head", branch);
+  list.forEach(a=>{
+    out += renderNode(a, S.node===a.id);
+    out += slot(a.id, branch);
+  });
+  return `<div class="recipe">${out}</div>`;
+}
+
+function renderMain(){
+  const m = cur();
+  const el = document.getElementById("main");
+  if(S.listState!=="data" || !m){
+    el.innerHTML = `<div class="empty" style="flex:1">${esc(T("emptyList"))}</div>`;
+    return;
+  }
+  const startSel = S.node==="start";
+  const startKind = m.type==="cycle"?T("cycleStart"):T("start");
+  const startDesc = m.type==="cycle"
+    ? `${m.heartbeat||"00:00:00"}${m.random?" · "+T("atRandom"):""}`
+    : (m.conditions.length? m.conditions.map(condText).join(" "+T("or")+" ") : T("noCond"));
+  let banners = "";
+  if(S.dirty) banners += `<div class="banner banner-warn">${esc(T("unsaved"))}</div>`;
+  if(m.type==="cycle") banners += `<div class="banner banner-info">${esc(T("overlap"))}</div>`;
+  if(isIncomplete(m)) banners += `<div class="banner banner-danger">${esc(T("noActions"))} <button class="link" data-act="addSlot" data-after="" data-branch="root">${esc(T("addAction"))}</button></div>`;
+  if(m.mode==="never") banners += `<div class="banner banner-info">${esc(T("neverHint"))}</div>`;
+
+  el.innerHTML = `
+    <div class="main-h">
+      ${S.dirty?'<span class="dirty-dot" title="'+esc(T("unsaved"))+'"></span>':""}
+      <input class="name" data-act="rename" value="${esc(m.name)}" aria-label="${esc(T("macros"))}">
+      <span class="badge ${typeBadge(m.type)}">${esc(typeLab(m.type))}</span>
+      <span class="grow"></span>
+      <button class="btn btn-subtle" data-act="copy">${icon("copy")}${esc(T("copy"))}</button>
+      <button class="btn btn-danger" data-act="del">${icon("trash")}${esc(T("del"))}</button>
+      <button class="btn btn-outline" data-act="revert" ${S.dirty?"":"disabled"}>${esc(T("cancel"))}</button>
+      <button class="btn btn-primary" data-act="save" ${S.dirty?"":"disabled"}>${esc(T("save"))}</button>
+    </div>
+    ${banners}
+    <div class="summary">${esc(summarize(m))}</div>
+    <div class="flow">
+      <div class="recipe">
+        <button type="button" class="node start ${startSel?"is-sel":""}" data-act="node" data-id="start">
+          <div class="node-k">${icon("play")} ${esc(startKind)}</div>
+          <div class="node-t">${esc(startDesc)}</div>
+        </button>
+        ${renderList(m.actions, "root")}
+      </div>
+    </div>`;
+}
+
+function fieldSel(label, act, val, opts){
+  return `<label class="stack" style="gap:4px"><span class="label">${esc(label)}</span>
+    <select class="field" data-act="${act}" data-arg="${esc(val)}">${opts}</select></label>`;
+}
+
+function renderInsp(){
+  const m = cur();
+  const el = document.getElementById("insp");
+  if(!m || S.listState!=="data"){
+    el.innerHTML = `<div class="pane-h"><h2>${esc(T("actions"))}</h2></div><div class="insp-empty">${esc(T("clickNode"))}</div>`;
+    return;
+  }
+  let body = "";
+  if(S.node==="start" || !S.node){
+    body = renderStartInsp(m);
+  } else {
+    const a = findAct(S.node);
+    body = a ? renderActInsp(m,a) : `<div class="insp-empty">${esc(T("clickNode"))}</div>`;
+  }
+  el.innerHTML = `<div class="pane-h"><h2>${esc(S.node==="start"?T("start"):T("actions"))}</h2></div><div class="pane-b">${body}</div>`;
+}
+
+function modeOpts(m){
+  return ["never","always","schedule"].map(v=>`<option value="${v}" ${m.mode===v?"selected":""}>${esc(T(v))}</option>`).join("");
+}
+function schedOpts(m){
+  return SCHEDULES.map(s=>`<option value="${s.id}" ${m.scheduleId===s.id?"selected":""}>${esc(S.lang==="en"?s.en:s.ru)}</option>`).join("");
+}
+function camOpts(val, withInit){
+  let o = withInit? `<option value="initiator" ${val==="initiator"?"selected":""}>${esc(T("initiator"))}</option>`:"";
+  o += CAMERAS.map(c=>`<option value="${c.id}" ${val===c.id?"selected":""}>${esc(S.lang==="en"?c.en:c.ru)}</option>`).join("");
+  return o;
+}
+
+function renderStartInsp(m){
+  let html = `<label class="stack" style="gap:4px"><span class="label">${esc(T("mode"))}</span>
+    <select class="field" data-act="mode">${modeOpts(m)}</select></label>`;
+  if(m.mode==="schedule"){
+    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("schedule"))}</span>
+      <select class="field" data-act="schedule">${schedOpts(m)}</select></label>
+      <div class="helper">${esc(Tf("scheduleLink", loc(SCHEDULES,m.scheduleId)))}</div>`;
+  }
+  html += `<label class="choice"><input type="checkbox" data-act="inMenu" ${m.inMenu?"checked":""}> ${esc(T("inMenu"))}</label>`;
+  if(m.type==="cycle"){
+    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("heartbeat"))}</span>
+      <input class="field" data-act="heartbeat" value="${esc(m.heartbeat||"00:00:00")}" placeholder="HH:MM:SS"></label>
+      <label class="choice"><input type="checkbox" data-act="random" ${m.random?"checked":""}> ${esc(T("random"))}</label>
+      <div class="helper">${esc(T("overlap"))}</div>`;
+  }
+  if(m.type==="auto"){
+    const d = DETECTORS.find(x=>x.id===m.detectorId);
+    html += `<div class="helper">${esc(T("autoNote"))}</div>
+      <div class="cond"><div class="node-t">${esc(d?(S.lang==="en"?d.en:d.ru):"")}</div></div>`;
+  }
+  if(m.type==="event"){
+    html += `<div class="helper">${esc(T("condHint"))}</div>`;
+    if(!m.conditions.length) html += `<div class="muted">${esc(T("noCond"))}</div>`;
+    m.conditions.forEach((c,i)=>{
+      if(i) html += `<div class="or">${esc(T("or"))}</div>`;
+      html += renderCond(c);
+    });
+    const canGroup = m.conditions.some((c,i)=> m.conditions.findIndex(x=>x.event===c.event)!==i);
+    if(canGroup) html += `<button class="btn btn-subtle" data-act="groupSame">${esc(T("groupSame"))}</button>`;
+    html += `<button class="btn btn-outline" data-act="addCond">${icon("plus")}${esc(T("addCond"))}</button>`;
+  }
+  if(m.type==="auto" && m.conditions[0]) html += renderCond(m.conditions[0], true);
+  return html;
+}
+
+function renderCond(c, lockedEvent){
+  const evOpts = EVENTS.map(e=>`<option value="${e.id}" ${c.event===e.id?"selected":""}>${esc(T(e.k))}</option>`).join("");
+  const spec = EVENTS.find(e=>e.id===c.event);
+  let extra="";
+  if(spec && spec.extra==="threshold"){
+    extra = `<label class="stack" style="gap:4px"><span class="label">${esc(T("threshold"))}</span>
+      <input class="field" type="number" min="0" max="3600" data-act="cthresh" data-id="${c.id}" value="${esc(c.threshold||0)}"></label>`;
+  }
+  if(spec && spec.extra==="stat"){
+    extra = `<label class="stack" style="gap:4px"><span class="label">${esc(T("value"))}</span>
+      <input class="field" type="number" data-act="cval" data-id="${c.id}" value="${esc(c.value||80)}"></label>
+      <label class="stack" style="gap:4px"><span class="label">${esc(T("trend"))}</span>
+      <select class="field" data-act="ctrend" data-id="${c.id}">
+        ${[["none","trendNone"],["leave","trendLeave"],["up","trendUp"],["down","trendDown"]].map(([v,k])=>
+          `<option value="${v}" ${c.trend===v?"selected":""}>${esc(T(k))}</option>`).join("")}
+      </select></label>`;
+  }
+  const objs = [...GROUPS, ...CAMERAS];
+  const picks = objs.map(o=>{
+    const on = (c.devices||[]).includes(o.id);
+    return `<label><input type="checkbox" data-act="cdev" data-id="${c.id}" data-dev="${o.id}" ${on?"checked":""}> ${esc(S.lang==="en"?o.en:o.ru)}</label>`;
+  }).join("");
+  return `<div class="cond">
+    <label class="stack" style="gap:4px"><span class="label">${esc(T("start"))}</span>
+      <select class="field" data-act="cevent" data-id="${c.id}" ${lockedEvent?"disabled":""}>${evOpts}</select></label>
+    ${extra}
+    <div class="label" style="margin-top:8px">${esc(T("devices"))}</div>
+    <div class="obj-list">${picks}</div>
+    ${lockedEvent?"":`<button class="btn btn-subtle btn-sm" style="margin-top:6px" data-act="rmCond" data-id="${c.id}">${esc(T("del"))}</button>`}
+  </div>`;
+}
+
+function renderActInsp(m,a){
+  const p = a.params||{};
+  let html = `<div class="node-t">${esc(actLab(a.kind))}</div>`;
+  const needCam = ["cam.record","cam.alarm","cam.arm","cam.view","cam.preset"].includes(a.kind);
+  if(needCam){
+    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("camera"))}</span>
+      <select class="field" data-act="ap" data-k="camera">${camOpts(p.camera||"initiator", true)}</select></label>`;
+  }
+  if(a.kind==="cam.record"){
+    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("archive"))}</span>
+      <select class="field" data-act="ap" data-k="archive">${ARCHIVES.map(x=>`<option value="${x.id}" ${p.archive===x.id?"selected":""}>${esc(S.lang==="en"?x.en:x.ru)}</option>`).join("")}</select></label>`;
+  }
+  if(a.kind==="cam.alarm"){
+    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("priority"))}</span>
+      <select class="field" data-act="ap" data-k="priority">
+        ${[["hi","hi"],["mid","mid"],["lo","lo"]].map(([v,k])=>`<option value="${v}" ${p.priority===v?"selected":""}>${esc(T(k))}</option>`).join("")}
+      </select></label>
+      <label class="stack" style="gap:4px"><span class="label">${esc(T("alarmMode"))}</span>
+      <select class="field" data-act="ap" data-k="alarmMode">
+        <option value="always" ${p.alarmMode!=="idle"?"selected":""}>${esc(T("alarmAlways"))}</option>
+        <option value="idle" ${p.alarmMode==="idle"?"selected":""}>${esc(T("alarmIdle"))}</option>
+      </select></label>`;
+  }
+  if(a.kind==="cam.arm"){
+    html += `<label class="choice"><input type="checkbox" data-act="apb" data-k="arm" ${p.arm!==false?"checked":""}> ${esc(T("arm"))}</label>`;
+  }
+  if(a.kind==="cam.view"){
+    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("display"))}</span>
+      <select class="field" data-act="ap" data-k="display">
+        <option value="zoom" ${p.display==="zoom"?"selected":""}>${esc(T("zoom"))}</option>
+        <option value="mark" ${p.display==="mark"?"selected":""}>${esc(T("mark"))}</option>
+      </select></label>`;
+  }
+  if(a.kind==="cam.preset"){
+    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("preset"))}</span>
+      <input class="field" data-act="ap" data-k="preset" value="${esc(p.preset||"1")}"></label>`;
+  }
+  if(a.kind==="prog.waitT"||a.kind==="prog.waitE"||a.kind==="prog.waitP"){
+    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("timeout"))}</span>
+      <input class="field" data-act="ap" data-k="timeout" value="${esc(p.timeout||"00:00:05")}" placeholder="HH:MM:SS"></label>`;
+  }
+  if(a.kind==="prog.waitE"){
+    html += `<div class="helper">${esc(T("condHint"))}</div>`;
+    (a.waitEvents||[]).forEach(c=> html += renderCond(c));
+    html += `<button class="btn btn-outline" data-act="addWaitEv">${icon("plus")}${esc(T("addCond"))}</button>`;
+  }
+  if(a.kind==="prog.run"){
+    const others = S.macros.filter(x=>x.id!==m.id && x.type==="event");
+    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("macro"))}</span>
+      <select class="field" data-act="ap" data-k="macro">${others.map(x=>`<option value="${x.id}" ${p.macro===x.id?"selected":""}>${esc(x.name)}</option>`).join("")}</select></label>
+      <div class="helper">${esc(T("typeEvent"))}</div>`;
+  }
+  if(a.kind==="mon.lay"){
+    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("layout"))}</span>
+      <select class="field" data-act="ap" data-k="layout">${LAYOUTS.map(x=>`<option value="${x.id}" ${p.layout===x.id?"selected":""}>${esc(S.lang==="en"?x.en:x.ru)}</option>`).join("")}</select></label>`;
+  }
+  if(a.kind==="ntf.mail"){
+    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("to"))}</span>
+      <input class="field" data-act="ap" data-k="to" value="${esc(p.to||"ops@site.local")}"></label>
+      <label class="stack" style="gap:4px"><span class="label">${esc(T("subject"))}</span>
+      <input class="field" data-act="ap" data-k="subject" value="${esc(p.subject||"")}"></label>
+      <label class="stack" style="gap:4px"><span class="label">${esc(T("message"))}</span>
+      <textarea class="field" data-act="ap" data-k="message">${esc(p.message||"")}</textarea></label>`;
+  }
+  if(a.kind==="ntf.voice"||a.kind==="ntf.push"){
+    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("message"))}</span>
+      <textarea class="field" data-act="ap" data-k="message">${esc(p.message||"")}</textarea></label>`;
+  }
+  if(a.kind==="gen.web"){
+    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("url"))}</span>
+      <input class="field" data-act="ap" data-k="url" value="${esc(p.url||"https://")}"></label>`;
+  }
+  if(a.kind==="gen.en"){
+    html += `<label class="choice"><input type="checkbox" data-act="apb" data-k="enable" ${p.enable!==false?"checked":""}> ${esc(T("onOff"))}</label>`;
+  }
+  if(a.kind==="acfa.out"){
+    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("relay"))}</span>
+      <input class="field" data-act="ap" data-k="relay" value="${esc(p.relay||"Relay 1")}"></label>
+      <label class="choice"><input type="checkbox" data-act="apb" data-k="on" ${p.on!==false?"checked":""}> ${esc(T("onOff"))}</label>`;
+  }
+  html += `<button class="btn btn-danger" style="margin-top:12px" data-act="rmAct" data-id="${a.id}">${esc(T("del"))}</button>`;
+  return html;
+}
+
+/* ── dialogs / menus ────────────────────────────────────── */
+function hideMenu(){ const m=document.getElementById("menu"); m.hidden=true; m.innerHTML=""; }
+function showMenu(html, x, y){
+  const m=document.getElementById("menu");
+  m.innerHTML=html; m.hidden=false;
+  const r=m.getBoundingClientRect();
+  m.style.left = Math.min(x, innerWidth-r.width-8)+"px";
+  m.style.top = Math.min(y, innerHeight-r.height-8)+"px";
+}
+function openDlg(html){
+  const d=document.getElementById("dlg");
+  d.innerHTML=html;
+  if(typeof d.showModal==="function") d.showModal(); else d.setAttribute("open","");
+}
+function closeDlg(){
+  const d=document.getElementById("dlg");
+  if(d.open && d.close) d.close();
+  d.removeAttribute("open");
+  d.innerHTML="";
+  S.dlg=null;
+}
+
+function createMenu(x,y){
+  showMenu(`
+    <div class="menu-subheader">${esc(T("createType"))}</div>
+    <button class="menu-item-rich menu-item" data-act="create" data-type="event"><span class="menu-item-title">${esc(T("typeEvent"))}</span><span class="menu-item-desc">${esc(T("condHint"))}</span></button>
+    <button class="menu-item-rich menu-item" data-act="create" data-type="auto"><span class="menu-item-title">${esc(T("typeAuto"))}</span><span class="menu-item-desc">${esc(T("autoNote"))}</span></button>
+    <button class="menu-item-rich menu-item" data-act="create" data-type="cycle"><span class="menu-item-title">${esc(T("typeCycle"))}</span><span class="menu-item-desc">${esc(T("overlap"))}</span></button>
+  `, x, y);
+}
+
+function catalogDlg(){
+  const groups = ["g_macro","g_cam","g_prog","g_gen","g_mon","g_ntf","g_acfa"];
+  let body = `<div class="cat-grid">`;
+  groups.forEach(g=>{
+    body += `<div class="menu-subheader">${esc(T(g))}</div>`;
+    ACTS.filter(a=>a.g===g).forEach(a=>{
+      body += `<button class="menu-item menu-item-rich" data-act="pickAct" data-kind="${a.id}"><span class="menu-item-title">${esc(T(a.k))}</span></button>`;
+    });
+  });
+  body += `</div>`;
+  openDlg(`<div class="dlg-h">${esc(T("reactions"))}</div><div class="dlg-b">${body}</div>
+    <div class="dlg-f"><button class="btn btn-outline" data-act="closeDlg">${esc(T("cancel"))}</button></div>`);
+}
+
+function detectorDlg(){
+  const rows = DETECTORS.map(d=>`<button class="menu-item menu-item-rich" data-act="pickDet" data-id="${d.id}">
+    <span class="menu-item-title">${esc(S.lang==="en"?d.en:d.ru)}</span>
+    <span class="menu-item-desc">${esc(camLab(d.camera))} · ${esc(evLab(d.event))}</span></button>`).join("");
+  openDlg(`<div class="dlg-h">${esc(T("pickDet"))}</div><div class="dlg-b"><p class="helper">${esc(T("pickDetH"))}</p>${rows}</div>
+    <div class="dlg-f"><button class="btn btn-outline" data-act="closeDlg">${esc(T("cancel"))}</button></div>`);
+}
+
+function confirmLeave(nextId){
+  const m = cur();
+  S.pending = nextId;
+  openDlg(`<div class="dlg-h">${esc(T("leaveTitle"))}</div>
+    <div class="dlg-b">${esc(Tf("leaveBody", m.name))}</div>
+    <div class="dlg-f" style="justify-content:space-between">
+      <button class="btn btn-danger" data-act="leave">${esc(T("leave"))}</button>
+      <span class="row">
+        <button class="btn btn-outline" data-act="closeDlg">${esc(T("stay"))}</button>
+        <button class="btn btn-primary" data-act="saveThen">${esc(T("save"))}</button>
+      </span>
+    </div>`);
+}
+
+function confirmDel(){
+  const m = cur();
+  openDlg(`<div class="dlg-h">${esc(T("delTitle"))}</div>
+    <div class="dlg-b">${esc(Tf("delBody", m.name))}</div>
+    <div class="dlg-f">
+      <button class="btn btn-outline" data-act="closeDlg">${esc(T("cancel"))}</button>
+      <button class="btn btn-danger" data-act="doDel">${esc(T("del"))}</button>
+    </div>`);
+}
+
+function selectMacro(id, force){
+  if(S.selId===id) return;
+  if(S.dirty && !force){ confirmLeave(id); return; }
+  S.selId = id; S.node="start"; S.dirty=false;
+  S.hist=[snap()]; S.histI=0;
+  S.saved[id] = S.saved[id] ?? snap();
+  hideMenu(); closeDlg(); render();
+}
+
+function createMacro(type, detId){
+  if(type==="auto" && !detId){ detectorDlg(); return; }
+  const n = S.macros.filter(m=>m.type===type).length+1;
+  const m = {
+    id: uid(), type, name: T("defaultName")+" "+n,
+    mode:"always", inMenu:false, conditions:[], actions:[]
+  };
+  if(type==="cycle") m.heartbeat="01:00:00";
+  if(type==="auto"){
+    const d = DETECTORS.find(x=>x.id===detId);
+    m.detectorId = detId;
+    m.name = d ? (S.lang==="en"?d.en:d.ru) : m.name;
+    m.conditions = [{id:uid(), event:d.event, devices:[d.camera]}];
+  }
+  S.macros.unshift(m);
+  S.saved[m.id]=snap(m);
+  S.listState="data";
+  selectMacro(m.id, true);
+}
+
+function addPickedAct(kind){
+  const m = cur(); if(!m) return;
+  remember();
+  const act = mkAct(kind, kind.startsWith("cam.")?{camera:"initiator"}:{});
+  const ins = S.insert || {branch:"root", after:""};
+  let list = m.actions;
+  if(ins.branch.endsWith("-then")){
+    const id = ins.branch.replace(/-then$/,"");
+    const w = findAct(id); if(w) list = w.then;
+  } else if(ins.branch.endsWith("-else")){
+    const id = ins.branch.replace(/-else$/,"");
+    const w = findAct(id); if(w) list = w.else;
+  }
+  const after = (ins.after||"").includes("|head") ? "" : ins.after;
+  insertAct(list, after, act);
+  S.node = act.id;
+  closeDlg();
+  S.dirty = snap()!==S.saved[m.id];
+  render();
+}
+
+/* ── events ─────────────────────────────────────────────── */
+document.addEventListener("click", ev=>{
+  const t = ev.target.closest("[data-act]");
+  if(!t){
+    if(!ev.target.closest("#menu")) hideMenu();
+    return;
+  }
+  const act = t.dataset.act;
+  const m = cur();
+
+  if(act==="nav" && t.dataset.k!=="navMacros"){
+    openDlg(`<div class="dlg-h">${esc(T(t.dataset.k))}</div><div class="dlg-b">${esc(T("otherTab"))}</div>
+      <div class="dlg-f"><button class="btn btn-primary" data-act="closeDlg">${esc(T("close"))}</button></div>`);
+    return;
+  }
+  if(act==="theme"){
+    S.theme = S.theme==="light"?"dark":"light";
+    localStorage.setItem("macros-theme", S.theme); render(); return;
+  }
+  if(act==="type"){ S.type=t.dataset.v; render(); return; }
+  if(act==="listState"){ S.listState=t.dataset.v; render(); return; }
+  if(act==="retry"){ S.listState="data"; render(); return; }
+  if(act==="resetQ"){ S.q=""; S.type="all"; S.listState="data"; render(); return; }
+  if(act==="createMenu"){ createMenu(ev.clientX, ev.clientY); return; }
+  if(act==="create"){ hideMenu(); createMacro(t.dataset.type); return; }
+  if(act==="pickDet"){ closeDlg(); createMacro("auto", t.dataset.id); return; }
+  if(act==="sel"){ selectMacro(t.dataset.id); return; }
+  if(act==="closeDlg"){ closeDlg(); S.pending=null; return; }
+  if(act==="node"){ S.node=t.dataset.id; render(); return; }
+  if(act==="addSlot"){
+    S.insert={branch:t.dataset.branch||"root", after:t.dataset.after||""};
+    catalogDlg(); return;
+  }
+  if(act==="pickAct"){ addPickedAct(t.dataset.kind); return; }
+  if(act==="copy" && m){
+    const c = clone(m); c.id=uid(); c.name=m.name+T("copySuffix");
+    walkActs(c.actions, a=>{ a.id=uid(); });
+    (c.conditions||[]).forEach(x=>x.id=uid());
+    S.macros.unshift(c); S.saved[c.id]=snap(c); selectMacro(c.id,true); return;
+  }
+  if(act==="del" && m){ confirmDel(); return; }
+  if(act==="doDel" && m){
+    S.macros = S.macros.filter(x=>x.id!==m.id);
+    delete S.saved[m.id];
+    S.dirty=false; S.selId = S.macros[0]?S.macros[0].id:null; S.node="start";
+    closeDlg(); render(); return;
+  }
+  if(act==="save" && m){ S.saved[m.id]=snap(m); S.dirty=false; render(); return; }
+  if(act==="revert" && m){
+    Object.assign(m, JSON.parse(S.saved[m.id]));
+    S.dirty=false; S.node="start"; render(); return;
+  }
+  if(act==="leave"){
+    const id=S.pending; const curm=cur();
+    if(curm) Object.assign(curm, JSON.parse(S.saved[curm.id]));
+    S.dirty=false; closeDlg(); selectMacro(id,true); return;
+  }
+  if(act==="saveThen"){
+    if(m) S.saved[m.id]=snap(m);
+    S.dirty=false; const id=S.pending; closeDlg(); selectMacro(id,true); return;
+  }
+  if(act==="addCond" && m){
+    remember();
+    m.conditions.push({id:uid(), event:"cam.alarm", devices:[]});
+    S.dirty=true; render(); return;
+  }
+  if(act==="rmCond" && m){
+    remember();
+    m.conditions = (m.conditions||[]).filter(c=>c.id!==t.dataset.id);
+    walkActs(m.actions, a=>{
+      if(a.waitEvents) a.waitEvents = a.waitEvents.filter(c=>c.id!==t.dataset.id);
+    });
+    S.dirty=true; render(); return;
+  }
+  if(act==="groupSame" && m){
+    remember();
+    const out=[], map={};
+    m.conditions.forEach(c=>{
+      const k=c.event+"|"+(c.threshold||"")+"|"+(c.value||"")+"|"+(c.trend||"");
+      if(!map[k]){ map[k]={...c, devices:[...(c.devices||[])]}; out.push(map[k]); }
+      else map[k].devices=[...new Set([...map[k].devices, ...(c.devices||[])])];
+    });
+    m.conditions=out;
+    S.dirty=true; render(); return;
+  }
+  if(act==="addWaitEv"){
+    const a=findAct(S.node); if(!a) return;
+    remember(); a.waitEvents=a.waitEvents||[]; a.waitEvents.push({id:uid(), event:"tech.ok", devices:[]});
+    S.dirty=true; render(); return;
+  }
+  if(act==="rmAct"){ removeAct(t.dataset.id); S.node="start"; S.dirty=true; render(); return; }
+});
+
+document.addEventListener("change", ev=>{
+  const t = ev.target.closest("[data-act]"); if(!t) return;
+  const act=t.dataset.act; const m=cur(); if(!m) return;
+
+  if(act==="lang"){ S.lang=t.value; localStorage.setItem("macros-lang", S.lang); render(); return; }
+  if(act==="q"){ S.q=t.value; render(); return; }
+
+  const patch = ()=>{ remember(); S.dirty = snap()!==S.saved[m.id]; };
+
+  if(act==="mode"){ patch(); m.mode=t.value; if(m.mode==="schedule" && !m.scheduleId) m.scheduleId="sch_after"; render(); return; }
+  if(act==="schedule"){ patch(); m.scheduleId=t.value; render(); return; }
+  if(act==="inMenu"){ patch(); m.inMenu=t.checked; render(); return; }
+  if(act==="heartbeat"){ patch(); m.heartbeat=t.value; render(); return; }
+  if(act==="random"){ patch(); m.random=t.checked; render(); return; }
+  if(act==="rename"){ m.name=t.value; S.dirty = snap()!==S.saved[m.id]; 
+    document.querySelectorAll(".mrow[aria-selected='true'] .ttl").forEach(el=>el.textContent=m.name);
+    const sum=document.querySelector(".summary"); if(sum) sum.textContent=summarize(m);
+    return; }
+  if(act==="cevent"){
+    const c = condById(t.dataset.id); if(!c) return; patch(); c.event=t.value; render(); return;
+  }
+  if(act==="cthresh"){ const c=condById(t.dataset.id); if(!c) return; patch(); c.threshold=+t.value; render(); return; }
+  if(act==="cval"){ const c=condById(t.dataset.id); if(!c) return; patch(); c.value=+t.value; render(); return; }
+  if(act==="ctrend"){ const c=condById(t.dataset.id); if(!c) return; patch(); c.trend=t.value; render(); return; }
+  if(act==="cdev"){
+    const c=condById(t.dataset.id); if(!c) return; patch();
+    c.devices=c.devices||[];
+    if(t.checked){ if(!c.devices.includes(t.dataset.dev)) c.devices.push(t.dataset.dev); }
+    else c.devices=c.devices.filter(x=>x!==t.dataset.dev);
+    render(); return;
+  }
+  if(act==="ap"){
+    const a=findAct(S.node); if(!a) return; patch(); a.params=a.params||{}; a.params[t.dataset.k]=t.value; render(); return;
+  }
+  if(act==="apb"){
+    const a=findAct(S.node); if(!a) return; patch(); a.params=a.params||{}; a.params[t.dataset.k]=t.checked; render(); return;
+  }
+});
+
+document.addEventListener("input", ev=>{
+  const t=ev.target.closest("[data-act=q]");
+  if(t){ S.q=t.value; /* live filter without losing focus */ 
+    const side=document.getElementById("side");
+    const keep=t; const pos=t.selectionStart;
+    renderSide();
+    const nq=document.querySelector("[data-act=q]");
+    if(nq){ nq.focus(); nq.setSelectionRange(pos,pos); }
+  }
+});
+
+function condById(id){
+  const m=cur(); if(!m) return null;
+  let c = (m.conditions||[]).find(x=>x.id===id);
+  if(c) return c;
+  walkActs(m.actions, a=>{
+    (a.waitEvents||[]).forEach(w=>{ if(w.id===id) c=w; });
+  });
+  return c;
+}
+
+document.addEventListener("keydown", ev=>{
+  if(ev.key==="Escape"){ hideMenu(); closeDlg(); return; }
+  if((ev.ctrlKey||ev.metaKey) && ev.key==="s"){ ev.preventDefault(); const m=cur(); if(m&&S.dirty){ S.saved[m.id]=snap(m); S.dirty=false; render(); } }
+  if((ev.ctrlKey||ev.metaKey) && ev.key==="z"){ ev.preventDefault(); restoreHist(S.histI-1); }
+  if((ev.ctrlKey||ev.metaKey) && (ev.key==="y" || (ev.shiftKey && ev.key==="z"))){ ev.preventDefault(); restoreHist(S.histI+1); }
+});
+
+document.getElementById("dlg").addEventListener("click", ev=>{
+  if(ev.target===ev.currentTarget) closeDlg();
+});
+
+/* boot */
+S.macros = seed();
+S.macros.forEach(m=> S.saved[m.id]=snap(m));
+S.selId = "m_auto_motion";
+S.hist=[snap()]; S.histI=0;
+S.theme = localStorage.getItem("macros-theme") || "light";
+S.lang = localStorage.getItem("macros-lang") || "ru";
+render();
+})();
+</script>
+</body>
+</html>
