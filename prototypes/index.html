@@ -241,13 +241,35 @@ body[data-resizing] *{user-select:none!important}
 [data-theme="dark"] .main-h{border-bottom-color:var(--one-border)}
 .main-h .name{font:var(--one-type-heading-md);border:0;background:transparent;color:var(--one-fg);width:min(420px,100%);flex:1 1 180px;min-width:0;padding:2px 4px;border-radius:var(--one-radius-control)}
 .main-h .name:focus{outline:2px solid var(--one-focus-ring);outline-offset:2px}
-.banner{margin:10px 16px 0;padding:8px 12px;border-radius:var(--one-radius-container);font:var(--one-type-body-sm)}
+.banner{padding:8px 12px;border-radius:var(--one-radius-container);font:var(--one-type-body-sm)}
 .banner-warn{background:var(--one-warning-bg);color:var(--one-warning-text)}
 .banner-info{background:var(--one-info-bg);color:var(--one-info-text)}
 .banner-danger{background:var(--one-danger-bg);color:var(--one-danger-text)}
-.summary{margin:10px 16px 0;padding:10px 12px;background:var(--one-surface);border-radius:var(--one-radius-window);font:var(--one-type-body-md);color:var(--one-fg)}
-.flow{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;align-items:center}
+/* Banners and summary share the left column, so the view toggle keeps its corner under Save. */
+.main-top{display:flex;align-items:flex-start;gap:12px;margin:10px 16px 0}
+.main-top-b{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.main-top > .seg{flex:none}
+.summary{min-width:0;padding:10px 12px;background:var(--one-surface);border-radius:var(--one-radius-window);
+  font:var(--one-type-body-md);color:var(--one-fg)}
+.flow{flex:1;overflow:auto;padding:16px;display:flex;gap:12px}
+.flow.is-rows{flex-direction:column;align-items:center}
+.flow.is-cols{flex-direction:row;align-items:flex-start;justify-content:center}
 .recipe{width:min(640px,100%);display:flex;flex-direction:column;align-items:stretch}
+.pan{background:var(--one-surface-muted);border:1px solid var(--one-surface-subtle);border-radius:var(--one-radius-window);
+  display:flex;flex-direction:column;min-width:0}
+[data-theme="dark"] .pan{border-color:var(--one-border)}
+.flow.is-rows .pan{width:min(660px,100%)}
+.flow.is-cols .pan{flex:1 1 0;max-width:520px;min-width:280px}
+.pan-h{display:flex;align-items:center;gap:6px;padding:8px 12px;font:var(--one-type-overline);text-transform:uppercase;
+  letter-spacing:.04em;color:var(--one-fg-muted);border-bottom:1px solid var(--one-surface-subtle)}
+[data-theme="dark"] .pan-h{border-bottom-color:var(--one-border)}
+.pan-h .ico{width:12px;height:12px}
+.pan-when .pan-h{color:var(--one-nav-selected-text)}
+.pan-b{padding:12px}
+.pan .recipe{width:100%}
+.pan-link{flex:none;display:grid;place-items:center;color:var(--one-fg-subtle)}
+.flow.is-rows .pan-link{height:20px;transform:rotate(90deg)}
+.flow.is-cols .pan-link{align-self:flex-start;padding-top:10px}
 
 .node{background:var(--one-surface);border:1px solid var(--one-border);border-radius:var(--one-radius-window);padding:10px 12px;text-align:left;cursor:pointer;color:var(--one-fg);width:100%}
 .node:hover{background:var(--one-control-hover)}
@@ -282,8 +304,9 @@ body[data-resizing] *{user-select:none!important}
 .chips{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
 .chip{display:inline-flex;align-items:center;gap:2px;max-width:100%;height:24px;padding:0 4px 0 8px;
   border-radius:var(--one-radius-pill);background:var(--one-surface-muted);color:var(--one-fg);font:var(--one-type-caption)}
+.chip{cursor:default}
 .chip > span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.chip-x{width:18px;height:18px;border:0;background:transparent;color:var(--one-fg-muted);cursor:pointer;
+.chip-x{width:20px;height:20px;border:0;background:transparent;color:var(--one-fg-muted);cursor:pointer;
   border-radius:var(--one-radius-pill);padding:0;display:grid;place-items:center;font-size:14px;line-height:1}
 .chip-x:hover{background:var(--one-control-hover);color:var(--one-fg)}
 .chip-empty{background:transparent;border:1px dashed var(--one-border);color:var(--one-fg-subtle)}
@@ -298,26 +321,29 @@ body[data-resizing] *{user-select:none!important}
 .cbx-btn .cbx-val{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .cbx-btn .subtle{color:var(--one-fg-placeholder)}
 .cbx-btn .ico{transform:rotate(90deg);color:var(--one-fg-muted);flex:none}
-.cbx-multi{display:flex;flex-wrap:wrap;align-items:center;gap:4px;min-height:28px;padding:4px;width:100%;
-  border:1px solid var(--one-editor-border);border-radius:var(--one-radius-control);background:var(--one-editor-bg);cursor:text}
-.cbx-multi:hover{background:var(--one-editor-hover);border-color:var(--one-editor-border-hover)}
-.cbx-multi.is-open{border-color:var(--one-editor-border-focus);box-shadow:0 0 0 2px var(--one-focus-halo)}
+.picker{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.chips-box{display:flex;flex-wrap:wrap;align-items:center;gap:4px;min-height:28px;padding:4px;width:100%;
+  border:1px solid var(--one-editor-border);border-radius:var(--one-radius-control);background:var(--one-editor-bg)}
+.picker-add.is-open{border-color:var(--one-editor-border-focus);box-shadow:0 0 0 2px var(--one-focus-halo)}
+.picker-add .ico{width:14px;height:14px}
 .cbx-pop{position:fixed;z-index:70;display:flex;flex-direction:column;min-width:220px;max-width:min(420px,94vw);max-height:280px;
   background:var(--one-popup);border:1px solid var(--one-border);border-radius:var(--one-radius-container);box-shadow:var(--one-shadow)}
 .cbx-pop[hidden]{display:none!important}
 .cbx-pop .field{margin:6px 6px 0;width:calc(100% - 12px)}
 .cbx-list{overflow:auto;padding:4px;min-height:40px}
-.cbx-opt{display:flex;flex-direction:column;align-items:flex-start;gap:1px;width:100%;text-align:left;border:0;background:transparent;color:var(--one-fg);font:var(--one-type-body-sm);
+.cbx-opt{display:flex;align-items:flex-start;gap:8px;width:100%;text-align:left;border:0;background:transparent;color:var(--one-fg);font:var(--one-type-body-sm);
   padding:6px 10px;border-radius:var(--one-radius-control);cursor:pointer;line-height:1.3}
 .cbx-opt:hover,.cbx-opt.is-hi{background:var(--one-control-hover)}
 .cbx-opt[aria-selected="true"]{background:var(--one-accent-soft);color:var(--one-nav-selected-text)}
-.cbx-opt-lab{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.cbx-check{flex:none;display:grid;place-items:center;width:16px;height:16px;margin-top:1px;visibility:hidden}
+.cbx-check .ico{width:14px;height:14px}
+.cbx-opt[aria-selected="true"] .cbx-check{visibility:visible}
+.cbx-opt-lab{display:flex;flex-direction:column;gap:1px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cbx-opt-hint{font:var(--one-type-caption);color:var(--one-fg-subtle)}
 .cbx-opt[aria-selected="true"] .cbx-opt-hint{color:inherit;opacity:.75}
 .cbx-empty{padding:8px 10px;color:var(--one-fg-subtle);font:var(--one-type-caption)}
-.cbx-add{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:var(--one-radius-control);
-  color:var(--one-fg-muted);flex:none}
-.cbx-multi:hover .cbx-add{background:var(--one-control-hover);color:var(--one-fg)}
+.cbx-foot{padding:6px 10px;border-top:1px solid var(--one-surface-subtle);color:var(--one-fg-subtle);font:var(--one-type-caption);flex:none}
+[data-theme="dark"] .cbx-foot{border-top-color:var(--one-border)}
 .cascade{display:flex;flex-direction:column;gap:10px}
 
 .menu{position:absolute;z-index:45;min-width:200px;max-width:320px;background:var(--one-popup);border:1px solid var(--one-border);border-radius:var(--one-radius-container);box-shadow:var(--one-shadow);padding:4px}
@@ -387,6 +413,12 @@ const TR = {
   save:["Сохранить","Save"], cancel:["Отмена","Cancel"], apply:["Применить","Apply"],
   close:["Закрыть","Close"], add:["Добавить","Add"], edit:["Изменить","Edit"],
   filterType:["Тип макрокоманды","Macro type"],
+  flowView:["Вид схемы","Recipe layout"],
+  flowRows:["Условие сверху, действия снизу","Condition on top, actions below"],
+  flowCols:["Условие слева, действия справа","Condition on the left, actions on the right"],
+  objects:["Объекты","Objects"],
+  targetsHint:["Реакция выполнится для каждого выбранного объекта.","The action runs for every selected object."],
+  pickHint:["Клик по строке добавляет или снимает объект — список остаётся открытым.","Clicking a row adds or removes an object — the list stays open."],
   addMacro:["Добавить","Add macro"], delMacro:["Удалить макрокоманду","Delete macro"],
   editHint:["Правка выделенного элемента схемы","Edit the selected recipe element"],
   delNodeHint:["Удалить выделенный элемент схемы","Delete the selected recipe element"],
@@ -538,6 +570,7 @@ const MAIN_MIN = 480;
 const S = {
   lang: localStorage.getItem("macros-lang") || "ru",
   theme: localStorage.getItem("macros-theme") || "light",
+  flow: localStorage.getItem("macros-flow") || "rows",
   q: "", type: "all",
   macros: [], saved: {}, selId: null, node: "start",
   dirty: false, hist: [], histI: -1,
@@ -561,7 +594,10 @@ const ICO = {
   trash:'<path d="M5 7h14M10 11v6M14 11v6M8 7V5h8v2M6 7l1 14h10l1-14"/>',
   x:'<path d="M6 6l12 12M18 6 6 18"/>',
   alert:'<path d="M12 9v4M12 17h.01"/><path d="M10.3 4.7 2.8 18a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 4.7a2 2 0 0 0-3.4 0z"/>',
-  more:'<circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/>'
+  more:'<circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/>',
+  rows:'<rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/>',
+  cols:'<rect x="4" y="4" width="6" height="16" rx="1.5"/><rect x="14" y="4" width="6" height="16" rx="1.5"/>',
+  check:'<path d="m5 13 4 4L19 7"/>'
 };
 function icon(n){ return `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[n]||""}</svg>`; }
 
@@ -631,9 +667,9 @@ const OBJ_TYPES = [
   {id:"archive", ru:"Архив", en:"Archive", events:1},
   {id:"schedule", ru:"Временная зона", en:"Time schedule", events:1},
   {id:"tech", ru:"Оборудование", en:"Hardware", events:1},
-  {id:"layout", ru:"Раскладка", en:"Layout", acts:1},
+  {id:"layout", ru:"Раскладка", en:"Layout"},
   {id:"macro", ru:"Макрокоманда", en:"Macro", acts:1},
-  {id:"monitor", ru:"Монитор", en:"Monitor", acts:1},
+  {id:"monitor", ru:"Монитор", en:"Monitor", acts:1, noObject:1},
   {id:"ntf", ru:"Оповещение", en:"Notification", acts:1, noObject:1},
   {id:"prog", ru:"Программирование", en:"Programming", acts:1, noObject:1},
   {id:"gen", ru:"Основные", en:"General", acts:1, noObject:1}
@@ -738,6 +774,23 @@ function actSpec(id){ return ACTS.find(x=>x.id===id) || {}; }
 function condTypeOf(c){ return c.type || evSpec(c.event).obj || "camera"; }
 function actTypeOf(a){ return actSpec(a.kind).type || "camera"; }
 function targetOf(a){ const p=a.params||{}; return p.object||p.camera||p.macro||p.layout||""; }
+function targetsOf(a){
+  const p = a.params||{};
+  if(Array.isArray(p.objects)) return p.objects.slice();
+  const one = targetOf(a);
+  return one ? [one] : [];
+}
+/* Actions target a list of objects of one type; single-value aliases stay in sync. */
+function setTargets(a, list){
+  const type = actTypeOf(a);
+  const arr = (list||[]).filter(Boolean);
+  a.params = a.params||{};
+  a.params.objects = arr;
+  const first = arr[0] || "";
+  a.params.object = first;
+  if(type==="camera") a.params.camera = first;
+  if(type==="macro") a.params.macro = first==="initiator" ? "" : first;
+}
 function blankCond(type){
   type = type || "camera";
   const ev = eventsOf(type)[0];
@@ -750,21 +803,24 @@ function mkAct(kind, params){
   if(spec && spec.wait==="event"){ a.then=[]; a.else=[]; a.params.timeout=a.params.timeout||"00:00:30"; a.waitEvents=a.waitEvents||[]; }
   if(spec && spec.wait==="prev"){ a.then=[]; a.else=[]; a.params.timeout=a.params.timeout||"00:10:00"; }
   if(spec && spec.wait===true){ a.params.timeout=a.params.timeout||"00:00:05"; }
-  if(a.params.object && spec && spec.type==="camera" && !a.params.camera) a.params.camera=a.params.object;
+  if(spec && !objTypeMeta(spec.type).noObject){
+    const t = targetsOf(a);
+    setTargets(a, t.length ? t : ["initiator"]);
+  }
   return a;
 }
 
 function replaceActKind(a, kind){
+  const oldType = actTypeOf(a);
   const spec = actSpec(kind);
-  const keepObj = targetOf(a) || "initiator";
+  const keep = spec.type===oldType ? targetsOf(a) : [];
+  const timeout = (a.params||{}).timeout;
   a.kind = kind;
-  a.params = {object: keepObj};
-  if(spec.type==="camera") a.params.camera = keepObj;
-  if(spec.type==="macro") a.params.macro = keepObj==="initiator"?"":keepObj;
-  if(spec.type==="monitor" || spec.type==="layout") a.params.layout = keepObj;
-  if(spec.wait==="event"){ a.then=a.then||[]; a.else=a.else||[]; a.params.timeout=a.params.timeout||"00:00:30"; a.waitEvents=a.waitEvents||[]; }
-  else if(spec.wait==="prev"){ a.then=a.then||[]; a.else=a.else||[]; a.params.timeout=a.params.timeout||"00:10:00"; delete a.waitEvents; }
-  else if(spec.wait===true){ a.params.timeout=a.params.timeout||"00:00:05"; delete a.then; delete a.else; delete a.waitEvents; }
+  a.params = {};
+  if(!objTypeMeta(spec.type).noObject) setTargets(a, keep.length ? keep : ["initiator"]);
+  if(spec.wait==="event"){ a.then=a.then||[]; a.else=a.else||[]; a.params.timeout=timeout||"00:00:30"; a.waitEvents=a.waitEvents||[]; }
+  else if(spec.wait==="prev"){ a.then=a.then||[]; a.else=a.else||[]; a.params.timeout=timeout||"00:10:00"; delete a.waitEvents; }
+  else if(spec.wait===true){ a.params.timeout=timeout||"00:00:05"; delete a.then; delete a.else; delete a.waitEvents; }
   else { delete a.then; delete a.else; delete a.waitEvents; }
 }
 
@@ -772,33 +828,53 @@ function closeCbx(){
   S.cbx = null;
   const pop = document.getElementById("cbxpop");
   if(pop){ pop.hidden = true; pop.innerHTML = ""; }
-  document.querySelectorAll(".cbx-btn.is-open,.cbx-multi.is-open").forEach(el=>el.classList.remove("is-open"));
+  document.querySelectorAll("[data-act=cbxOpen].is-open").forEach(el=>el.classList.remove("is-open"));
+}
+/* Object pickers are multi-select everywhere: conditions collect sources, actions collect targets. */
+function isActPick(where){
+  if(where==="insp") return true;
+  return where==="dlg" && S.dlg && S.dlg.purpose==="reaction";
+}
+function pickedObjects(where, condId){
+  if(where==="dlg") return (S.dlg && S.dlg.objects) || [];
+  if(where==="insp"){ const a=findAct(S.node); return a ? targetsOf(a) : []; }
+  const c = condById(condId); return c ? (c.devices||[]) : [];
+}
+function setPickedObjects(where, condId, arr){
+  if(where==="dlg"){ if(S.dlg) S.dlg.objects = arr; return; }
+  if(where==="insp"){ const a=findAct(S.node); if(a) setTargets(a, arr); return; }
+  const c = condById(condId); if(c) c.devices = arr;
+}
+function togglePick(where, condId, v){
+  const acts = isActPick(where);
+  if(v==="*" || v==="initiator"){ setPickedObjects(where, condId, acts?["initiator"]:[]); return; }
+  const list = pickedObjects(where, condId).filter(x=>x!=="initiator");
+  const i = list.indexOf(v);
+  if(i>=0) list.splice(i,1); else list.push(v);
+  setPickedObjects(where, condId, acts && !list.length ? ["initiator"] : list);
 }
 function cbxMatch(...parts){
   const q = (S.cbx && S.cbx.q || "").trim().toLowerCase();
   if(!q) return true;
   return parts.some(s => String(s||"").toLowerCase().includes(q));
 }
-function cbxCurrent(){
-  if(!S.cbx) return "";
+function cbxChosen(){
+  if(!S.cbx) return [];
   const {kind, where, condId} = S.cbx;
+  if(kind==="obj"){
+    const picked = pickedObjects(where, condId);
+    return picked.length ? picked : [isActPick(where)?"initiator":"*"];
+  }
   if(where==="dlg"){
-    if(!S.dlg) return "";
-    if(kind==="type") return S.dlg.type||"";
-    if(kind==="obj") return S.dlg.object||"";
-    return S.dlg.item||"";
+    if(!S.dlg) return [];
+    return [kind==="type" ? (S.dlg.type||"") : (S.dlg.item||"")];
   }
   if(where==="insp"){
-    const a=findAct(S.node); if(!a) return "";
-    if(kind==="type") return actTypeOf(a);
-    if(kind==="act") return a.kind;
-    if(kind==="obj") return targetOf(a);
-    return "";
+    const a=findAct(S.node); if(!a) return [];
+    return [kind==="type" ? actTypeOf(a) : a.kind];
   }
-  const c=condById(condId); if(!c) return "";
-  if(kind==="type") return condTypeOf(c);
-  if(kind==="event") return c.event||"";
-  return "";
+  const c=condById(condId); if(!c) return [];
+  return [kind==="type" ? condTypeOf(c) : (c.event||"")];
 }
 function cbxOpts(){
   if(!S.cbx) return [];
@@ -819,17 +895,10 @@ function cbxOpts(){
   else if(where==="insp"){ const a=findAct(S.node); type = a?actTypeOf(a):""; }
   else { const c=condById(condId); type = c?condTypeOf(c):""; }
   if(kind==="obj"){
-    const dlgMulti = where==="dlg" && S.dlg && S.dlg.purpose!=="reaction";
-    const multi = where==="cond" || where==="wait" || dlgMulti;
-    const selected = !multi ? []
-      : (dlgMulti ? (S.dlg.objects||[]) : ((condById(condId)||{}).devices||[]));
-    if(multi){
-      if(cbxMatch(T("anyObject"))) out.push({id:"*", label:T("anyObject")});
-    } else if(!objTypeMeta(type).noObject){
-      if(cbxMatch(T("initiatorObj"))) out.push({id:"initiator", label:T("initiatorObj")});
-    }
+    const acts = isActPick(where);
+    const special = acts ? {id:"initiator", label:T("initiatorObj")} : {id:"*", label:T("anyObject")};
+    if(cbxMatch(special.label)) out.push(special);
     objectsOf(type).forEach(o=>{
-      if(multi && selected.includes(o.id)) return;
       const label = S.lang==="en"?o.en:o.ru;
       if(cbxMatch(label, o.id, o.ru, o.en)) out.push({id:o.id, label, hint:o.id});
     });
@@ -851,17 +920,21 @@ function paintCbx(keepQ){
   if(S.cbx.hi >= opts.length) S.cbx.hi = Math.max(0, opts.length-1);
   const q = keepQ ? pop.querySelector("[data-act=cbxQ]") : null;
   const pos = q ? q.selectionStart : 0;
-  const cur = cbxCurrent();
+  const chosen = cbxChosen();
+  const multi = S.cbx.kind==="obj";
   const list = opts.length
     ? opts.map((o,i)=>{
-        const sel = o.id===cur;
+        const sel = chosen.includes(o.id);
         const hint = o.hint ? `<span class="cbx-opt-hint">${esc(o.hint)}</span>` : "";
-        return `<button type="button" class="cbx-opt ${i===S.cbx.hi?"is-hi":""}" data-act="cbxPick" data-v="${esc(o.id)}" role="option" aria-selected="${sel}">
-          <span class="cbx-opt-lab">${esc(o.label)}</span>${hint}</button>`;
+        return `<button type="button" class="cbx-opt ${i===S.cbx.hi?"is-hi":""}" data-act="cbxPick" data-v="${esc(o.id)}"
+          role="option" aria-selected="${sel}">
+          <span class="cbx-check">${icon("check")}</span>
+          <span class="cbx-opt-lab">${esc(o.label)}${hint}</span></button>`;
       }).join("")
     : `<div class="cbx-empty">${esc(T("noMatch"))}</div>`;
   pop.innerHTML = `<input class="field" data-act="cbxQ" value="${esc(S.cbx.q)}" placeholder="${esc(T("filterPh"))}" aria-label="${esc(T("filterPh"))}">
-    <div class="cbx-list" role="listbox">${list}</div>`;
+    <div class="cbx-list" role="listbox" aria-multiselectable="${multi}">${list}</div>
+    ${multi?`<div class="cbx-foot">${esc(T("pickHint"))}</div>`:""}`;
   const inp = pop.querySelector("[data-act=cbxQ]");
   if(inp){ inp.focus(); if(keepQ) try{ inp.setSelectionRange(pos,pos); }catch(e){} }
   const hi = pop.querySelector(".cbx-opt.is-hi");
@@ -879,7 +952,7 @@ function placeCbx(el){
   pop.style.top = top+"px";
   pop.style.width = w+"px";
 }
-function openCbx(el){
+function openCbx(el, q, hi){
   if(S.cbx && S.cbx.kind===el.dataset.kind && S.cbx.where===el.dataset.where && S.cbx.condId===(el.dataset.id||"")){
     closeCbx(); return;
   }
@@ -887,10 +960,10 @@ function openCbx(el){
     kind: el.dataset.kind,
     where: el.dataset.where,
     condId: el.dataset.id||"",
-    q: "",
-    hi: 0
+    q: q||"",
+    hi: hi||0
   };
-  document.querySelectorAll(".cbx-btn.is-open,.cbx-multi.is-open").forEach(n=>n.classList.remove("is-open"));
+  document.querySelectorAll("[data-act=cbxOpen].is-open").forEach(n=>n.classList.remove("is-open"));
   el.classList.add("is-open");
   const pop = document.getElementById("cbxpop");
   const dlg = document.getElementById("dlg");
@@ -899,33 +972,35 @@ function openCbx(el){
   paintCbx(false);
   placeCbx(el);
 }
+/* Multi-select keeps the list open, so the same popup adds and removes objects. */
+function reopenCbx(spec){
+  const el = document.querySelector(
+    `[data-act=cbxOpen][data-kind="${spec.kind}"][data-where="${spec.where}"][data-id="${spec.condId}"]`);
+  if(el) openCbx(el, spec.q, spec.hi);
+}
 function applyCbx(v){
   if(!S.cbx) return;
   const {kind, where, condId} = S.cbx;
+  const spec = {kind, where, condId, q:S.cbx.q, hi:S.cbx.hi};
+
   if(where==="dlg"){
-    if(!S.dlg) return;
-    const multi = S.dlg.purpose!=="reaction";
-    if(kind==="type"){
-      S.dlg.type=v; S.dlg.object="initiator"; S.dlg.objects=[];
-      const first = multi ? eventsOf(v)[0] : actsOf(v)[0];
-      S.dlg.item = first?first.id:"";
-    }
+    const d = S.dlg; if(!d){ closeCbx(); return; }
     if(kind==="obj"){
-      if(!multi) S.dlg.object=v;
-      else if(v==="*") S.dlg.objects=[];
-      else { S.dlg.objects=S.dlg.objects||[]; if(!S.dlg.objects.includes(v)) S.dlg.objects.push(v); }
+      togglePick("dlg", "", v);
+      closeCbx(); cascadeDlg(); reopenCbx(spec); return;
     }
-    if(kind==="event" || kind==="act") S.dlg.item=v;
-    const reopen = multi && kind==="obj" && v!=="*";
-    closeCbx(); cascadeDlg();
-    if(reopen){
-      const el = document.querySelector('[data-act=cbxOpen][data-kind=obj][data-where="dlg"]');
-      if(el) openCbx(el);
-    }
-    return;
+    if(kind==="type"){
+      d.type = v;
+      d.objects = d.purpose==="reaction" ? ["initiator"] : [];
+      const first = d.purpose==="reaction" ? actsOf(v)[0] : eventsOf(v)[0];
+      d.item = first?first.id:"";
+    } else d.item = v;
+    closeCbx(); cascadeDlg(); return;
   }
+
   const m = cur(); if(!m){ closeCbx(); return; }
   remember();
+  let keepOpen = false;
   if(where==="cond" || where==="wait"){
     const c = condById(condId); if(!c){ closeCbx(); return; }
     if(kind==="type"){
@@ -933,41 +1008,47 @@ function applyCbx(v){
       const ev=eventsOf(v)[0];
       c.event = ev?ev.id:"";
       c.devices=[];
-    }
-    if(kind==="event") c.event=v;
-    if(kind==="obj"){
-      if(v==="*") c.devices=[];
-      else { c.devices=c.devices||[]; if(!c.devices.includes(v)) c.devices.push(v); }
-    }
-  }
-  if(where==="insp"){
+    } else if(kind==="event") c.event=v;
+    else if(kind==="obj"){ togglePick(where, condId, v); keepOpen=true; }
+  } else if(where==="insp"){
     const a = findAct(S.node); if(!a){ closeCbx(); return; }
     if(kind==="type"){
       const first = actsOf(v)[0];
       if(first) replaceActKind(a, first.id);
-    }
-    if(kind==="act") replaceActKind(a, v);
-    if(kind==="obj"){
-      a.params=a.params||{};
-      a.params.object=v;
-      if(actTypeOf(a)==="camera") a.params.camera=v;
-      if(actTypeOf(a)==="macro") a.params.macro=v==="initiator"?"":v;
-      if(actTypeOf(a)==="monitor") a.params.layout=v;
-    }
+    } else if(kind==="act") replaceActKind(a, v);
+    else if(kind==="obj"){ togglePick(where, "", v); keepOpen=true; }
   }
   S.dirty = snap()!==S.saved[m.id];
-  const reopen = (where==="cond"||where==="wait") && kind==="obj" && v!=="*";
-  const spec = reopen ? {kind, where, condId} : null;
   closeCbx(); render();
-  if(spec){
-    const el = document.querySelector(`[data-act=cbxOpen][data-kind=obj][data-where="${spec.where}"][data-id="${spec.condId}"]`);
-    if(el) openCbx(el);
-  }
+  if(keepOpen) reopenCbx(spec);
 }
-function cbxBtn(kind, where, id, label, empty){
-  return `<button type="button" class="cbx-btn" data-act="cbxOpen" data-kind="${kind}" data-where="${where}" data-id="${id||""}" aria-haspopup="listbox">
-    <span class="cbx-val ${label?"":"subtle"}">${esc(label||empty||T("filterPh"))}</span>${icon("chevron")}
+function cbxBtn(kind, where, id, label, empty, field){
+  const val = label || empty || T("filterPh");
+  return `<button type="button" class="cbx-btn" data-act="cbxOpen" data-kind="${kind}" data-where="${where}" data-id="${id||""}"
+    aria-haspopup="listbox" aria-label="${esc(field ? field+": "+val : val)}">
+    <span class="cbx-val ${label?"":"subtle"}">${esc(val)}</span>${icon("chevron")}
   </button>`;
+}
+/* Chips list the picked objects; the labelled button is the only way to open the list,
+   so it can never be mistaken for a chip's remove cross. */
+function objPicker(where, id, label, hint){
+  const ids = pickedObjects(where, id);
+  const empty = isActPick(where) ? T("initiatorObj") : T("anyObject");
+  const chips = ids.length
+    ? ids.map(oid=>`<span class="chip"><span title="${esc(objLab(oid))}">${esc(objLab(oid))}</span>
+        <button type="button" class="chip-x" data-act="rmPick" data-where="${where}" data-id="${id||""}" data-dev="${esc(oid)}"
+          aria-label="${esc(T("del"))}" title="${esc(T("del"))}">×</button></span>`).join("")
+    : `<span class="chip chip-empty"><span>${esc(empty)}</span></span>`;
+  /* Plain div wrapper: a label element would forward stray clicks to the first chip's cross. */
+  return `<div class="stack" style="gap:4px"><span class="label">${esc(label)}</span>
+    <div class="picker">
+      <div class="chips-box">${chips}</div>
+      <button type="button" class="btn btn-outline btn-sm picker-add" data-act="cbxOpen" data-kind="obj"
+        data-where="${where}" data-id="${id||""}" aria-haspopup="listbox"
+        aria-label="${esc(label+": "+T("addObjects"))}">${icon("plus")}${esc(T("addObjects"))}</button>
+    </div>
+    <div class="helper">${esc(hint)} · ${esc(Tf("selectedN", ids.length))}</div>
+  </div>`;
 }
 
 function seed(){
@@ -1099,6 +1180,11 @@ function removeAct(id){
   remember(); rm(m.actions);
 }
 
+function condSources(c){
+  const ds = (c.devices||[]).map(objLab).filter(Boolean);
+  return ds.length ? listText(ds) : T("anyObject");
+}
+
 function condText(c){
   const ev = evLab(c.event);
   const ds = (c.devices||[]).map(objLab).filter(Boolean);
@@ -1109,16 +1195,22 @@ function condText(c){
     extra = ` · ${c.value||80}% · ${T(tr)}`;
   }
   if(!ds.length) return `${ev} — ${T("anyObject")}${extra}`;
-  if(ds.length<=3) return `${ev} — ${ds.join(", ")}${extra}`;
-  return `${ev} — ${ds.slice(0,2).join(", ")} ${Tf("andMore", ds.length-2)}${extra}`;
+  return `${ev} — ${listText(ds)}${extra}`;
+}
+
+function listText(labels){
+  if(!labels.length) return "";
+  if(labels.length<=3) return labels.join(", ");
+  return `${labels.slice(0,2).join(", ")} ${Tf("andMore", labels.length-2)}`;
 }
 
 function actText(a){
   const title = actLab(a.kind);
   const p = a.params||{};
   const bits=[];
-  const tgt = targetOf(a);
-  if(tgt) bits.push(objLab(tgt));
+  const tgts = objTypeMeta(actTypeOf(a)).noObject
+    ? "" : listText(targetsOf(a).map(objLab).filter(Boolean));
+  if(tgts) bits.push(tgts);
   if(p.archive) bits.push(loc(ARCHIVES,p.archive));
   if(p.timeout) bits.push(p.timeout);
   if(p.layout) bits.push(loc(LAYOUTS,p.layout));
@@ -1302,12 +1394,12 @@ function renderMain(){
     triggers = m.conditions.map((c,i)=>
       (i?`<div class="or">${esc(T("or"))}</div>`:"") +
       `<button type="button" class="node start ${S.node==="cond:"+c.id?"is-sel":""}" data-act="node" data-id="cond:${c.id}">
-        <div class="node-k">${icon("play")} ${esc(T("start"))}</div>
-        <div class="node-t">${esc(condText(c))}</div>
+        <div class="node-k">${esc(objTypeName(condTypeOf(c)))}</div>
+        <div class="node-t">${esc(evLab(c.event))}</div>
+        <div class="node-d">${esc(condSources(c))}</div>
       </button>`).join("");
   } else {
     triggers = `<button type="button" class="node start ${startSel?"is-sel":""}" data-act="node" data-id="start">
-      <div class="node-k">${icon("play")} ${esc(startKind)}</div>
       <div class="node-t">${esc(startDesc)}</div>
     </button>`;
   }
@@ -1332,13 +1424,26 @@ function renderMain(){
       <button class="btn btn-outline" data-act="revert" ${S.dirty?"":"disabled"}>${esc(T("cancel"))}</button>
       <button class="btn btn-primary" data-act="save" ${S.dirty?"":"disabled"}>${esc(T("save"))}</button>
     </div>
-    ${banners}
-    <div class="summary">${esc(summarize(m))}</div>
-    <div class="flow">
-      <div class="recipe">
-        ${triggers}
-        ${renderList(m.actions, "root")}
+    <div class="main-top">
+      <div class="main-top-b">
+        ${banners}
+        <div class="summary">${esc(summarize(m))}</div>
       </div>
+      <div class="seg" role="group" aria-label="${esc(T("flowView"))}">
+        <button class="btn btn-icon" data-act="flow" data-v="rows" aria-pressed="${S.flow!=="cols"}" title="${esc(T("flowRows"))}" aria-label="${esc(T("flowRows"))}">${icon("rows")}</button>
+        <button class="btn btn-icon" data-act="flow" data-v="cols" aria-pressed="${S.flow==="cols"}" title="${esc(T("flowCols"))}" aria-label="${esc(T("flowCols"))}">${icon("cols")}</button>
+      </div>
+    </div>
+    <div class="flow ${S.flow==="cols"?"is-cols":"is-rows"}">
+      <section class="pan pan-when">
+        <div class="pan-h">${icon("play")}${esc(m.type==="cycle"?T("cycleStart"):T("start"))}</div>
+        <div class="pan-b"><div class="recipe">${triggers}</div></div>
+      </section>
+      <div class="pan-link" aria-hidden="true">${icon("chevron")}</div>
+      <section class="pan pan-do">
+        <div class="pan-h">${esc(T("actions"))}</div>
+        <div class="pan-b">${renderList(m.actions, "root")}</div>
+      </section>
     </div>`;
 }
 
@@ -1446,21 +1551,13 @@ function renderCond(c){
           `<option value="${v}" ${c.trend===v?"selected":""}>${esc(T(k))}</option>`).join("")}
       </select></label>`;
   }
-  const ids = c.devices||[];
-  const chips = ids.length
-    ? ids.map(id=>`<span class="chip"><span title="${esc(objLab(id))}">${esc(objLab(id))}</span>
-        <button type="button" class="chip-x" data-act="rmObj" data-id="${c.id}" data-dev="${id}" aria-label="${esc(T("del"))}">×</button></span>`).join("")
-    : `<span class="chip chip-empty"><span>${esc(T("anyObject"))}</span></span>`;
   const where = (cur() && (cur().conditions||[]).some(x=>x.id===c.id)) ? "cond" : "wait";
   return `<div class="cond cascade">
-    <label class="stack" style="gap:4px"><span class="label">${esc(T("objType"))}</span>
-      ${cbxBtn("type", where, c.id, objTypeName(t))}</label>
-    <label class="stack" style="gap:4px"><span class="label">${esc(T("object"))}</span>
-      <div class="cbx-multi" role="combobox" aria-haspopup="listbox" tabindex="0" data-act="cbxOpen" data-kind="obj" data-where="${where}" data-id="${c.id}">${chips}<span class="cbx-add">${icon("plus")}</span></div>
-      <div class="helper">${esc(T("sourcesHint"))} · ${esc(Tf("selectedN", ids.length))}</div>
-    </label>
-    <label class="stack" style="gap:4px"><span class="label">${esc(T("eventKind"))}</span>
-      ${cbxBtn("event", where, c.id, c.event?evLab(c.event):"", T("pickEvent"))}</label>
+    <div class="stack" style="gap:4px"><span class="label">${esc(T("objType"))}</span>
+      ${cbxBtn("type", where, c.id, objTypeName(t), "", T("objType"))}</div>
+    ${objPicker(where, c.id, T("sources"), T("sourcesHint"))}
+    <div class="stack" style="gap:4px"><span class="label">${esc(T("eventKind"))}</span>
+      ${cbxBtn("event", where, c.id, c.event?evLab(c.event):"", T("pickEvent"), T("eventKind"))}</div>
     ${extra}
     <button class="btn btn-subtle btn-sm" data-act="rmCond" data-id="${c.id}">${esc(T("del"))}</button>
   </div>`;
@@ -1470,16 +1567,12 @@ function renderActInsp(m,a){
   const p = a.params||{};
   const t = actTypeOf(a);
   const tmeta = objTypeMeta(t);
-  const tgt = targetOf(a);
   let html = `<div class="cascade">
-    <label class="stack" style="gap:4px"><span class="label">${esc(T("objType"))}</span>
-      ${cbxBtn("type","insp","", objTypeName(t))}</label>`;
-  if(!tmeta.noObject){
-    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("object"))}</span>
-      ${cbxBtn("obj","insp","", tgt?objLab(tgt):"", T("object"))}</label>`;
-  }
-  html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("reactionKind"))}</span>
-    ${cbxBtn("act","insp","", actLab(a.kind))}</label>
+    <div class="stack" style="gap:4px"><span class="label">${esc(T("objType"))}</span>
+      ${cbxBtn("type","insp","", objTypeName(t), "", T("objType"))}</div>`;
+  if(!tmeta.noObject) html += objPicker("insp", "", T("objects"), T("targetsHint"));
+  html += `<div class="stack" style="gap:4px"><span class="label">${esc(T("reactionKind"))}</span>
+    ${cbxBtn("act","insp","", actLab(a.kind), "", T("reactionKind"))}</div>
   </div>`;
   if(a.kind==="cam.record"){
     html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("archive"))}</span>
@@ -1519,12 +1612,7 @@ function renderActInsp(m,a){
     (a.waitEvents||[]).forEach(c=> html += renderCond(c));
     html += `<button class="btn btn-outline" data-act="addWaitEv">${icon("plus")}${esc(T("addCond"))}</button>`;
   }
-  if(a.kind==="prog.run"){
-    const others = S.macros.filter(x=>x.id!==m.id && x.type==="event");
-    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("macro"))}</span>
-      <select class="field" data-act="ap" data-k="macro">${others.map(x=>`<option value="${x.id}" ${p.macro===x.id?"selected":""}>${esc(macroName(x))}</option>`).join("")}</select></label>
-      <div class="helper">${esc(T("typeEvent"))}</div>`;
-  }
+  if(a.kind==="prog.run") html += `<div class="helper">${esc(T("typeEvent"))}</div>`;
   if(a.kind==="mon.lay"){
     html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("layout"))}</span>
       <select class="field" data-act="ap" data-k="layout">${LAYOUTS.map(x=>`<option value="${x.id}" ${p.layout===x.id?"selected":""}>${esc(S.lang==="en"?x.en:x.ru)}</option>`).join("")}</select></label>`;
@@ -1598,15 +1686,16 @@ function createMenu(x,y){
 }
 
 function catalogDlg(){
-  S.dlg = {kind:"cascade", purpose:"reaction", mode:"add", type:"camera", object:"initiator", item:"cam.record"};
+  S.dlg = {kind:"cascade", purpose:"reaction", mode:"add", type:"camera", objects:["initiator"], item:"cam.record"};
   cascadeDlg();
 }
 
 function actDlg(id){
   const a = findAct(id); if(!a) return;
   const type = actTypeOf(a);
+  const tgts = targetsOf(a);
   S.dlg = {kind:"cascade", purpose:"reaction", mode:"edit", actId:a.id, type,
-    object: targetOf(a)||"initiator", item:a.kind};
+    objects: tgts.length?tgts:["initiator"], item:a.kind};
   cascadeDlg();
 }
 
@@ -1628,25 +1717,15 @@ function cascadeDlg(){
   const itemEmpty = isAct ? T("reactionKind") : T("pickEvent");
   let body = `<div class="cascade">
     <div class="helper">${esc(T("cascadeHint"))}</div>
-    <label class="stack" style="gap:4px"><span class="label">${esc(T("objType"))}</span>
-      ${cbxBtn("type","dlg","", objTypeName(d.type))}</label>`;
-  if(!tmeta.noObject && isAct){
-    body += `<label class="stack" style="gap:4px"><span class="label">${esc(T("object"))}</span>
-      ${cbxBtn("obj","dlg","", d.object?objLab(d.object):"", T("object"))}</label>`;
+    <div class="stack" style="gap:4px"><span class="label">${esc(T("objType"))}</span>
+      ${cbxBtn("type","dlg","", objTypeName(d.type), "", T("objType"))}</div>`;
+  if(!tmeta.noObject){
+    body += isAct
+      ? objPicker("dlg", "", T("objects"), T("targetsHint"))
+      : objPicker("dlg", "", T("sources"), T("sourcesHint"));
   }
-  if(!isAct){
-    const ids = d.objects||[];
-    const chips = ids.length
-      ? ids.map(id=>`<span class="chip"><span title="${esc(objLab(id))}">${esc(objLab(id))}</span>
-          <button type="button" class="chip-x" data-act="rmObjDlg" data-dev="${id}" aria-label="${esc(T("del"))}">×</button></span>`).join("")
-      : `<span class="chip chip-empty"><span>${esc(T("anyObject"))}</span></span>`;
-    body += `<label class="stack" style="gap:4px"><span class="label">${esc(T("sources"))}</span>
-      <div class="cbx-multi" role="combobox" aria-haspopup="listbox" tabindex="0" data-act="cbxOpen" data-kind="obj" data-where="dlg" data-id="">${chips}<span class="cbx-add">${icon("plus")}</span></div>
-      <div class="helper">${esc(T("sourcesHint"))} · ${esc(Tf("selectedN", ids.length))}</div>
-    </label>`;
-  }
-  body += `<label class="stack" style="gap:4px"><span class="label">${esc(isAct?T("reactionKind"):T("eventKind"))}</span>
-      ${cbxBtn(itemKind,"dlg","", itemLab, itemEmpty)}</label>
+  body += `<div class="stack" style="gap:4px"><span class="label">${esc(isAct?T("reactionKind"):T("eventKind"))}</span>
+      ${cbxBtn(itemKind,"dlg","", itemLab, itemEmpty, isAct?T("reactionKind"):T("eventKind"))}</div>
   </div>`;
   const title = d.mode==="edit"
     ? (isAct?T("editReaction"):T("editStart"))
@@ -1682,13 +1761,9 @@ function applyActDlg(){
   const a = findAct(d.actId); if(!a){ closeDlg(); return; }
   remember();
   replaceActKind(a, d.item);
-  const type = actTypeOf(a);
-  if(!objTypeMeta(type).noObject){
-    const obj = d.object || "initiator";
-    a.params.object = obj;
-    if(type==="camera") a.params.camera = obj;
-    if(type==="macro") a.params.macro = obj==="initiator" ? "" : obj;
-    if(type==="monitor" || type==="layout") a.params.layout = obj;
+  if(!objTypeMeta(actTypeOf(a)).noObject){
+    const objs = (d.objects||[]).length ? d.objects : ["initiator"];
+    setTargets(a, objs);
   }
   S.node = a.id;
   closeDlg();
@@ -1763,16 +1838,14 @@ function createMacro(type){
   if(type==="event" || type==="auto") eventDlg();
 }
 
-function addPickedAct(kind, object){
+function addPickedAct(kind, objects){
   const m = cur(); if(!m) return;
   remember();
   const spec = ACTS.find(x=>x.id===kind);
   let params = {};
   if(spec && !objTypeMeta(spec.type).noObject){
-    params.object = object||"initiator";
-    if(spec.type==="camera") params.camera = params.object;
-    if(spec.type==="macro") params.macro = params.object==="initiator"?"":params.object;
-    if(spec.type==="monitor") params.layout = params.object;
+    const arr = (objects||[]).length ? objects.slice() : ["initiator"];
+    params.objects = arr;
   }
   const act = mkAct(kind, params);
   const ins = S.insert || {branch:"root", after:""};
@@ -1809,13 +1882,16 @@ document.addEventListener("click", ev=>{
     const d = S.dlg; if(!d || !d.item) return;
     if(d.purpose!=="reaction") applyCondDlg();
     else if(d.mode==="edit") applyActDlg();
-    else addPickedAct(d.item, d.object);
+    else addPickedAct(d.item, d.objects);
     return;
   }
-  if(act==="rmObjDlg"){
-    if(!S.dlg) return;
-    S.dlg.objects = (S.dlg.objects||[]).filter(x=>x!==t.dataset.dev);
-    cascadeDlg(); return;
+  if(act==="rmPick"){
+    if(!ev.target.closest(".chip-x")) return;   // only the cross itself removes a chip
+    const where = t.dataset.where, id = t.dataset.id||"", dev = t.dataset.dev;
+    if(where==="dlg"){ togglePick(where, id, dev); cascadeDlg(); return; }
+    if(!m) return;
+    remember(); togglePick(where, id, dev);
+    S.dirty = snap()!==S.saved[m.id]; render(); return;
   }
 
   if(act==="nav" && t.dataset.k!=="navMacros"){
@@ -1827,6 +1903,7 @@ document.addEventListener("click", ev=>{
     S.theme = S.theme==="light"?"dark":"light";
     localStorage.setItem("macros-theme", S.theme); render(); return;
   }
+  if(act==="flow"){ S.flow=t.dataset.v; localStorage.setItem("macros-flow", S.flow); render(); return; }
   if(act==="resetQ"){ S.q=""; S.type="all"; render(); return; }
   if(act==="createMenu"){ createMenu(ev.clientX, ev.clientY); return; }
   if(act==="create"){ hideMenu(); createMacro(t.dataset.type); return; }
@@ -1890,12 +1967,6 @@ document.addEventListener("click", ev=>{
     S.dirty=false; const id=S.pending; closeDlg(); selectMacro(id,true); return;
   }
   if(act==="addCond" && m){ eventDlg(); return; }
-  if(act==="rmObj" && m){
-    const c = condById(t.dataset.id); if(!c) return;
-    remember();
-    c.devices = (c.devices||[]).filter(x=>x!==t.dataset.dev);
-    S.dirty=true; render(); return;
-  }
   if(act==="rmCond" && m){
     remember();
     m.conditions = (m.conditions||[]).filter(c=>c.id!==t.dataset.id);
