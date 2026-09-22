@@ -223,6 +223,10 @@ body[data-resizing] *{user-select:none!important}
 .pane-h h2{margin:0;font:var(--one-type-heading-sm);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pane-b{padding:10px 12px;display:flex;flex-direction:column;gap:8px;flex:1;min-height:0;overflow:auto}
 .side-list{flex:1;overflow:auto;display:flex;flex-direction:column;gap:2px}
+.pane-f{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--one-surface-subtle);flex:none}
+[data-theme="dark"] .pane-f{border-top-color:var(--one-border)}
+.pane-f .btn{flex:1;min-width:0}
+.btn-lg{height:36px;padding:0 14px;font:var(--one-type-body-md-medium)}
 
 .mrow{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border-radius:var(--one-radius-control);cursor:pointer;text-align:left;border:0;background:transparent;color:var(--one-fg);width:100%;font:inherit}
 .mrow:hover{background:var(--one-control-hover)}
@@ -269,6 +273,52 @@ body[data-resizing] *{user-select:none!important}
 .cond{padding:8px;border:1px solid var(--one-border);border-radius:var(--one-radius-control);background:var(--one-surface)}
 .cond + .cond{margin-top:6px}
 .or{text-align:center;font:var(--one-type-caption);color:var(--one-fg-subtle);padding:4px 0}
+.or-add{display:flex;justify-content:center;padding:6px 0}
+.pick-event{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;text-align:left;
+  padding:8px 10px;border:1px solid var(--one-border);border-radius:var(--one-radius-control);
+  background:var(--one-surface);color:var(--one-fg);cursor:pointer;font:inherit}
+.pick-event:hover{background:var(--one-control-hover)}
+.pick-event .chg{flex:none;color:var(--one-link);font:var(--one-type-label)}
+.chips{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:2px;max-width:100%;height:24px;padding:0 4px 0 8px;
+  border-radius:var(--one-radius-pill);background:var(--one-surface-muted);color:var(--one-fg);font:var(--one-type-caption)}
+.chip > span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip-x{width:18px;height:18px;border:0;background:transparent;color:var(--one-fg-muted);cursor:pointer;
+  border-radius:var(--one-radius-pill);padding:0;display:grid;place-items:center;font-size:14px;line-height:1}
+.chip-x:hover{background:var(--one-control-hover);color:var(--one-fg)}
+.chip-empty{background:transparent;border:1px dashed var(--one-border);color:var(--one-fg-subtle)}
+.btn-chip{height:24px;padding:0 8px;font:var(--one-type-caption)}
+
+.cbx{position:relative}
+.cbx-btn{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;height:28px;padding:0 6px 0 10px;
+  border:1px solid var(--one-editor-border);border-radius:var(--one-radius-control);background:var(--one-editor-bg);
+  color:var(--one-fg);font:var(--one-type-body-sm);cursor:pointer;text-align:left}
+.cbx-btn:hover{background:var(--one-editor-hover);border-color:var(--one-editor-border-hover)}
+.cbx-btn.is-open{border-color:var(--one-editor-border-focus);box-shadow:0 0 0 2px var(--one-focus-halo)}
+.cbx-btn .cbx-val{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.cbx-btn .subtle{color:var(--one-fg-placeholder)}
+.cbx-btn .ico{transform:rotate(90deg);color:var(--one-fg-muted);flex:none}
+.cbx-multi{display:flex;flex-wrap:wrap;align-items:center;gap:4px;min-height:28px;padding:4px;width:100%;
+  border:1px solid var(--one-editor-border);border-radius:var(--one-radius-control);background:var(--one-editor-bg);cursor:text}
+.cbx-multi:hover{background:var(--one-editor-hover);border-color:var(--one-editor-border-hover)}
+.cbx-multi.is-open{border-color:var(--one-editor-border-focus);box-shadow:0 0 0 2px var(--one-focus-halo)}
+.cbx-pop{position:fixed;z-index:70;display:flex;flex-direction:column;min-width:220px;max-width:min(420px,94vw);max-height:280px;
+  background:var(--one-popup);border:1px solid var(--one-border);border-radius:var(--one-radius-container);box-shadow:var(--one-shadow)}
+.cbx-pop[hidden]{display:none!important}
+.cbx-pop .field{margin:6px 6px 0;width:calc(100% - 12px)}
+.cbx-list{overflow:auto;padding:4px;min-height:40px}
+.cbx-opt{display:flex;flex-direction:column;align-items:flex-start;gap:1px;width:100%;text-align:left;border:0;background:transparent;color:var(--one-fg);font:var(--one-type-body-sm);
+  padding:6px 10px;border-radius:var(--one-radius-control);cursor:pointer;line-height:1.3}
+.cbx-opt:hover,.cbx-opt.is-hi{background:var(--one-control-hover)}
+.cbx-opt[aria-selected="true"]{background:var(--one-accent-soft);color:var(--one-nav-selected-text)}
+.cbx-opt-lab{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.cbx-opt-hint{font:var(--one-type-caption);color:var(--one-fg-subtle)}
+.cbx-opt[aria-selected="true"] .cbx-opt-hint{color:inherit;opacity:.75}
+.cbx-empty{padding:8px 10px;color:var(--one-fg-subtle);font:var(--one-type-caption)}
+.cbx-add{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:var(--one-radius-control);
+  color:var(--one-fg-muted);flex:none}
+.cbx-multi:hover .cbx-add{background:var(--one-control-hover);color:var(--one-fg)}
+.cascade{display:flex;flex-direction:column;gap:10px}
 
 .menu{position:absolute;z-index:45;min-width:200px;max-width:320px;background:var(--one-popup);border:1px solid var(--one-border);border-radius:var(--one-radius-container);box-shadow:var(--one-shadow);padding:4px}
 .insp .pane-b > .btn,.cond > .btn{width:100%;white-space:normal;height:auto;min-height:28px;padding:6px 10px;line-height:1.3}
@@ -280,7 +330,7 @@ body[data-resizing] *{user-select:none!important}
 .menu-subheader{padding:8px 16px 4px;font:var(--one-type-overline);text-transform:uppercase;color:var(--one-fg-muted)}
 .menu-sep{height:1px;background:var(--one-surface-subtle);margin:4px 0}
 
-dialog.dialog{border:1px solid var(--one-border);border-radius:var(--one-radius-window);background:var(--one-dialog);color:var(--one-fg);
+dialog.dialog{position:relative;overflow:visible;border:1px solid var(--one-border);border-radius:var(--one-radius-window);background:var(--one-dialog);color:var(--one-fg);
   padding:0;box-shadow:var(--one-shadow);min-width:min(480px,92vw);max-width:640px}
 dialog.dialog::backdrop{background:var(--one-scrim)}
 .dlg-h{font:var(--one-type-heading-md);padding:16px 16px 8px}
@@ -314,6 +364,7 @@ dialog.dialog::backdrop{background:var(--one-scrim)}
 </div>
 <dialog class="dialog" id="dlg"></dialog>
 <div class="menu" id="menu" hidden></div>
+<div class="cbx-pop" id="cbxpop" hidden></div>
 <script>
 (function(){
 "use strict";
@@ -334,7 +385,19 @@ const TR = {
   typeEvent:["По событиям","Event rule"], typeAuto:["Автоматическое","Automatic rule"], typeCycle:["Циклическое","Cycle rule"],
   newMacro:["Создать","Create"], copy:["Копировать","Duplicate"], del:["Удалить","Delete"],
   save:["Сохранить","Save"], cancel:["Отмена","Cancel"], apply:["Применить","Apply"],
-  close:["Закрыть","Close"], add:["Добавить","Add"],
+  close:["Закрыть","Close"], add:["Добавить","Add"], edit:["Изменить","Edit"],
+  filterType:["Тип макрокоманды","Macro type"],
+  addMacro:["Добавить","Add macro"], delMacro:["Удалить макрокоманду","Delete macro"],
+  editHint:["Правка выделенного элемента схемы","Edit the selected recipe element"],
+  delNodeHint:["Удалить выделенный элемент схемы","Delete the selected recipe element"],
+  pickNode:["Сначала выберите элемент на схеме","Select an element in the recipe first"],
+  cycleNoTrigger:["У цикла нет события-триггера: интервал задаётся в инспекторе","A cycle has no trigger event: set the interval in the inspector"],
+  editStart:["Изменить условие запуска","Edit start condition"],
+  editReaction:["Изменить реакцию","Edit action"],
+  delCondTitle:["Удалить условие запуска","Delete start condition"],
+  delCondBody:["Это условие запуска будет удалено. Если условий не останется, макрокоманда будет запускаться только вручную.","This start condition will be removed. With no conditions left, the macro can only be started manually."],
+  delActTitle:["Удалить реакцию","Delete action"],
+  delActBody:["Эта реакция будет удалена из схемы вместе с вложенными действиями её веток.","This action will be removed from the recipe together with the nested actions of its branches."],
   mode:["Режим работы","Working mode"], never:["Никогда","Never"], always:["Всегда","Always"], schedule:["Временная зона","Time schedule"],
   inMenu:["Добавить в меню раскладки","Add to layout menu"],
   heartbeat:["Интервал цикла","Heartbeat interval"], random:["Случайный момент в интервале","Random within interval"],
@@ -347,10 +410,6 @@ const TR = {
   clickNode:["Выберите узел на схеме, чтобы править параметры.","Select a node in the recipe to edit its parameters."],
   emptyList:["Нет макрокоманд в этой выборке","No macros in this filter"],
   resetFilter:["Сбросить фильтр","Reset filter"],
-  loadErr:["Не удалось загрузить список макрокоманд","Could not load macros"],
-  retry:["Повторить","Retry"],
-  demo:["Состояние списка (демо)","List state (demo)"],
-  data:["Данные","Data"], loading:["Загрузка","Loading"], empty:["Пусто","Empty"], error:["Ошибка","Error"],
   incomplete:["Неполное","Incomplete"], inMenuShort:["в меню","in menu"],
   leaveTitle:["Несохранённые изменения","Unsaved changes"],
   leaveBody:["Сохранить изменения в «{0}» перед переключением?","Save changes to “{0}” before switching?"],
@@ -358,13 +417,29 @@ const TR = {
   delTitle:["Удалить макрокоманду","Delete macro"],
   delBody:["«{0}» будет удалена. Зависимые объекты в этом прототипе не моделируются.","“{0}” will be deleted. Dependents are not modelled in this prototype."],
   createType:["Тип новой макрокоманды","New macro type"],
-  pickDet:["Выберите детектор","Choose a detector"],
-  pickDetH:["Автоматическое правило привязано к одному детектору. Условия запуска правятся здесь, создание на вкладке «Детекторы» тоже допустимо.","An automatic rule is bound to one detector. Start conditions are edited here; creating it on the Detectors tab is also valid."],
+  objType:["Тип объекта","Object type"],
+  object:["Объект","Object"],
+  eventKind:["Событие","Event"],
+  reactionKind:["Реакция","Reaction"],
+  filterPh:["Начните вводить название","Start typing a name"],
+  noMatch:["Нет совпадений","No matches"],
+  cascadeHint:["Типы и объекты приходят с сервера. Поля зависимые: тип сужает объекты и события (или реакции). Набор на клавиатуре фильтрует список.","Types and objects come from the server. Fields cascade: the type narrows objects and events (or reactions). Typing filters the list."],
+  pickEvent:["Выберите событие","Choose an event"],
+  setStart:["Задать условие запуска","Set start condition"],
   addCond:["Добавить условие","Add condition"],
-  condHint:["Несколько условий соединяются через ИЛИ: сработает любое.","Several conditions are OR-ed: any one starts the macro."],
+  condHint:["Несколько условий соединяются через ИЛИ: сработает любое. Источник — событие объекта; объектов может быть много.","Several conditions are OR-ed: any one starts the macro. The source is an object event; many objects can be selected."],
   noCond:["Нет условий — запуск только вручную","No conditions — manual start only"],
-  devices:["Устройства и группы","Devices and groups"],
+  sources:["Источники события","Event sources"],
+  sourcesHint:["Макрос стартует, если событие пришло от любого выбранного объекта.","The macro starts when the event comes from any of the selected objects."],
+  anyObject:["Любой объект этого типа","Any object of this type"],
+  addObjects:["Выбрать объекты…","Select objects…"],
+  pickObjects:["Объекты-источники","Source objects"],
+  selectedN:["Выбрано: {0}","Selected: {0}"],
+  selectAll:["Выбрать все","Select all"],
+  clearSel:["Снять все","Clear all"],
+  objSearch:["Поиск объекта","Search objects"],
   initiator:["Камера, инициировавшая запуск","Camera that initiated execution"],
+  initiatorObj:["Объект, инициировавший запуск","Object that initiated execution"],
   threshold:["Порог, с","Threshold, s"], value:["Значение, %","Value, %"], trend:["Тренд","Trend"],
   trendNone:["Отсутствие","None"], trendLeave:["Окончание","Leaving"], trendUp:["Нарастание","Rising"], trendDown:["Понижение","Falling"],
   camera:["Камера","Camera"], archive:["Архив","Archive"], priority:["Приоритет тревоги","Alarm priority"],
@@ -377,7 +452,7 @@ const TR = {
   waitPrevYes:["Если предыдущее завершилось","If previous action completed"],
   waitPrevNo:["Если не завершилось вовремя","If it did not finish in time"],
   overlap:["Цикл запускает новый экземпляр, даже если предыдущий ещё выполняется. Несколько копий могут работать одновременно.","A cycle starts a new instance even if the previous run is still going. Several copies may run at once."],
-  autoNote:["Автоматическое правило срабатывает на каждое событие выбранного детектора.","An automatic rule runs on every event of the selected detector."],
+  autoNote:["Автоматическое правило стартует на событие выбранных объектов: детекторы, камеры, СКУД, ОПС — объектов может быть много.","An automatic rule starts on an event from the selected objects: detectors, cameras, ACS, fire/security — many objects can be selected."],
   neverHint:["Режим «Никогда»: событийное правило запускается только вручную; циклическое отключено, ручной запуск возможен.","Never: an event rule runs only manually; a cycle rule is disabled but can still be started by hand."],
   groupSame:["Сгруппировать одинаковые","Group identical events"],
   scheduleLink:["Расписание «{0}»","Schedule “{0}”"],
@@ -399,6 +474,20 @@ const TR = {
   evt_tech_ok:["Восстановление связи с IP-устройством","Connection to IP device restored"],
   evt_srv_cpu:["Загруженность ЦП","CPU usage"],
   evt_acfa_sensor:["Датчик: начало срабатывания","Sensor: triggering start"],
+  evt_acs_grant:["Доступ разрешён","Access granted"],
+  evt_acs_deny:["Доступ запрещён","Access denied"],
+  evt_acs_unknown:["Неизвестная карта","Unknown card"],
+  evt_acs_open:["Дверь открыта","Door opened"],
+  evt_acs_forced:["Дверь взломана","Door forced"],
+  evt_acs_held:["Дверь удерживается","Door held open"],
+  evt_ops_fire:["Пожарная тревога","Fire alarm"],
+  evt_ops_warn:["Пожар: предупреждение","Fire warning"],
+  evt_ops_restore:["Зона восстановлена","Zone restored"],
+  evt_ops_intrusion:["Охранная тревога","Intrusion alarm"],
+  evt_ops_fault:["Неисправность прибора ОПС","Fire panel fault"],
+  g_evt_cam:["Камера","Camera"], g_evt_det:["Детекторы","Detectors"], g_evt_arch:["Архив","Archive"],
+  g_evt_tz:["Расписание","Schedule"], g_evt_tech:["Оборудование","Hardware"], g_evt_srv:["Сервер","Server"],
+  g_evt_acs:["СКУД","ACS"], g_evt_ops:["ОПС","Fire and security"],
   act_cam_record:["Запись в архив","Start recording to archive"],
   act_cam_alarm:["Инициировать тревогу","Initiate alarm"],
   act_cam_arm:["Поставить / снять с охраны","Arm or disarm a camera"],
@@ -416,19 +505,31 @@ const TR = {
   act_ntf_voice:["Голосовое оповещение с клиента","Voice notification from client"],
   act_ntf_mail:["Отправить e-mail","Send e-mail"],
   act_ntf_push:["Push-уведомление","Send push notification"],
-  act_acfa_out:["Включить / выключить выход","Switch on/off output"],
+  act_acs_unlock:["Разблокировать дверь","Unlock door"],
+  act_acs_lock:["Заблокировать дверь","Lock door"],
+  act_acs_open:["Открыть дверь","Open door"],
+  act_acs_grant:["Разрешить проход","Grant access"],
+  act_acs_out:["Включить / выключить выход","Switch on/off output"],
+  act_ops_reset:["Сбросить пожарную тревогу","Reset fire alarm"],
+  act_ops_arm:["Поставить зону на охрану","Arm security zone"],
+  act_ops_disarm:["Снять зону с охраны","Disarm security zone"],
+  act_ops_siren:["Включить оповещатель","Turn on sounder"],
+  act_ops_silence:["Отключить оповещатель","Silence sounder"],
   g_macro:["Макрокоманды","Macros"], g_cam:["Камера","Camera"], g_prog:["Программирование","Programming"],
-  g_gen:["Основные","General"], g_mon:["Монитор","Monitor"], g_ntf:["Оповещение","Notification"], g_acfa:["ACFA","ACFA"],
+  g_gen:["Основные","General"], g_mon:["Монитор","Monitor"], g_ntf:["Оповещение","Notification"],
+  g_acs:["СКУД","ACS"], g_ops:["ОПС","Fire and security"],
   when:["Когда","When"], thenDo:["— сделать","— then"], every:["Каждые {0}","Every {0}"],
   atRandom:["в случайный момент","at a random moment"],
   manualOnly:["Только вручную из меню раскладки","Manually from the layout menu only"],
-  onDetector:["на детекторе «{0}» ({1})","on detector “{0}” ({1})"],
+  onObjects:["на {0}","on {0}"],
   andMore:["и ещё {0}","and {0} more"],
   hi:["Высший","Highest"], mid:["Средний","Medium"], lo:["Низкий","Low"],
   arm:["Поставить на охрану","Arm"], disarm:["Снять с охраны","Disarm"],
   preset:["Предустановка","Preset"],
   display:["Режим показа","Display mode"],
-  zoom:["Увеличить","Zoom in"], mark:["Отметить","Mark camera"]
+  zoom:["Увеличить","Zoom in"], mark:["Отметить","Mark camera"],
+  door:["Дверь","Door"], zone:["Зона","Zone"], reader:["Считыватель","Reader"],
+  target:["Объект","Object"]
 };
 
 const PANEL = { side:{ min:200, max:460, def:268 }, insp:{ min:256, max:520, def:300 } };
@@ -437,10 +538,10 @@ const MAIN_MIN = 480;
 const S = {
   lang: localStorage.getItem("macros-lang") || "ru",
   theme: localStorage.getItem("macros-theme") || "light",
-  q: "", type: "all", listState: "data",
+  q: "", type: "all",
   macros: [], saved: {}, selId: null, node: "start",
   dirty: false, hist: [], histI: -1,
-  insert: null, menu: null, dlg: null, pending: null,
+  insert: null, menu: null, dlg: null, pending: null, cbx: null,
   sideW: PANEL.side.def, inspW: PANEL.insp.def, rs: null
 };
 
@@ -481,9 +582,36 @@ const ARCHIVES = [
   {id:"a2", ru:"Архив 2", en:"Archive 2"}
 ];
 const DETECTORS = [
-  {id:"d17m", camera:"c17", ru:"132.118 Камера: 17 Детектор движения", en:"132.118 Camera 17 · Motion detector", event:"det.motion"},
-  {id:"d18s", camera:"c18", ru:"Камера 18 · Детектор дыма", en:"Camera 18 · Smoke detector", event:"det.smoke"},
-  {id:"dparkf", camera:"cpark", ru:"Парковка · Детектор огня", en:"Parking · Fire detector", event:"det.fire"}
+  {id:"d17m", camera:"c17", ru:"Камера 17 · Детектор движения", en:"Camera 17 · Motion detector"},
+  {id:"dparkm", camera:"cpark", ru:"Парковка · Детектор движения", en:"Parking · Motion detector"},
+  {id:"dperm", camera:"cper", ru:"Периметр 3 · Детектор движения", en:"Perimeter 3 · Motion detector"},
+  {id:"dgatem", camera:"cgate", ru:"Ворота · Детектор движения", en:"Gate · Motion detector"},
+  {id:"dlobbym", camera:"clobby", ru:"Холл 1 · Детектор движения", en:"Lobby 1 · Motion detector"},
+  {id:"d18s", camera:"c18", ru:"Камера 18 · Детектор дыма", en:"Camera 18 · Smoke detector"},
+  {id:"dparkf", camera:"cpark", ru:"Парковка · Детектор огня", en:"Parking · Fire detector"}
+];
+const ACS_GROUPS = [
+  {id:"acs_per", ru:"Группа точек прохода «Периметр»", en:"Access points “Perimeter”"}
+];
+const ACS = [
+  {id:"r1", role:"reader", ru:"Считыватель «Главный вход»", en:"Reader “Main entrance”"},
+  {id:"r2", role:"reader", ru:"Считыватель «КПП»", en:"Reader “Checkpoint”"},
+  {id:"r3", role:"reader", ru:"Считыватель «Серверная»", en:"Reader “Server room”"},
+  {id:"r4", role:"reader", ru:"Считыватель «Склад»", en:"Reader “Warehouse”"},
+  {id:"door1", role:"door", ru:"Дверь «Главный вход»", en:"Door “Main entrance”"},
+  {id:"door2", role:"door", ru:"Дверь «Аварийный выход»", en:"Door “Emergency exit”"},
+  {id:"door3", role:"door", ru:"Дверь «Склад»", en:"Door “Warehouse”"},
+  {id:"acs1", role:"ctrl", ru:"Контроллер СКУД 1", en:"ACS controller 1"}
+];
+const OPS = [
+  {id:"fz1", role:"fire", ru:"Пожарная зона «Холл»", en:"Fire zone “Lobby”"},
+  {id:"fz2", role:"fire", ru:"Пожарная зона «Склад»", en:"Fire zone “Warehouse”"},
+  {id:"fz3", role:"fire", ru:"Пожарная зона «Парковка»", en:"Fire zone “Parking”"},
+  {id:"ss1", role:"fire", ru:"Извещатель дыма 18", en:"Smoke detector 18"},
+  {id:"ss2", role:"fire", ru:"Извещатель дыма склад", en:"Smoke detector warehouse"},
+  {id:"bz1", role:"intrusion", ru:"Охранная зона «Периметр»", en:"Intrusion zone “Perimeter”"},
+  {id:"bz2", role:"intrusion", ru:"Охранная зона «Офис»", en:"Intrusion zone “Office”"},
+  {id:"panel1", role:"panel", ru:"Прибор ОПС 1", en:"Fire panel 1"}
 ];
 const SCHEDULES = [
   {id:"sch_after", ru:"Вне рабочих часов", en:"Outside business hours"},
@@ -494,53 +622,127 @@ const LAYOUTS = [
   {id:"l1", ru:"Раскладка «Периметр»", en:"Layout “Perimeter”"},
   {id:"l2", ru:"Раскладка «Холл»", en:"Layout “Lobby”"}
 ];
+/* Object types as if loaded from the server */
+const OBJ_TYPES = [
+  {id:"camera", ru:"Камера", en:"Camera", events:1, acts:1},
+  {id:"detector", ru:"Детектор", en:"Detector", events:1},
+  {id:"acs", ru:"СКУД", en:"ACS", events:1, acts:1},
+  {id:"ops", ru:"ОПС", en:"Fire and security", events:1, acts:1},
+  {id:"archive", ru:"Архив", en:"Archive", events:1},
+  {id:"schedule", ru:"Временная зона", en:"Time schedule", events:1},
+  {id:"tech", ru:"Оборудование", en:"Hardware", events:1},
+  {id:"layout", ru:"Раскладка", en:"Layout", acts:1},
+  {id:"macro", ru:"Макрокоманда", en:"Macro", acts:1},
+  {id:"monitor", ru:"Монитор", en:"Monitor", acts:1},
+  {id:"ntf", ru:"Оповещение", en:"Notification", acts:1, noObject:1},
+  {id:"prog", ru:"Программирование", en:"Programming", acts:1, noObject:1},
+  {id:"gen", ru:"Основные", en:"General", acts:1, noObject:1}
+];
+function pack(type, list){ return list.map(o => ({id:o.id, type, ru:o.ru, en:o.en})); }
+const OBJECTS = [
+  ...pack("camera", GROUPS), ...pack("camera", CAMERAS),
+  ...pack("detector", DETECTORS),
+  ...pack("acs", ACS_GROUPS), ...pack("acs", ACS),
+  ...pack("ops", OPS),
+  ...pack("archive", ARCHIVES),
+  ...pack("schedule", SCHEDULES),
+  ...pack("layout", LAYOUTS),
+  ...pack("tech", CAMERAS),
+  ...pack("tech", ACS.filter(x=>x.role==="ctrl")),
+  ...pack("tech", OPS.filter(x=>x.role==="panel"))
+];
 const EVENTS = [
-  {id:"cam.alarm", k:"evt_cam_alarm", extra:null},
-  {id:"cam.armed", k:"evt_cam_armed", extra:null},
-  {id:"cam.disarmed", k:"evt_cam_disarmed", extra:null},
-  {id:"det.motion", k:"evt_det_motion", extra:null},
-  {id:"det.smoke", k:"evt_det_smoke", extra:null},
-  {id:"det.fire", k:"evt_det_fire", extra:null},
-  {id:"det.line", k:"evt_det_line", extra:null},
-  {id:"arch.start", k:"evt_arch_start", extra:null},
-  {id:"arch.stop", k:"evt_arch_stop", extra:null},
-  {id:"tz.start", k:"evt_tz_start", extra:null},
-  {id:"tz.end", k:"evt_tz_end", extra:null},
-  {id:"tech.lost", k:"evt_tech_lost", extra:"threshold"},
-  {id:"tech.ok", k:"evt_tech_ok", extra:"threshold"},
-  {id:"srv.cpu", k:"evt_srv_cpu", extra:"stat"},
-  {id:"acfa.sensor", k:"evt_acfa_sensor", extra:null}
+  {id:"cam.alarm", k:"evt_cam_alarm", g:"g_evt_cam", obj:"camera"},
+  {id:"cam.armed", k:"evt_cam_armed", g:"g_evt_cam", obj:"camera"},
+  {id:"cam.disarmed", k:"evt_cam_disarmed", g:"g_evt_cam", obj:"camera"},
+  {id:"det.motion", k:"evt_det_motion", g:"g_evt_det", obj:"detector"},
+  {id:"det.smoke", k:"evt_det_smoke", g:"g_evt_det", obj:"detector"},
+  {id:"det.fire", k:"evt_det_fire", g:"g_evt_det", obj:"detector"},
+  {id:"det.line", k:"evt_det_line", g:"g_evt_det", obj:"detector"},
+  {id:"arch.start", k:"evt_arch_start", g:"g_evt_arch", obj:"archive"},
+  {id:"arch.stop", k:"evt_arch_stop", g:"g_evt_arch", obj:"archive"},
+  {id:"tz.start", k:"evt_tz_start", g:"g_evt_tz", obj:"schedule"},
+  {id:"tz.end", k:"evt_tz_end", g:"g_evt_tz", obj:"schedule"},
+  {id:"tech.lost", k:"evt_tech_lost", g:"g_evt_tech", obj:"tech", extra:"threshold"},
+  {id:"tech.ok", k:"evt_tech_ok", g:"g_evt_tech", obj:"tech", extra:"threshold"},
+  {id:"srv.cpu", k:"evt_srv_cpu", g:"g_evt_srv", obj:"tech", extra:"stat"},
+  {id:"acs.grant", k:"evt_acs_grant", g:"g_evt_acs", obj:"acs"},
+  {id:"acs.deny", k:"evt_acs_deny", g:"g_evt_acs", obj:"acs"},
+  {id:"acs.unknown", k:"evt_acs_unknown", g:"g_evt_acs", obj:"acs"},
+  {id:"acs.open", k:"evt_acs_open", g:"g_evt_acs", obj:"acs"},
+  {id:"acs.forced", k:"evt_acs_forced", g:"g_evt_acs", obj:"acs"},
+  {id:"acs.held", k:"evt_acs_held", g:"g_evt_acs", obj:"acs"},
+  {id:"ops.fire", k:"evt_ops_fire", g:"g_evt_ops", obj:"ops"},
+  {id:"ops.warn", k:"evt_ops_warn", g:"g_evt_ops", obj:"ops"},
+  {id:"ops.restore", k:"evt_ops_restore", g:"g_evt_ops", obj:"ops"},
+  {id:"ops.intrusion", k:"evt_ops_intrusion", g:"g_evt_ops", obj:"ops"},
+  {id:"ops.fault", k:"evt_ops_fault", g:"g_evt_ops", obj:"ops"}
 ];
 const ACTS = [
-  {id:"cam.record", g:"g_cam", k:"act_cam_record"},
-  {id:"cam.alarm", g:"g_cam", k:"act_cam_alarm"},
-  {id:"cam.arm", g:"g_cam", k:"act_cam_arm"},
-  {id:"cam.view", g:"g_cam", k:"act_cam_view"},
-  {id:"cam.preset", g:"g_cam", k:"act_cam_preset"},
-  {id:"prog.waitT", g:"g_prog", k:"act_prog_waitT", wait:true},
-  {id:"prog.waitE", g:"g_prog", k:"act_prog_waitE", wait:"event"},
-  {id:"prog.waitP", g:"g_prog", k:"act_prog_waitP", wait:"prev"},
-  {id:"prog.break", g:"g_prog", k:"act_prog_break"},
-  {id:"prog.run", g:"g_macro", k:"act_prog_run"},
-  {id:"gen.en", g:"g_gen", k:"act_gen_en"},
-  {id:"gen.web", g:"g_gen", k:"act_gen_web"},
-  {id:"mon.lay", g:"g_mon", k:"act_mon_lay"},
-  {id:"mon.map", g:"g_mon", k:"act_mon_map"},
-  {id:"ntf.voice", g:"g_ntf", k:"act_ntf_voice"},
-  {id:"ntf.mail", g:"g_ntf", k:"act_ntf_mail"},
-  {id:"ntf.push", g:"g_ntf", k:"act_ntf_push"},
-  {id:"acfa.out", g:"g_acfa", k:"act_acfa_out"}
+  {id:"cam.record", g:"g_cam", type:"camera", k:"act_cam_record"},
+  {id:"cam.alarm", g:"g_cam", type:"camera", k:"act_cam_alarm"},
+  {id:"cam.arm", g:"g_cam", type:"camera", k:"act_cam_arm"},
+  {id:"cam.view", g:"g_cam", type:"camera", k:"act_cam_view"},
+  {id:"cam.preset", g:"g_cam", type:"camera", k:"act_cam_preset"},
+  {id:"prog.waitT", g:"g_prog", type:"prog", k:"act_prog_waitT", wait:true},
+  {id:"prog.waitE", g:"g_prog", type:"prog", k:"act_prog_waitE", wait:"event"},
+  {id:"prog.waitP", g:"g_prog", type:"prog", k:"act_prog_waitP", wait:"prev"},
+  {id:"prog.break", g:"g_prog", type:"prog", k:"act_prog_break"},
+  {id:"prog.run", g:"g_macro", type:"macro", k:"act_prog_run"},
+  {id:"gen.en", g:"g_gen", type:"gen", k:"act_gen_en"},
+  {id:"gen.web", g:"g_gen", type:"gen", k:"act_gen_web"},
+  {id:"mon.lay", g:"g_mon", type:"monitor", k:"act_mon_lay"},
+  {id:"mon.map", g:"g_mon", type:"monitor", k:"act_mon_map"},
+  {id:"ntf.voice", g:"g_ntf", type:"ntf", k:"act_ntf_voice"},
+  {id:"ntf.mail", g:"g_ntf", type:"ntf", k:"act_ntf_mail"},
+  {id:"ntf.push", g:"g_ntf", type:"ntf", k:"act_ntf_push"},
+  {id:"acs.unlock", g:"g_acs", type:"acs", k:"act_acs_unlock"},
+  {id:"acs.lock", g:"g_acs", type:"acs", k:"act_acs_lock"},
+  {id:"acs.open", g:"g_acs", type:"acs", k:"act_acs_open"},
+  {id:"acs.grant", g:"g_acs", type:"acs", k:"act_acs_grant"},
+  {id:"acs.out", g:"g_acs", type:"acs", k:"act_acs_out"},
+  {id:"ops.reset", g:"g_ops", type:"ops", k:"act_ops_reset"},
+  {id:"ops.arm", g:"g_ops", type:"ops", k:"act_ops_arm"},
+  {id:"ops.disarm", g:"g_ops", type:"ops", k:"act_ops_disarm"},
+  {id:"ops.siren", g:"g_ops", type:"ops", k:"act_ops_siren"},
+  {id:"ops.silence", g:"g_ops", type:"ops", k:"act_ops_silence"}
 ];
 
 function loc(list, id){ const o = list.find(x=>x.id===id); return o ? (S.lang==="en"?o.en:o.ru) : id; }
+/* Demo content is bilingual: macro names and free-text parameters keep an "…En" twin. */
+function macroName(m){ return m ? (S.lang==="en" ? (m.nameEn||m.name||"") : (m.name||"")) : ""; }
+function setMacroName(m, v){ if(S.lang==="en") m.nameEn = v; else m.name = v; }
+function pkey(k){ return S.lang==="en" ? k+"En" : k; }
+function ptext(p, k){
+  if(S.lang!=="en") return p[k] ?? "";
+  return p[k+"En"] ?? p[k] ?? "";
+}
+function objTypeMeta(id){ return OBJ_TYPES.find(t=>t.id===id) || OBJ_TYPES[0]; }
+function objTypeName(id){ const t=objTypeMeta(id); return S.lang==="en"?t.en:t.ru; }
+function objectsOf(type){
+  if(type==="macro") return S.macros.filter(m=>m.id!==S.selId).map(m=>({id:m.id, type:"macro", ru:m.name, en:m.nameEn||m.name}));
+  return OBJECTS.filter(o=>o.type===type);
+}
+function eventsOf(type){ return EVENTS.filter(e=>e.obj===type); }
+function actsOf(type){ return ACTS.filter(a=>a.type===type); }
 function objLab(id){
-  if(id==="initiator") return T("initiator");
-  if(GROUPS.some(g=>g.id===id)) return loc(GROUPS,id);
-  return loc(CAMERAS,id);
+  if(id==="initiator") return T("initiatorObj");
+  const o = OBJECTS.find(x=>x.id===id) || objectsOf("macro").find(x=>x.id===id);
+  return o ? (S.lang==="en"?o.en:o.ru) : id;
 }
 function evLab(id){ const e = EVENTS.find(x=>x.id===id); return e ? T(e.k) : id; }
 function actLab(id){ const a = ACTS.find(x=>x.id===id); return a ? T(a.k) : id; }
 function camLab(id){ if(id==="initiator") return T("initiator"); return loc(CAMERAS,id); }
+function evSpec(id){ return EVENTS.find(x=>x.id===id) || {}; }
+function actSpec(id){ return ACTS.find(x=>x.id===id) || {}; }
+function condTypeOf(c){ return c.type || evSpec(c.event).obj || "camera"; }
+function actTypeOf(a){ return actSpec(a.kind).type || "camera"; }
+function targetOf(a){ const p=a.params||{}; return p.object||p.camera||p.macro||p.layout||""; }
+function blankCond(type){
+  type = type || "camera";
+  const ev = eventsOf(type)[0];
+  return {id:uid(), type, event: ev?ev.id:"", devices:[]};
+}
 
 function mkAct(kind, params){
   const a = {id:uid(), kind, params: params||{}};
@@ -548,23 +750,240 @@ function mkAct(kind, params){
   if(spec && spec.wait==="event"){ a.then=[]; a.else=[]; a.params.timeout=a.params.timeout||"00:00:30"; a.waitEvents=a.waitEvents||[]; }
   if(spec && spec.wait==="prev"){ a.then=[]; a.else=[]; a.params.timeout=a.params.timeout||"00:10:00"; }
   if(spec && spec.wait===true){ a.params.timeout=a.params.timeout||"00:00:05"; }
+  if(a.params.object && spec && spec.type==="camera" && !a.params.camera) a.params.camera=a.params.object;
   return a;
+}
+
+function replaceActKind(a, kind){
+  const spec = actSpec(kind);
+  const keepObj = targetOf(a) || "initiator";
+  a.kind = kind;
+  a.params = {object: keepObj};
+  if(spec.type==="camera") a.params.camera = keepObj;
+  if(spec.type==="macro") a.params.macro = keepObj==="initiator"?"":keepObj;
+  if(spec.type==="monitor" || spec.type==="layout") a.params.layout = keepObj;
+  if(spec.wait==="event"){ a.then=a.then||[]; a.else=a.else||[]; a.params.timeout=a.params.timeout||"00:00:30"; a.waitEvents=a.waitEvents||[]; }
+  else if(spec.wait==="prev"){ a.then=a.then||[]; a.else=a.else||[]; a.params.timeout=a.params.timeout||"00:10:00"; delete a.waitEvents; }
+  else if(spec.wait===true){ a.params.timeout=a.params.timeout||"00:00:05"; delete a.then; delete a.else; delete a.waitEvents; }
+  else { delete a.then; delete a.else; delete a.waitEvents; }
+}
+
+function closeCbx(){
+  S.cbx = null;
+  const pop = document.getElementById("cbxpop");
+  if(pop){ pop.hidden = true; pop.innerHTML = ""; }
+  document.querySelectorAll(".cbx-btn.is-open,.cbx-multi.is-open").forEach(el=>el.classList.remove("is-open"));
+}
+function cbxMatch(...parts){
+  const q = (S.cbx && S.cbx.q || "").trim().toLowerCase();
+  if(!q) return true;
+  return parts.some(s => String(s||"").toLowerCase().includes(q));
+}
+function cbxCurrent(){
+  if(!S.cbx) return "";
+  const {kind, where, condId} = S.cbx;
+  if(where==="dlg"){
+    if(!S.dlg) return "";
+    if(kind==="type") return S.dlg.type||"";
+    if(kind==="obj") return S.dlg.object||"";
+    return S.dlg.item||"";
+  }
+  if(where==="insp"){
+    const a=findAct(S.node); if(!a) return "";
+    if(kind==="type") return actTypeOf(a);
+    if(kind==="act") return a.kind;
+    if(kind==="obj") return targetOf(a);
+    return "";
+  }
+  const c=condById(condId); if(!c) return "";
+  if(kind==="type") return condTypeOf(c);
+  if(kind==="event") return c.event||"";
+  return "";
+}
+function cbxOpts(){
+  if(!S.cbx) return [];
+  const {kind, where, condId} = S.cbx;
+  const out = [];
+  if(kind==="type"){
+    const forActs = where==="insp" || (where==="dlg" && S.dlg && S.dlg.purpose==="reaction");
+    OBJ_TYPES.forEach(t=>{
+      if(!(forActs ? t.acts : t.events)) return;
+      const label = S.lang==="en"?t.en:t.ru;
+      const n = t.noObject ? 0 : objectsOf(t.id).length;
+      if(cbxMatch(label, t.id, t.ru, t.en)) out.push({id:t.id, label: n ? `${label} (${n})` : label});
+    });
+    return out;
+  }
+  let type = "";
+  if(where==="dlg") type = S.dlg && S.dlg.type;
+  else if(where==="insp"){ const a=findAct(S.node); type = a?actTypeOf(a):""; }
+  else { const c=condById(condId); type = c?condTypeOf(c):""; }
+  if(kind==="obj"){
+    const dlgMulti = where==="dlg" && S.dlg && S.dlg.purpose!=="reaction";
+    const multi = where==="cond" || where==="wait" || dlgMulti;
+    const selected = !multi ? []
+      : (dlgMulti ? (S.dlg.objects||[]) : ((condById(condId)||{}).devices||[]));
+    if(multi){
+      if(cbxMatch(T("anyObject"))) out.push({id:"*", label:T("anyObject")});
+    } else if(!objTypeMeta(type).noObject){
+      if(cbxMatch(T("initiatorObj"))) out.push({id:"initiator", label:T("initiatorObj")});
+    }
+    objectsOf(type).forEach(o=>{
+      if(multi && selected.includes(o.id)) return;
+      const label = S.lang==="en"?o.en:o.ru;
+      if(cbxMatch(label, o.id, o.ru, o.en)) out.push({id:o.id, label, hint:o.id});
+    });
+    return out;
+  }
+  if(kind==="event"){
+    eventsOf(type).forEach(e=>{ const label=T(e.k); if(cbxMatch(label, e.id)) out.push({id:e.id, label}); });
+    return out;
+  }
+  if(kind==="act"){
+    actsOf(type).forEach(a=>{ const label=T(a.k); if(cbxMatch(label, a.id)) out.push({id:a.id, label}); });
+    return out;
+  }
+  return out;
+}
+function paintCbx(keepQ){
+  const pop = document.getElementById("cbxpop"); if(!pop || !S.cbx) return;
+  const opts = cbxOpts();
+  if(S.cbx.hi >= opts.length) S.cbx.hi = Math.max(0, opts.length-1);
+  const q = keepQ ? pop.querySelector("[data-act=cbxQ]") : null;
+  const pos = q ? q.selectionStart : 0;
+  const cur = cbxCurrent();
+  const list = opts.length
+    ? opts.map((o,i)=>{
+        const sel = o.id===cur;
+        const hint = o.hint ? `<span class="cbx-opt-hint">${esc(o.hint)}</span>` : "";
+        return `<button type="button" class="cbx-opt ${i===S.cbx.hi?"is-hi":""}" data-act="cbxPick" data-v="${esc(o.id)}" role="option" aria-selected="${sel}">
+          <span class="cbx-opt-lab">${esc(o.label)}</span>${hint}</button>`;
+      }).join("")
+    : `<div class="cbx-empty">${esc(T("noMatch"))}</div>`;
+  pop.innerHTML = `<input class="field" data-act="cbxQ" value="${esc(S.cbx.q)}" placeholder="${esc(T("filterPh"))}" aria-label="${esc(T("filterPh"))}">
+    <div class="cbx-list" role="listbox">${list}</div>`;
+  const inp = pop.querySelector("[data-act=cbxQ]");
+  if(inp){ inp.focus(); if(keepQ) try{ inp.setSelectionRange(pos,pos); }catch(e){} }
+  const hi = pop.querySelector(".cbx-opt.is-hi");
+  if(hi) hi.scrollIntoView({block:"nearest"});
+}
+function placeCbx(el){
+  const pop = document.getElementById("cbxpop"); if(!pop || !el) return;
+  const r = el.getBoundingClientRect();
+  const w = Math.max(r.width, 260);
+  let left = r.left, top = r.bottom + 4;
+  if(left + w > innerWidth - 8) left = Math.max(8, innerWidth - w - 8);
+  const ph = Math.min(280, pop.getBoundingClientRect().height || 200);
+  if(top + ph > innerHeight - 8) top = Math.max(8, r.top - ph - 4);
+  pop.style.left = Math.max(8, left)+"px";
+  pop.style.top = top+"px";
+  pop.style.width = w+"px";
+}
+function openCbx(el){
+  if(S.cbx && S.cbx.kind===el.dataset.kind && S.cbx.where===el.dataset.where && S.cbx.condId===(el.dataset.id||"")){
+    closeCbx(); return;
+  }
+  S.cbx = {
+    kind: el.dataset.kind,
+    where: el.dataset.where,
+    condId: el.dataset.id||"",
+    q: "",
+    hi: 0
+  };
+  document.querySelectorAll(".cbx-btn.is-open,.cbx-multi.is-open").forEach(n=>n.classList.remove("is-open"));
+  el.classList.add("is-open");
+  const pop = document.getElementById("cbxpop");
+  const dlg = document.getElementById("dlg");
+  (dlg && dlg.open ? dlg : document.body).appendChild(pop);
+  pop.hidden = false;
+  paintCbx(false);
+  placeCbx(el);
+}
+function applyCbx(v){
+  if(!S.cbx) return;
+  const {kind, where, condId} = S.cbx;
+  if(where==="dlg"){
+    if(!S.dlg) return;
+    const multi = S.dlg.purpose!=="reaction";
+    if(kind==="type"){
+      S.dlg.type=v; S.dlg.object="initiator"; S.dlg.objects=[];
+      const first = multi ? eventsOf(v)[0] : actsOf(v)[0];
+      S.dlg.item = first?first.id:"";
+    }
+    if(kind==="obj"){
+      if(!multi) S.dlg.object=v;
+      else if(v==="*") S.dlg.objects=[];
+      else { S.dlg.objects=S.dlg.objects||[]; if(!S.dlg.objects.includes(v)) S.dlg.objects.push(v); }
+    }
+    if(kind==="event" || kind==="act") S.dlg.item=v;
+    const reopen = multi && kind==="obj" && v!=="*";
+    closeCbx(); cascadeDlg();
+    if(reopen){
+      const el = document.querySelector('[data-act=cbxOpen][data-kind=obj][data-where="dlg"]');
+      if(el) openCbx(el);
+    }
+    return;
+  }
+  const m = cur(); if(!m){ closeCbx(); return; }
+  remember();
+  if(where==="cond" || where==="wait"){
+    const c = condById(condId); if(!c){ closeCbx(); return; }
+    if(kind==="type"){
+      c.type=v;
+      const ev=eventsOf(v)[0];
+      c.event = ev?ev.id:"";
+      c.devices=[];
+    }
+    if(kind==="event") c.event=v;
+    if(kind==="obj"){
+      if(v==="*") c.devices=[];
+      else { c.devices=c.devices||[]; if(!c.devices.includes(v)) c.devices.push(v); }
+    }
+  }
+  if(where==="insp"){
+    const a = findAct(S.node); if(!a){ closeCbx(); return; }
+    if(kind==="type"){
+      const first = actsOf(v)[0];
+      if(first) replaceActKind(a, first.id);
+    }
+    if(kind==="act") replaceActKind(a, v);
+    if(kind==="obj"){
+      a.params=a.params||{};
+      a.params.object=v;
+      if(actTypeOf(a)==="camera") a.params.camera=v;
+      if(actTypeOf(a)==="macro") a.params.macro=v==="initiator"?"":v;
+      if(actTypeOf(a)==="monitor") a.params.layout=v;
+    }
+  }
+  S.dirty = snap()!==S.saved[m.id];
+  const reopen = (where==="cond"||where==="wait") && kind==="obj" && v!=="*";
+  const spec = reopen ? {kind, where, condId} : null;
+  closeCbx(); render();
+  if(spec){
+    const el = document.querySelector(`[data-act=cbxOpen][data-kind=obj][data-where="${spec.where}"][data-id="${spec.condId}"]`);
+    if(el) openCbx(el);
+  }
+}
+function cbxBtn(kind, where, id, label, empty){
+  return `<button type="button" class="cbx-btn" data-act="cbxOpen" data-kind="${kind}" data-where="${where}" data-id="${id||""}" aria-haspopup="listbox">
+    <span class="cbx-val ${label?"":"subtle"}">${esc(label||empty||T("filterPh"))}</span>${icon("chevron")}
+  </button>`;
 }
 
 function seed(){
   const m1 = {
-    id:"m_auto_motion", type:"auto", name:"132.118 Камера: 17 Детектор движения",
-    mode:"always", inMenu:false, detectorId:"d17m",
-    conditions:[{id:uid(), event:"det.motion", devices:["c17"]}],
+    id:"m_auto_motion", type:"auto", name:"Движение на периметре", nameEn:"Motion on the perimeter",
+    mode:"always", inMenu:false,
+    conditions:[{id:uid(), event:"det.motion", devices:["d17m","dparkm","dperm","dgatem"]}],
     actions:[mkAct("cam.record",{camera:"initiator", archive:"a1"})]
   };
   const m2 = {
-    id:"m_smoke", type:"event", name:"Пожар: дым на камере 18",
+    id:"m_smoke", type:"event", name:"Пожар: дым на камере 18", nameEn:"Fire: smoke on camera 18",
     mode:"always", inMenu:false,
-    conditions:[{id:uid(), event:"det.smoke", devices:["c18"]}],
+    conditions:[{id:uid(), event:"det.smoke", devices:["d18s"]}],
     actions:[
       mkAct("cam.alarm",{camera:"c18", priority:"hi", alarmMode:"always"}),
-      mkAct("ntf.voice",{message:"Smoke in hall 18"})
+      mkAct("ntf.voice",{message:"Дым в холле 18", messageEn:"Smoke in hall 18"})
     ]
   };
   const wait = mkAct("prog.waitE",{timeout:"00:00:30"});
@@ -572,35 +991,58 @@ function seed(){
   wait.then = [];
   wait.else = [mkAct("cam.alarm",{camera:"cgate", priority:"hi", alarmMode:"always"})];
   const m3 = {
-    id:"m_lost", type:"event", name:"Потеря связи с воротами",
+    id:"m_lost", type:"event", name:"Потеря связи с воротами", nameEn:"Connection to the gate lost",
     mode:"always", inMenu:false,
     conditions:[{id:uid(), event:"tech.lost", devices:["cgate"], threshold:10}],
     actions:[wait]
   };
   const m4 = {
-    id:"m_cycle", type:"cycle", name:"Ночная проверка записи",
+    id:"m_cycle", type:"cycle", name:"Ночная проверка записи", nameEn:"Nightly recording check",
     mode:"always", inMenu:false, heartbeat:"08:00:00", random:true,
     conditions:[],
     actions:[mkAct("cam.record",{camera:"c17", archive:"a1"}), mkAct("gen.en",{enable:true})]
   };
   const m5 = {
-    id:"m_manual", type:"event", name:"Патруль: открыть периметр",
+    id:"m_manual", type:"event", name:"Патруль: открыть периметр", nameEn:"Patrol: open the perimeter",
     mode:"never", inMenu:true, conditions:[],
     actions:[mkAct("mon.lay",{layout:"l1"}), mkAct("cam.view",{camera:"cper", display:"zoom"})]
   };
   const m6 = {
-    id:"m_empty", type:"event", name:"Макрокоманда без реакций",
+    id:"m_empty", type:"event", name:"Макрокоманда без реакций", nameEn:"Macro without actions",
     mode:"always", inMenu:false,
     conditions:[{id:uid(), event:"cam.alarm", devices:["clobby"]}],
     actions:[]
   };
   const m7 = {
-    id:"m_sched", type:"event", name:"Снять холл с охраны вечером",
+    id:"m_sched", type:"event", name:"Снять холл с охраны вечером", nameEn:"Disarm the lobby in the evening",
     mode:"schedule", scheduleId:"sch_after", inMenu:false,
     conditions:[{id:uid(), event:"tz.start", devices:[]}],
     actions:[mkAct("cam.arm",{camera:"clobby", arm:false})]
   };
-  return [m1,m2,m3,m4,m5,m6,m7];
+  const m8 = {
+    id:"m_acs_deny", type:"event", name:"СКУД: отказ в доступе", nameEn:"ACS: access denied",
+    mode:"always", inMenu:false,
+    conditions:[{id:uid(), event:"acs.deny", devices:["r1","r2","r3","acs_per"]}],
+    actions:[
+      mkAct("cam.alarm",{camera:"cgate", priority:"hi", alarmMode:"always"}),
+      mkAct("acs.lock",{object:"door1"}),
+      mkAct("ntf.mail",{to:"ops@site.local", subject:"Отказ в доступе", subjectEn:"Access denied",
+        message:"Отказ в доступе на считывателях периметра", messageEn:"Denied at perimeter readers"})
+    ]
+  };
+  const m9 = {
+    id:"m_ops_fire", type:"auto", name:"ОПС: пожар на объекте", nameEn:"Fire and security: fire on site",
+    mode:"always", inMenu:false,
+    conditions:[{id:uid(), event:"ops.fire", devices:["fz1","fz2","fz3","ss1","ss2"]}],
+    actions:[
+      mkAct("cam.alarm",{camera:"clobby", priority:"hi", alarmMode:"always"}),
+      mkAct("cam.record",{camera:"initiator", archive:"a1"}),
+      mkAct("ntf.voice",{message:"Пожарная тревога", messageEn:"Fire alarm"}),
+      mkAct("acs.unlock",{object:"door2"}),
+      mkAct("ops.siren",{object:"panel1"})
+    ]
+  };
+  return [m1,m2,m8,m9,m3,m4,m5,m6,m7];
 }
 
 function cur(){ return S.macros.find(m=>m.id===S.selId) || null; }
@@ -666,14 +1108,17 @@ function condText(c){
     const tr = ({none:"trendNone",leave:"trendLeave",up:"trendUp",down:"trendDown"})[c.trend||"up"];
     extra = ` · ${c.value||80}% · ${T(tr)}`;
   }
-  return ds.length ? `${ev} — ${ds.join(", ")}${extra}` : ev+extra;
+  if(!ds.length) return `${ev} — ${T("anyObject")}${extra}`;
+  if(ds.length<=3) return `${ev} — ${ds.join(", ")}${extra}`;
+  return `${ev} — ${ds.slice(0,2).join(", ")} ${Tf("andMore", ds.length-2)}${extra}`;
 }
 
 function actText(a){
   const title = actLab(a.kind);
   const p = a.params||{};
   const bits=[];
-  if(p.camera) bits.push(camLab(p.camera));
+  const tgt = targetOf(a);
+  if(tgt) bits.push(objLab(tgt));
   if(p.archive) bits.push(loc(ARCHIVES,p.archive));
   if(p.timeout) bits.push(p.timeout);
   if(p.layout) bits.push(loc(LAYOUTS,p.layout));
@@ -688,12 +1133,6 @@ function summarize(m){
   if(m.type==="cycle"){
     const hb = m.heartbeat||"00:00:00";
     return `${Tf("every", hb)}${m.random?" "+T("atRandom"):""} ${T("thenDo")} ${actS}.`;
-  }
-  if(m.type==="auto"){
-    const d = DETECTORS.find(x=>x.id===m.detectorId);
-    const dn = d ? (S.lang==="en"?d.en:d.ru) : "";
-    const cam = d ? camLab(d.camera) : "";
-    return `${T("when")} ${evLab((m.conditions[0]||{}).event)} ${Tf("onDetector", dn, cam)} ${T("thenDo")} ${actS}.`;
   }
   if(!m.conditions.length){
     return `${T("manualOnly")} ${T("thenDo")} ${actS}.`;
@@ -713,15 +1152,17 @@ function filtered(){
   if(S.type!=="all") list = list.filter(m=>m.type===S.type);
   if(S.q.trim()){
     const q = S.q.trim().toLowerCase();
-    list = list.filter(m => m.name.toLowerCase().includes(q) || summarize(m).toLowerCase().includes(q));
+    list = list.filter(m => macroName(m).toLowerCase().includes(q) || summarize(m).toLowerCase().includes(q));
   }
   return list;
 }
 
 /* ── render ─────────────────────────────────────────────── */
 function render(){
+  closeCbx();
   document.documentElement.lang = S.lang==="en"?"en":"ru";
   document.documentElement.dataset.theme = S.theme;
+  document.title = T("macros")+" — "+T("brand");
   renderAppbar(); renderSide(); renderMain(); renderInsp();
   applyPanels();
 }
@@ -746,11 +1187,7 @@ function renderAppbar(){
 function renderSide(){
   const list = filtered();
   let body = "";
-  if(S.listState==="loading"){
-    body = `<div class="stack" aria-busy="true">${[0,1,2,3].map(()=>`<div class="skeleton"></div>`).join("")}</div>`;
-  } else if(S.listState==="error"){
-    body = `<div class="empty">${icon("alert")}<div>${esc(T("loadErr"))}</div><button class="btn btn-outline" data-act="retry">${esc(T("retry"))}</button></div>`;
-  } else if(S.listState==="empty" || !list.length){
+  if(!list.length){
     body = `<div class="empty"><div>${esc(T("emptyList"))}</div><button class="btn btn-outline" data-act="resetQ">${esc(T("resetFilter"))}</button></div>`;
   } else {
     body = `<div class="side-list" role="listbox" aria-label="${esc(T("macros"))}">${list.map(m=>{
@@ -758,7 +1195,7 @@ function renderSide(){
       const alarm = isIncomplete(m);
       return `<button type="button" class="mrow ${m.mode==="never"?"is-never":""} ${alarm?"is-alarm":""}" role="option" aria-selected="${sel}" data-act="sel" data-id="${m.id}">
         <div class="grow">
-          <div class="ttl">${esc(m.name)}</div>
+          <div class="ttl">${esc(macroName(m))}</div>
           <div class="meta">
             <span class="badge ${typeBadge(m.type)}">${esc(typeLab(m.type))}</span>
             <span>${esc(m.mode==="schedule"?loc(SCHEDULES,m.scheduleId):T(m.mode))}</span>
@@ -769,26 +1206,23 @@ function renderSide(){
       </button>`;
     }).join("")}</div>`;
   }
+  const m = cur();
   document.getElementById("side").innerHTML = `
     <div class="pane-h">
       <h2>${esc(T("macros"))}</h2>
-      <span class="grow"></span>
-      <button class="btn btn-icon btn-primary" data-act="createMenu" aria-label="${esc(T("newMacro"))}">${icon("plus")}</button>
     </div>
     <div class="pane-b">
+      <label class="stack" style="gap:4px"><span class="label">${esc(T("filterType"))}</span>
+        <select class="field" data-act="typeSel" aria-label="${esc(T("filterType"))}">
+          ${[["all","all"],["event","event"],["auto","auto"],["cycle","cycle"]].map(([v,k])=>
+            `<option value="${v}" ${S.type===v?"selected":""}>${esc(T(k))}</option>`).join("")}
+        </select></label>
       <input class="field" data-act="q" value="${esc(S.q)}" placeholder="${esc(T("searchPh"))}" aria-label="${esc(T("searchPh"))}">
-      <div class="seg seg-2x2" role="group" aria-label="${esc(T("macros"))}">
-        ${[["all","all"],["event","event"],["auto","auto"],["cycle","cycle"]].map(([v,k])=>
-          `<button class="btn" data-act="type" data-v="${v}" aria-pressed="${S.type===v}">${esc(T(k))}</button>`).join("")}
-      </div>
       ${body}
     </div>
-    <div class="demo">
-      ${esc(T("demo"))}
-      <div class="seg seg-2x2" role="group" aria-label="${esc(T("demo"))}">
-        ${["data","loading","empty","error"].map(v=>
-          `<button class="btn" data-act="listState" data-v="${v}" aria-pressed="${S.listState===v}">${esc(T(v))}</button>`).join("")}
-      </div>
+    <div class="pane-f">
+      <button class="btn btn-primary btn-lg" data-act="createMenu">${icon("plus")}${esc(T("addMacro"))}</button>
+      <button class="btn btn-danger btn-lg" data-act="del" ${m?"":"disabled"} title="${esc(T("delMacro"))}">${icon("trash")}${esc(T("del"))}</button>
     </div>`;
 }
 
@@ -823,18 +1257,63 @@ function renderList(list, branch){
   return `<div class="recipe">${out}</div>`;
 }
 
+function firstNode(m){
+  return (m && m.type!=="cycle" && (m.conditions||[]).length) ? "cond:"+m.conditions[0].id : "start";
+}
+function selectedCond(){
+  return (typeof S.node==="string" && S.node.indexOf("cond:")===0) ? condById(S.node.slice(5)) : null;
+}
+function selection(m){
+  const out = {kind:"start", cond:null, act:null, canEdit:false, canDel:false,
+    editTitle:T("editHint"), delTitle:T("delNodeHint")};
+  if(!m) return out;
+  const c = selectedCond();
+  if(c){
+    out.kind="cond"; out.cond=c; out.canEdit=true; out.canDel=true;
+    out.editTitle=T("editStart"); out.delTitle=T("delCondTitle");
+    return out;
+  }
+  const a = findAct(S.node);
+  if(a){
+    out.kind="act"; out.act=a; out.canEdit=true; out.canDel=true;
+    out.editTitle=T("editReaction"); out.delTitle=T("delActTitle");
+    return out;
+  }
+  if(m.type==="cycle"){ out.editTitle=T("cycleNoTrigger"); out.delTitle=T("cycleNoTrigger"); return out; }
+  out.canEdit=true; out.editTitle=T("setStart"); out.delTitle=T("pickNode");
+  return out;
+}
+
 function renderMain(){
   const m = cur();
   const el = document.getElementById("main");
-  if(S.listState!=="data" || !m){
+  if(!m){
     el.innerHTML = `<div class="empty" style="flex:1">${esc(T("emptyList"))}</div>`;
     return;
   }
+  const sel = selection(m);
   const startSel = S.node==="start";
   const startKind = m.type==="cycle"?T("cycleStart"):T("start");
   const startDesc = m.type==="cycle"
     ? `${m.heartbeat||"00:00:00"}${m.random?" · "+T("atRandom"):""}`
-    : (m.conditions.length? m.conditions.map(condText).join(" "+T("or")+" ") : T("noCond"));
+    : T("noCond");
+  let triggers = "";
+  if(m.type!=="cycle" && m.conditions.length){
+    triggers = m.conditions.map((c,i)=>
+      (i?`<div class="or">${esc(T("or"))}</div>`:"") +
+      `<button type="button" class="node start ${S.node==="cond:"+c.id?"is-sel":""}" data-act="node" data-id="cond:${c.id}">
+        <div class="node-k">${icon("play")} ${esc(T("start"))}</div>
+        <div class="node-t">${esc(condText(c))}</div>
+      </button>`).join("");
+  } else {
+    triggers = `<button type="button" class="node start ${startSel?"is-sel":""}" data-act="node" data-id="start">
+      <div class="node-k">${icon("play")} ${esc(startKind)}</div>
+      <div class="node-t">${esc(startDesc)}</div>
+    </button>`;
+  }
+  if(m.type!=="cycle"){
+    triggers += `<div class="or-add"><button class="btn btn-subtle btn-sm" data-act="addCond">${icon("plus")}${esc(m.conditions.length?T("addCond"):T("setStart"))}</button></div>`;
+  }
   let banners = "";
   if(S.dirty) banners += `<div class="banner banner-warn">${esc(T("unsaved"))}</div>`;
   if(m.type==="cycle") banners += `<div class="banner banner-info">${esc(T("overlap"))}</div>`;
@@ -844,11 +1323,12 @@ function renderMain(){
   el.innerHTML = `
     <div class="main-h">
       ${S.dirty?'<span class="dirty-dot" title="'+esc(T("unsaved"))+'"></span>':""}
-      <input class="name" data-act="rename" value="${esc(m.name)}" aria-label="${esc(T("macros"))}">
+      <input class="name" data-act="rename" value="${esc(macroName(m))}" aria-label="${esc(T("macros"))}">
       <span class="badge ${typeBadge(m.type)}">${esc(typeLab(m.type))}</span>
       <span class="grow"></span>
       <button class="btn btn-subtle" data-act="copy">${icon("copy")}${esc(T("copy"))}</button>
-      <button class="btn btn-danger" data-act="del">${icon("trash")}${esc(T("del"))}</button>
+      <button class="btn btn-outline" data-act="editNode" ${sel.canEdit?"":"disabled"} title="${esc(sel.editTitle)}">${esc(T("edit"))}</button>
+      <button class="btn btn-danger" data-act="delNode" ${sel.canDel?"":"disabled"} title="${esc(sel.delTitle)}">${icon("trash")}${esc(T("del"))}</button>
       <button class="btn btn-outline" data-act="revert" ${S.dirty?"":"disabled"}>${esc(T("cancel"))}</button>
       <button class="btn btn-primary" data-act="save" ${S.dirty?"":"disabled"}>${esc(T("save"))}</button>
     </div>
@@ -856,10 +1336,7 @@ function renderMain(){
     <div class="summary">${esc(summarize(m))}</div>
     <div class="flow">
       <div class="recipe">
-        <button type="button" class="node start ${startSel?"is-sel":""}" data-act="node" data-id="start">
-          <div class="node-k">${icon("play")} ${esc(startKind)}</div>
-          <div class="node-t">${esc(startDesc)}</div>
-        </button>
+        ${triggers}
         ${renderList(m.actions, "root")}
       </div>
     </div>`;
@@ -873,18 +1350,21 @@ function fieldSel(label, act, val, opts){
 function renderInsp(){
   const m = cur();
   const el = document.getElementById("insp");
-  if(!m || S.listState!=="data"){
+  if(!m){
     el.innerHTML = `<div class="pane-h"><h2>${esc(T("actions"))}</h2></div><div class="insp-empty">${esc(T("clickNode"))}</div>`;
     return;
   }
-  let body = "";
-  if(S.node==="start" || !S.node){
-    body = renderStartInsp(m);
+  let body = "", head = T("actions");
+  const c = selectedCond();
+  if(c){
+    body = renderCondInsp(m, c); head = T("start");
+  } else if(S.node==="start" || !S.node || S.node.indexOf("cond:")===0){
+    body = renderStartInsp(m); head = T("start");
   } else {
     const a = findAct(S.node);
     body = a ? renderActInsp(m,a) : `<div class="insp-empty">${esc(T("clickNode"))}</div>`;
   }
-  el.innerHTML = `<div class="pane-h"><h2>${esc(S.node==="start"?T("start"):T("actions"))}</h2></div><div class="pane-b">${body}</div>`;
+  el.innerHTML = `<div class="pane-h"><h2>${esc(head)}</h2></div><div class="pane-b">${body}</div>`;
 }
 
 function modeOpts(m){
@@ -900,7 +1380,39 @@ function camOpts(val, withInit){
 }
 
 function renderStartInsp(m){
-  let html = `<label class="stack" style="gap:4px"><span class="label">${esc(T("mode"))}</span>
+  let html = "";
+  if(m.type!=="cycle"){
+    html += `<div class="helper">${esc(T("cascadeHint"))}</div>`;
+    if(!m.conditions.length){
+      html += `<div class="muted">${esc(T("noCond"))}</div>
+        <button class="btn btn-primary" data-act="addCond">${icon("plus")}${esc(T("setStart"))}</button>`;
+    } else {
+      m.conditions.forEach((c,i)=>{
+        if(i) html += `<div class="or">${esc(T("or"))}</div>`;
+        html += renderCond(c);
+      });
+      const canGroup = m.conditions.some((c,i)=> m.conditions.findIndex(x=>x.event===c.event)!==i);
+      if(canGroup) html += `<button class="btn btn-subtle" data-act="groupSame">${esc(T("groupSame"))}</button>`;
+      html += `<button class="btn btn-outline" data-act="addCond">${icon("plus")}${esc(T("addCond"))}</button>`;
+    }
+    if(m.type==="auto") html += `<div class="helper">${esc(T("autoNote"))}</div>`;
+  }
+  return html + macroStartFields(m);
+}
+
+function renderCondInsp(m, c){
+  let html = `<div class="helper">${esc(T("cascadeHint"))}</div>`;
+  html += renderCond(c);
+  html += `<button class="btn btn-outline" data-act="addCond">${icon("plus")}${esc(T("addCond"))}</button>`;
+  const canGroup = m.conditions.some((x,i)=> m.conditions.findIndex(y=>y.event===x.event)!==i);
+  if(canGroup) html += `<button class="btn btn-subtle" data-act="groupSame">${esc(T("groupSame"))}</button>`;
+  if(m.conditions.length>1) html += `<div class="helper">${esc(T("condHint"))}</div>`;
+  if(m.type==="auto") html += `<div class="helper">${esc(T("autoNote"))}</div>`;
+  return html + macroStartFields(m);
+}
+
+function macroStartFields(m){
+  let html = `<label class="stack" style="gap:4px;margin-top:8px"><span class="label">${esc(T("mode"))}</span>
     <select class="field" data-act="mode">${modeOpts(m)}</select></label>`;
   if(m.mode==="schedule"){
     html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("schedule"))}</span>
@@ -914,35 +1426,18 @@ function renderStartInsp(m){
       <label class="choice"><input type="checkbox" data-act="random" ${m.random?"checked":""}> ${esc(T("random"))}</label>
       <div class="helper">${esc(T("overlap"))}</div>`;
   }
-  if(m.type==="auto"){
-    const d = DETECTORS.find(x=>x.id===m.detectorId);
-    html += `<div class="helper">${esc(T("autoNote"))}</div>
-      <div class="cond"><div class="node-t">${esc(d?(S.lang==="en"?d.en:d.ru):"")}</div></div>`;
-  }
-  if(m.type==="event"){
-    html += `<div class="helper">${esc(T("condHint"))}</div>`;
-    if(!m.conditions.length) html += `<div class="muted">${esc(T("noCond"))}</div>`;
-    m.conditions.forEach((c,i)=>{
-      if(i) html += `<div class="or">${esc(T("or"))}</div>`;
-      html += renderCond(c);
-    });
-    const canGroup = m.conditions.some((c,i)=> m.conditions.findIndex(x=>x.event===c.event)!==i);
-    if(canGroup) html += `<button class="btn btn-subtle" data-act="groupSame">${esc(T("groupSame"))}</button>`;
-    html += `<button class="btn btn-outline" data-act="addCond">${icon("plus")}${esc(T("addCond"))}</button>`;
-  }
-  if(m.type==="auto" && m.conditions[0]) html += renderCond(m.conditions[0], true);
   return html;
 }
 
-function renderCond(c, lockedEvent){
-  const evOpts = EVENTS.map(e=>`<option value="${e.id}" ${c.event===e.id?"selected":""}>${esc(T(e.k))}</option>`).join("");
-  const spec = EVENTS.find(e=>e.id===c.event);
+function renderCond(c){
+  const spec = evSpec(c.event);
+  const t = condTypeOf(c);
   let extra="";
-  if(spec && spec.extra==="threshold"){
+  if(spec.extra==="threshold"){
     extra = `<label class="stack" style="gap:4px"><span class="label">${esc(T("threshold"))}</span>
       <input class="field" type="number" min="0" max="3600" data-act="cthresh" data-id="${c.id}" value="${esc(c.threshold||0)}"></label>`;
   }
-  if(spec && spec.extra==="stat"){
+  if(spec.extra==="stat"){
     extra = `<label class="stack" style="gap:4px"><span class="label">${esc(T("value"))}</span>
       <input class="field" type="number" data-act="cval" data-id="${c.id}" value="${esc(c.value||80)}"></label>
       <label class="stack" style="gap:4px"><span class="label">${esc(T("trend"))}</span>
@@ -951,29 +1446,41 @@ function renderCond(c, lockedEvent){
           `<option value="${v}" ${c.trend===v?"selected":""}>${esc(T(k))}</option>`).join("")}
       </select></label>`;
   }
-  const objs = [...GROUPS, ...CAMERAS];
-  const picks = objs.map(o=>{
-    const on = (c.devices||[]).includes(o.id);
-    return `<label><input type="checkbox" data-act="cdev" data-id="${c.id}" data-dev="${o.id}" ${on?"checked":""}> ${esc(S.lang==="en"?o.en:o.ru)}</label>`;
-  }).join("");
-  return `<div class="cond">
-    <label class="stack" style="gap:4px"><span class="label">${esc(T("start"))}</span>
-      <select class="field" data-act="cevent" data-id="${c.id}" ${lockedEvent?"disabled":""}>${evOpts}</select></label>
+  const ids = c.devices||[];
+  const chips = ids.length
+    ? ids.map(id=>`<span class="chip"><span title="${esc(objLab(id))}">${esc(objLab(id))}</span>
+        <button type="button" class="chip-x" data-act="rmObj" data-id="${c.id}" data-dev="${id}" aria-label="${esc(T("del"))}">×</button></span>`).join("")
+    : `<span class="chip chip-empty"><span>${esc(T("anyObject"))}</span></span>`;
+  const where = (cur() && (cur().conditions||[]).some(x=>x.id===c.id)) ? "cond" : "wait";
+  return `<div class="cond cascade">
+    <label class="stack" style="gap:4px"><span class="label">${esc(T("objType"))}</span>
+      ${cbxBtn("type", where, c.id, objTypeName(t))}</label>
+    <label class="stack" style="gap:4px"><span class="label">${esc(T("object"))}</span>
+      <div class="cbx-multi" role="combobox" aria-haspopup="listbox" tabindex="0" data-act="cbxOpen" data-kind="obj" data-where="${where}" data-id="${c.id}">${chips}<span class="cbx-add">${icon("plus")}</span></div>
+      <div class="helper">${esc(T("sourcesHint"))} · ${esc(Tf("selectedN", ids.length))}</div>
+    </label>
+    <label class="stack" style="gap:4px"><span class="label">${esc(T("eventKind"))}</span>
+      ${cbxBtn("event", where, c.id, c.event?evLab(c.event):"", T("pickEvent"))}</label>
     ${extra}
-    <div class="label" style="margin-top:8px">${esc(T("devices"))}</div>
-    <div class="obj-list">${picks}</div>
-    ${lockedEvent?"":`<button class="btn btn-subtle btn-sm" style="margin-top:6px" data-act="rmCond" data-id="${c.id}">${esc(T("del"))}</button>`}
+    <button class="btn btn-subtle btn-sm" data-act="rmCond" data-id="${c.id}">${esc(T("del"))}</button>
   </div>`;
 }
 
 function renderActInsp(m,a){
   const p = a.params||{};
-  let html = `<div class="node-t">${esc(actLab(a.kind))}</div>`;
-  const needCam = ["cam.record","cam.alarm","cam.arm","cam.view","cam.preset"].includes(a.kind);
-  if(needCam){
-    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("camera"))}</span>
-      <select class="field" data-act="ap" data-k="camera">${camOpts(p.camera||"initiator", true)}</select></label>`;
+  const t = actTypeOf(a);
+  const tmeta = objTypeMeta(t);
+  const tgt = targetOf(a);
+  let html = `<div class="cascade">
+    <label class="stack" style="gap:4px"><span class="label">${esc(T("objType"))}</span>
+      ${cbxBtn("type","insp","", objTypeName(t))}</label>`;
+  if(!tmeta.noObject){
+    html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("object"))}</span>
+      ${cbxBtn("obj","insp","", tgt?objLab(tgt):"", T("object"))}</label>`;
   }
+  html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("reactionKind"))}</span>
+    ${cbxBtn("act","insp","", actLab(a.kind))}</label>
+  </div>`;
   if(a.kind==="cam.record"){
     html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("archive"))}</span>
       <select class="field" data-act="ap" data-k="archive">${ARCHIVES.map(x=>`<option value="${x.id}" ${p.archive===x.id?"selected":""}>${esc(S.lang==="en"?x.en:x.ru)}</option>`).join("")}</select></label>`;
@@ -1015,7 +1522,7 @@ function renderActInsp(m,a){
   if(a.kind==="prog.run"){
     const others = S.macros.filter(x=>x.id!==m.id && x.type==="event");
     html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("macro"))}</span>
-      <select class="field" data-act="ap" data-k="macro">${others.map(x=>`<option value="${x.id}" ${p.macro===x.id?"selected":""}>${esc(x.name)}</option>`).join("")}</select></label>
+      <select class="field" data-act="ap" data-k="macro">${others.map(x=>`<option value="${x.id}" ${p.macro===x.id?"selected":""}>${esc(macroName(x))}</option>`).join("")}</select></label>
       <div class="helper">${esc(T("typeEvent"))}</div>`;
   }
   if(a.kind==="mon.lay"){
@@ -1026,13 +1533,13 @@ function renderActInsp(m,a){
     html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("to"))}</span>
       <input class="field" data-act="ap" data-k="to" value="${esc(p.to||"ops@site.local")}"></label>
       <label class="stack" style="gap:4px"><span class="label">${esc(T("subject"))}</span>
-      <input class="field" data-act="ap" data-k="subject" value="${esc(p.subject||"")}"></label>
+      <input class="field" data-act="ap" data-k="subject" data-loc="1" value="${esc(ptext(p,"subject"))}"></label>
       <label class="stack" style="gap:4px"><span class="label">${esc(T("message"))}</span>
-      <textarea class="field" data-act="ap" data-k="message">${esc(p.message||"")}</textarea></label>`;
+      <textarea class="field" data-act="ap" data-k="message" data-loc="1">${esc(ptext(p,"message"))}</textarea></label>`;
   }
   if(a.kind==="ntf.voice"||a.kind==="ntf.push"){
     html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("message"))}</span>
-      <textarea class="field" data-act="ap" data-k="message">${esc(p.message||"")}</textarea></label>`;
+      <textarea class="field" data-act="ap" data-k="message" data-loc="1">${esc(ptext(p,"message"))}</textarea></label>`;
   }
   if(a.kind==="gen.web"){
     html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("url"))}</span>
@@ -1041,7 +1548,7 @@ function renderActInsp(m,a){
   if(a.kind==="gen.en"){
     html += `<label class="choice"><input type="checkbox" data-act="apb" data-k="enable" ${p.enable!==false?"checked":""}> ${esc(T("onOff"))}</label>`;
   }
-  if(a.kind==="acfa.out"){
+  if(a.kind==="acs.out"){
     html += `<label class="stack" style="gap:4px"><span class="label">${esc(T("relay"))}</span>
       <input class="field" data-act="ap" data-k="relay" value="${esc(p.relay||"Relay 1")}"></label>
       <label class="choice"><input type="checkbox" data-act="apb" data-k="on" ${p.on!==false?"checked":""}> ${esc(T("onOff"))}</label>`;
@@ -1059,12 +1566,21 @@ function showMenu(html, x, y){
   m.style.left = Math.min(x, innerWidth-r.width-8)+"px";
   m.style.top = Math.min(y, innerHeight-r.height-8)+"px";
 }
+function parkCbxPop(){
+  const pop=document.getElementById("cbxpop");
+  if(pop && pop.parentNode!==document.body) document.body.appendChild(pop);
+}
 function openDlg(html){
+  closeCbx();
+  parkCbxPop();
   const d=document.getElementById("dlg");
   d.innerHTML=html;
-  if(typeof d.showModal==="function") d.showModal(); else d.setAttribute("open","");
+  if(typeof d.showModal==="function"){ if(!d.open) d.showModal(); }
+  else d.setAttribute("open","");
 }
 function closeDlg(){
+  closeCbx();
+  parkCbxPop();
   const d=document.getElementById("dlg");
   if(d.open && d.close) d.close();
   d.removeAttribute("open");
@@ -1082,32 +1598,129 @@ function createMenu(x,y){
 }
 
 function catalogDlg(){
-  const groups = ["g_macro","g_cam","g_prog","g_gen","g_mon","g_ntf","g_acfa"];
-  let body = `<div class="cat-grid">`;
-  groups.forEach(g=>{
-    body += `<div class="menu-subheader">${esc(T(g))}</div>`;
-    ACTS.filter(a=>a.g===g).forEach(a=>{
-      body += `<button class="menu-item menu-item-rich" data-act="pickAct" data-kind="${a.id}"><span class="menu-item-title">${esc(T(a.k))}</span></button>`;
-    });
-  });
-  body += `</div>`;
-  openDlg(`<div class="dlg-h">${esc(T("reactions"))}</div><div class="dlg-b">${body}</div>
-    <div class="dlg-f"><button class="btn btn-outline" data-act="closeDlg">${esc(T("cancel"))}</button></div>`);
+  S.dlg = {kind:"cascade", purpose:"reaction", mode:"add", type:"camera", object:"initiator", item:"cam.record"};
+  cascadeDlg();
 }
 
-function detectorDlg(){
-  const rows = DETECTORS.map(d=>`<button class="menu-item menu-item-rich" data-act="pickDet" data-id="${d.id}">
-    <span class="menu-item-title">${esc(S.lang==="en"?d.en:d.ru)}</span>
-    <span class="menu-item-desc">${esc(camLab(d.camera))} · ${esc(evLab(d.event))}</span></button>`).join("");
-  openDlg(`<div class="dlg-h">${esc(T("pickDet"))}</div><div class="dlg-b"><p class="helper">${esc(T("pickDetH"))}</p>${rows}</div>
-    <div class="dlg-f"><button class="btn btn-outline" data-act="closeDlg">${esc(T("cancel"))}</button></div>`);
+function actDlg(id){
+  const a = findAct(id); if(!a) return;
+  const type = actTypeOf(a);
+  S.dlg = {kind:"cascade", purpose:"reaction", mode:"edit", actId:a.id, type,
+    object: targetOf(a)||"initiator", item:a.kind};
+  cascadeDlg();
+}
+
+function eventDlg(condId){
+  const c = condId ? condById(condId) : null;
+  const type = c ? condTypeOf(c) : "camera";
+  const first = eventsOf(type)[0];
+  S.dlg = {kind:"cascade", purpose:"event", mode: c?"edit":"add", condId: c?c.id:"", type,
+    objects: c ? [...(c.devices||[])] : [], item: c ? c.event : (first?first.id:"")};
+  cascadeDlg();
+}
+
+function cascadeDlg(){
+  const d = S.dlg; if(!d) return;
+  const isAct = d.purpose==="reaction";
+  const tmeta = objTypeMeta(d.type);
+  const itemLab = isAct ? (d.item?actLab(d.item):"") : (d.item?evLab(d.item):"");
+  const itemKind = isAct ? "act" : "event";
+  const itemEmpty = isAct ? T("reactionKind") : T("pickEvent");
+  let body = `<div class="cascade">
+    <div class="helper">${esc(T("cascadeHint"))}</div>
+    <label class="stack" style="gap:4px"><span class="label">${esc(T("objType"))}</span>
+      ${cbxBtn("type","dlg","", objTypeName(d.type))}</label>`;
+  if(!tmeta.noObject && isAct){
+    body += `<label class="stack" style="gap:4px"><span class="label">${esc(T("object"))}</span>
+      ${cbxBtn("obj","dlg","", d.object?objLab(d.object):"", T("object"))}</label>`;
+  }
+  if(!isAct){
+    const ids = d.objects||[];
+    const chips = ids.length
+      ? ids.map(id=>`<span class="chip"><span title="${esc(objLab(id))}">${esc(objLab(id))}</span>
+          <button type="button" class="chip-x" data-act="rmObjDlg" data-dev="${id}" aria-label="${esc(T("del"))}">×</button></span>`).join("")
+      : `<span class="chip chip-empty"><span>${esc(T("anyObject"))}</span></span>`;
+    body += `<label class="stack" style="gap:4px"><span class="label">${esc(T("sources"))}</span>
+      <div class="cbx-multi" role="combobox" aria-haspopup="listbox" tabindex="0" data-act="cbxOpen" data-kind="obj" data-where="dlg" data-id="">${chips}<span class="cbx-add">${icon("plus")}</span></div>
+      <div class="helper">${esc(T("sourcesHint"))} · ${esc(Tf("selectedN", ids.length))}</div>
+    </label>`;
+  }
+  body += `<label class="stack" style="gap:4px"><span class="label">${esc(isAct?T("reactionKind"):T("eventKind"))}</span>
+      ${cbxBtn(itemKind,"dlg","", itemLab, itemEmpty)}</label>
+  </div>`;
+  const title = d.mode==="edit"
+    ? (isAct?T("editReaction"):T("editStart"))
+    : (isAct?T("reactions"):T("setStart"));
+  openDlg(`<div class="dlg-h">${esc(title)}</div>
+    <div class="dlg-b">${body}</div>
+    <div class="dlg-f">
+      <button class="btn btn-outline" data-act="closeDlg">${esc(T("cancel"))}</button>
+      <button class="btn btn-primary" data-act="applyCascade" ${d.item?"":"disabled"}>${esc(d.mode==="edit"?T("apply"):T("add"))}</button>
+    </div>`);
+}
+
+function applyCondDlg(){
+  const m = cur(), d = S.dlg; if(!m || !d) return;
+  remember();
+  const devices = (d.objects||[]).slice();
+  if(d.mode==="edit"){
+    const c = condById(d.condId);
+    if(c){ c.type=d.type; c.event=d.item; c.devices=devices; S.node="cond:"+c.id; }
+  } else {
+    const c = {id:uid(), type:d.type, event:d.item, devices};
+    m.conditions = m.conditions||[];
+    m.conditions.push(c);
+    S.node = "cond:"+c.id;
+  }
+  closeDlg();
+  S.dirty = snap()!==S.saved[m.id];
+  render();
+}
+
+function applyActDlg(){
+  const m = cur(), d = S.dlg; if(!m || !d) return;
+  const a = findAct(d.actId); if(!a){ closeDlg(); return; }
+  remember();
+  replaceActKind(a, d.item);
+  const type = actTypeOf(a);
+  if(!objTypeMeta(type).noObject){
+    const obj = d.object || "initiator";
+    a.params.object = obj;
+    if(type==="camera") a.params.camera = obj;
+    if(type==="macro") a.params.macro = obj==="initiator" ? "" : obj;
+    if(type==="monitor" || type==="layout") a.params.layout = obj;
+  }
+  S.node = a.id;
+  closeDlg();
+  S.dirty = snap()!==S.saved[m.id];
+  render();
+}
+
+function confirmDelNode(){
+  const m = cur(); if(!m) return;
+  const sel = selection(m);
+  if(sel.kind!=="cond" && sel.kind!=="act") return;
+  const isCond = sel.kind==="cond";
+  const what = isCond ? condText(sel.cond) : actText(sel.act).title;
+  openDlg(`<div class="dlg-h">${esc(isCond?T("delCondTitle"):T("delActTitle"))}</div>
+    <div class="dlg-b">
+      <div class="node" style="cursor:default;margin-bottom:8px">
+        <div class="node-k">${esc(isCond?T("start"):T("reactionKind"))}</div>
+        <div class="node-t">${esc(what)}</div>
+      </div>
+      ${esc(isCond?T("delCondBody"):T("delActBody"))}
+    </div>
+    <div class="dlg-f">
+      <button class="btn btn-outline" data-act="closeDlg">${esc(T("cancel"))}</button>
+      <button class="btn btn-danger" data-act="doDelNode">${esc(T("del"))}</button>
+    </div>`);
 }
 
 function confirmLeave(nextId){
   const m = cur();
   S.pending = nextId;
   openDlg(`<div class="dlg-h">${esc(T("leaveTitle"))}</div>
-    <div class="dlg-b">${esc(Tf("leaveBody", m.name))}</div>
+    <div class="dlg-b">${esc(Tf("leaveBody", macroName(m)))}</div>
     <div class="dlg-f" style="justify-content:space-between">
       <button class="btn btn-danger" data-act="leave">${esc(T("leave"))}</button>
       <span class="row">
@@ -1120,7 +1733,7 @@ function confirmLeave(nextId){
 function confirmDel(){
   const m = cur();
   openDlg(`<div class="dlg-h">${esc(T("delTitle"))}</div>
-    <div class="dlg-b">${esc(Tf("delBody", m.name))}</div>
+    <div class="dlg-b">${esc(Tf("delBody", macroName(m)))}</div>
     <div class="dlg-f">
       <button class="btn btn-outline" data-act="closeDlg">${esc(T("cancel"))}</button>
       <button class="btn btn-danger" data-act="doDel">${esc(T("del"))}</button>
@@ -1130,36 +1743,38 @@ function confirmDel(){
 function selectMacro(id, force){
   if(S.selId===id) return;
   if(S.dirty && !force){ confirmLeave(id); return; }
-  S.selId = id; S.node="start"; S.dirty=false;
+  S.selId = id; S.node=firstNode(S.macros.find(x=>x.id===id)); S.dirty=false;
   S.hist=[snap()]; S.histI=0;
   S.saved[id] = S.saved[id] ?? snap();
   hideMenu(); closeDlg(); render();
 }
 
-function createMacro(type, detId){
-  if(type==="auto" && !detId){ detectorDlg(); return; }
+function createMacro(type){
   const n = S.macros.filter(m=>m.type===type).length+1;
   const m = {
-    id: uid(), type, name: T("defaultName")+" "+n,
+    id: uid(), type,
+    name: TR.defaultName[0]+" "+n, nameEn: TR.defaultName[1]+" "+n,
     mode:"always", inMenu:false, conditions:[], actions:[]
   };
   if(type==="cycle") m.heartbeat="01:00:00";
-  if(type==="auto"){
-    const d = DETECTORS.find(x=>x.id===detId);
-    m.detectorId = detId;
-    m.name = d ? (S.lang==="en"?d.en:d.ru) : m.name;
-    m.conditions = [{id:uid(), event:d.event, devices:[d.camera]}];
-  }
   S.macros.unshift(m);
   S.saved[m.id]=snap(m);
-  S.listState="data";
   selectMacro(m.id, true);
+  if(type==="event" || type==="auto") eventDlg();
 }
 
-function addPickedAct(kind){
+function addPickedAct(kind, object){
   const m = cur(); if(!m) return;
   remember();
-  const act = mkAct(kind, kind.startsWith("cam.")?{camera:"initiator"}:{});
+  const spec = ACTS.find(x=>x.id===kind);
+  let params = {};
+  if(spec && !objTypeMeta(spec.type).noObject){
+    params.object = object||"initiator";
+    if(spec.type==="camera") params.camera = params.object;
+    if(spec.type==="macro") params.macro = params.object==="initiator"?"":params.object;
+    if(spec.type==="monitor") params.layout = params.object;
+  }
+  const act = mkAct(kind, params);
   const ins = S.insert || {branch:"root", after:""};
   let list = m.actions;
   if(ins.branch.endsWith("-then")){
@@ -1179,6 +1794,7 @@ function addPickedAct(kind){
 
 /* ── events ─────────────────────────────────────────────── */
 document.addEventListener("click", ev=>{
+  if(S.cbx && !ev.target.closest("#cbxpop") && !ev.target.closest("[data-act=cbxOpen]")) closeCbx();
   const t = ev.target.closest("[data-act]");
   if(!t){
     if(!ev.target.closest("#menu")) hideMenu();
@@ -1186,6 +1802,21 @@ document.addEventListener("click", ev=>{
   }
   const act = t.dataset.act;
   const m = cur();
+
+  if(act==="cbxOpen"){ openCbx(t); return; }
+  if(act==="cbxPick"){ applyCbx(t.dataset.v); return; }
+  if(act==="applyCascade"){
+    const d = S.dlg; if(!d || !d.item) return;
+    if(d.purpose!=="reaction") applyCondDlg();
+    else if(d.mode==="edit") applyActDlg();
+    else addPickedAct(d.item, d.object);
+    return;
+  }
+  if(act==="rmObjDlg"){
+    if(!S.dlg) return;
+    S.dlg.objects = (S.dlg.objects||[]).filter(x=>x!==t.dataset.dev);
+    cascadeDlg(); return;
+  }
 
   if(act==="nav" && t.dataset.k!=="navMacros"){
     openDlg(`<div class="dlg-h">${esc(T(t.dataset.k))}</div><div class="dlg-b">${esc(T("otherTab"))}</div>
@@ -1196,13 +1827,9 @@ document.addEventListener("click", ev=>{
     S.theme = S.theme==="light"?"dark":"light";
     localStorage.setItem("macros-theme", S.theme); render(); return;
   }
-  if(act==="type"){ S.type=t.dataset.v; render(); return; }
-  if(act==="listState"){ S.listState=t.dataset.v; render(); return; }
-  if(act==="retry"){ S.listState="data"; render(); return; }
-  if(act==="resetQ"){ S.q=""; S.type="all"; S.listState="data"; render(); return; }
+  if(act==="resetQ"){ S.q=""; S.type="all"; render(); return; }
   if(act==="createMenu"){ createMenu(ev.clientX, ev.clientY); return; }
   if(act==="create"){ hideMenu(); createMacro(t.dataset.type); return; }
-  if(act==="pickDet"){ closeDlg(); createMacro("auto", t.dataset.id); return; }
   if(act==="sel"){ selectMacro(t.dataset.id); return; }
   if(act==="closeDlg"){ closeDlg(); S.pending=null; return; }
   if(act==="node"){ S.node=t.dataset.id; render(); return; }
@@ -1212,22 +1839,46 @@ document.addEventListener("click", ev=>{
   }
   if(act==="pickAct"){ addPickedAct(t.dataset.kind); return; }
   if(act==="copy" && m){
-    const c = clone(m); c.id=uid(); c.name=m.name+T("copySuffix");
+    const c = clone(m); c.id=uid();
+    c.name = m.name + TR.copySuffix[0];
+    c.nameEn = (m.nameEn||m.name) + TR.copySuffix[1];
     walkActs(c.actions, a=>{ a.id=uid(); });
     (c.conditions||[]).forEach(x=>x.id=uid());
     S.macros.unshift(c); S.saved[c.id]=snap(c); selectMacro(c.id,true); return;
+  }
+  if(act==="editNode" && m){
+    const sel = selection(m);
+    if(sel.kind==="cond") eventDlg(sel.cond.id);
+    else if(sel.kind==="act") actDlg(sel.act.id);
+    else if(m.type!=="cycle") eventDlg();
+    return;
+  }
+  if(act==="delNode" && m){ confirmDelNode(); return; }
+  if(act==="doDelNode" && m){
+    const sel = selection(m);
+    closeDlg();
+    if(sel.kind==="cond"){
+      remember();
+      m.conditions = (m.conditions||[]).filter(c=>c.id!==sel.cond.id);
+      S.node = m.conditions.length ? "cond:"+m.conditions[0].id : "start";
+    } else if(sel.kind==="act"){
+      removeAct(sel.act.id);
+      S.node = firstNode(m);
+    }
+    S.dirty = snap()!==S.saved[m.id];
+    render(); return;
   }
   if(act==="del" && m){ confirmDel(); return; }
   if(act==="doDel" && m){
     S.macros = S.macros.filter(x=>x.id!==m.id);
     delete S.saved[m.id];
-    S.dirty=false; S.selId = S.macros[0]?S.macros[0].id:null; S.node="start";
+    S.dirty=false; S.selId = S.macros[0]?S.macros[0].id:null; S.node=firstNode(cur());
     closeDlg(); render(); return;
   }
   if(act==="save" && m){ S.saved[m.id]=snap(m); S.dirty=false; render(); return; }
   if(act==="revert" && m){
     Object.assign(m, JSON.parse(S.saved[m.id]));
-    S.dirty=false; S.node="start"; render(); return;
+    S.dirty=false; S.node=firstNode(m); render(); return;
   }
   if(act==="leave"){
     const id=S.pending; const curm=cur();
@@ -1238,9 +1889,11 @@ document.addEventListener("click", ev=>{
     if(m) S.saved[m.id]=snap(m);
     S.dirty=false; const id=S.pending; closeDlg(); selectMacro(id,true); return;
   }
-  if(act==="addCond" && m){
+  if(act==="addCond" && m){ eventDlg(); return; }
+  if(act==="rmObj" && m){
+    const c = condById(t.dataset.id); if(!c) return;
     remember();
-    m.conditions.push({id:uid(), event:"cam.alarm", devices:[]});
+    c.devices = (c.devices||[]).filter(x=>x!==t.dataset.dev);
     S.dirty=true; render(); return;
   }
   if(act==="rmCond" && m){
@@ -1249,6 +1902,7 @@ document.addEventListener("click", ev=>{
     walkActs(m.actions, a=>{
       if(a.waitEvents) a.waitEvents = a.waitEvents.filter(c=>c.id!==t.dataset.id);
     });
+    if(S.node==="cond:"+t.dataset.id) S.node = m.conditions.length ? "cond:"+m.conditions[0].id : "start";
     S.dirty=true; render(); return;
   }
   if(act==="groupSame" && m){
@@ -1260,20 +1914,22 @@ document.addEventListener("click", ev=>{
       else map[k].devices=[...new Set([...map[k].devices, ...(c.devices||[])])];
     });
     m.conditions=out;
+    if(!selectedCond()) S.node=firstNode(m);
     S.dirty=true; render(); return;
   }
   if(act==="addWaitEv"){
     const a=findAct(S.node); if(!a) return;
-    remember(); a.waitEvents=a.waitEvents||[]; a.waitEvents.push({id:uid(), event:"tech.ok", devices:[]});
+    remember(); a.waitEvents=a.waitEvents||[]; a.waitEvents.push(blankCond());
     S.dirty=true; render(); return;
   }
-  if(act==="rmAct"){ removeAct(t.dataset.id); S.node="start"; S.dirty=true; render(); return; }
+  if(act==="rmAct"){ removeAct(t.dataset.id); S.node=firstNode(m); S.dirty=true; render(); return; }
 });
 
 document.addEventListener("change", ev=>{
   const t = ev.target.closest("[data-act]"); if(!t) return;
   const act=t.dataset.act;
   if(act==="lang"){ S.lang=t.value; localStorage.setItem("macros-lang", S.lang); render(); return; }
+  if(act==="typeSel"){ S.type=t.value; render(); return; }
   const m=cur(); if(!m) return;
   if(act==="q"){ S.q=t.value; render(); return; }
 
@@ -1284,8 +1940,8 @@ document.addEventListener("change", ev=>{
   if(act==="inMenu"){ patch(); m.inMenu=t.checked; render(); return; }
   if(act==="heartbeat"){ patch(); m.heartbeat=t.value; render(); return; }
   if(act==="random"){ patch(); m.random=t.checked; render(); return; }
-  if(act==="rename"){ m.name=t.value; S.dirty = snap()!==S.saved[m.id]; 
-    document.querySelectorAll(".mrow[aria-selected='true'] .ttl").forEach(el=>el.textContent=m.name);
+  if(act==="rename"){ setMacroName(m, t.value); S.dirty = snap()!==S.saved[m.id];
+    document.querySelectorAll(".mrow[aria-selected='true'] .ttl").forEach(el=>el.textContent=macroName(m));
     const sum=document.querySelector(".summary"); if(sum) sum.textContent=summarize(m);
     return; }
   if(act==="cevent"){
@@ -1302,7 +1958,9 @@ document.addEventListener("change", ev=>{
     render(); return;
   }
   if(act==="ap"){
-    const a=findAct(S.node); if(!a) return; patch(); a.params=a.params||{}; a.params[t.dataset.k]=t.value; render(); return;
+    const a=findAct(S.node); if(!a) return; patch(); a.params=a.params||{};
+    a.params[t.dataset.loc ? pkey(t.dataset.k) : t.dataset.k] = t.value;
+    render(); return;
   }
   if(act==="apb"){
     const a=findAct(S.node); if(!a) return; patch(); a.params=a.params||{}; a.params[t.dataset.k]=t.checked; render(); return;
@@ -1310,13 +1968,19 @@ document.addEventListener("change", ev=>{
 });
 
 document.addEventListener("input", ev=>{
-  const t=ev.target.closest("[data-act=q]");
-  if(t){ S.q=t.value; /* live filter without losing focus */ 
-    const side=document.getElementById("side");
-    const keep=t; const pos=t.selectionStart;
+  const tq=ev.target.closest("[data-act=q]");
+  if(tq){ S.q=tq.value;
+    const pos=tq.selectionStart;
     renderSide();
     const nq=document.querySelector("[data-act=q]");
     if(nq){ nq.focus(); nq.setSelectionRange(pos,pos); }
+    return;
+  }
+  const cq=ev.target.closest("[data-act=cbxQ]");
+  if(cq && S.cbx){
+    S.cbx.q = cq.value;
+    S.cbx.hi = 0;
+    paintCbx(true);
   }
 });
 
@@ -1331,6 +1995,24 @@ function condById(id){
 }
 
 document.addEventListener("keydown", ev=>{
+  if(S.cbx){
+    if(ev.key==="Escape"){ ev.preventDefault(); closeCbx(); return; }
+    if(ev.key==="ArrowDown"){ ev.preventDefault(); S.cbx.hi++; paintCbx(true); return; }
+    if(ev.key==="ArrowUp"){ ev.preventDefault(); S.cbx.hi=Math.max(0, S.cbx.hi-1); paintCbx(true); return; }
+    if(ev.key==="Enter"){
+      ev.preventDefault();
+      const opts=cbxOpts();
+      if(opts[S.cbx.hi]) applyCbx(opts[S.cbx.hi].id);
+      return;
+    }
+  } else {
+    const openEl = ev.target.closest && ev.target.closest("[data-act=cbxOpen]");
+    if(openEl && (ev.key==="Enter" || ev.key===" " || ev.key==="ArrowDown")){
+      ev.preventDefault();
+      openCbx(openEl);
+      return;
+    }
+  }
   const sp = ev.target.classList && ev.target.classList.contains("splitter") ? ev.target : null;
   if(sp && (ev.key==="ArrowLeft" || ev.key==="ArrowRight")){
     ev.preventDefault();
@@ -1342,7 +2024,7 @@ document.addEventListener("keydown", ev=>{
   if(sp && (ev.key==="Home" || ev.key==="Enter")){
     ev.preventDefault(); setPanel(sp.dataset.split, PANEL[sp.dataset.split].def); return;
   }
-  if(ev.key==="Escape"){ hideMenu(); closeDlg(); return; }
+  if(ev.key==="Escape"){ if(S.cbx){ closeCbx(); return; } hideMenu(); closeDlg(); return; }
   if((ev.ctrlKey||ev.metaKey) && ev.key==="s"){ ev.preventDefault(); const m=cur(); if(m&&S.dirty){ S.saved[m.id]=snap(m); S.dirty=false; render(); } }
   if((ev.ctrlKey||ev.metaKey) && ev.key==="z"){ ev.preventDefault(); restoreHist(S.histI-1); }
   if((ev.ctrlKey||ev.metaKey) && (ev.key==="y" || (ev.shiftKey && ev.key==="z"))){ ev.preventDefault(); restoreHist(S.histI+1); }
@@ -1401,6 +2083,7 @@ document.getElementById("dlg").addEventListener("click", ev=>{
 S.macros = seed();
 S.macros.forEach(m=> S.saved[m.id]=snap(m));
 S.selId = "m_auto_motion";
+S.node = firstNode(cur());
 S.hist=[snap()]; S.histI=0;
 S.theme = localStorage.getItem("macros-theme") || "light";
 S.lang = localStorage.getItem("macros-lang") || "ru";
