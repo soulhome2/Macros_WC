@@ -64,7 +64,7 @@
   --one-success:#20D300; --one-success-bg:#0B2707; --one-success-text:#B7F0AD; --one-success-icon:#20D300;
   --one-warning:#FF8A00; --one-warning-bg:#2E1C07; --one-warning-text:#FFD9AD; --one-warning-icon:#FF8A00;
   --one-danger:#FF5A5A; --one-danger-bg:#2E1415; --one-danger-text:#FFCACA; --one-danger-icon:#FF5A5A;
-  --one-focus-ring:#0082F7; --one-focus-halo:rgba(0,130,247,.40); --one-scrim:rgba(0,0,0,.6);
+  --one-focus-ring:#4DA3E8; --one-focus-halo:rgba(77,163,232,.40); --one-scrim:rgba(0,0,0,.6);
   --one-shadow:0 1px 2px rgba(0,0,0,.24), 0 4px 10px rgba(0,0,0,.20);
   color-scheme:dark;
 }
@@ -86,7 +86,9 @@ button{font-family:inherit}
 .btn[aria-disabled="true"]{background:var(--one-control-disabled);color:var(--one-fg-disabled);cursor:not-allowed;border-color:transparent}
 .btn[aria-disabled="true"]:hover,.btn[aria-disabled="true"]:active{background:var(--one-control-disabled);color:var(--one-fg-disabled)}
 /* One focus ring for every interactive element, not just .btn */
-:where(button,[href],input,select,textarea,[tabindex]):focus-visible{outline:2px solid var(--one-focus-ring);outline-offset:2px;border-radius:var(--one-radius-control)}
+/* Keyboard focus must be obvious on both themes: ring + soft halo, never on mouse clicks (focus-visible). */
+:where(button,[href],input,select,textarea,[tabindex]):focus-visible{outline:2px solid var(--one-focus-ring);outline-offset:2px;
+  box-shadow:0 0 0 5px var(--one-focus-halo);border-radius:var(--one-radius-control)}
 .btn-primary{background:var(--one-accent);color:var(--one-accent-on);border-color:var(--one-accent)}
 .btn-primary:hover{background:var(--one-primary-hover);color:var(--one-accent-on);border-color:var(--one-primary-hover)}
 .btn-primary:active{background:var(--one-primary-pressed);color:var(--one-accent-on);border-color:var(--one-primary-pressed)}
@@ -243,11 +245,11 @@ body[data-resizing] *{user-select:none!important}
 .mrow:hover{background:var(--one-control-hover)}
 .mrow:active{background:var(--one-control-pressed)}
 .mrow[aria-selected="true"]{background:var(--one-accent-soft);box-shadow:inset 3px 0 0 var(--one-selected-indicator)}
-.mrow.is-alarm[aria-selected="true"]{box-shadow:inset 3px 0 0 var(--one-danger)}
+.mrow.is-alarm[aria-selected="true"]{box-shadow:inset 3px 0 0 var(--one-warning)}
 .mrow.is-never{opacity:1;color:var(--one-fg-muted)}
 .mrow .ttl{font:var(--one-type-body-md-medium);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mrow .meta{font:var(--one-type-caption);color:var(--one-fg-muted);display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
-.mrow.is-alarm{box-shadow:inset 3px 0 0 var(--one-danger)}
+.mrow.is-alarm{box-shadow:inset 3px 0 0 var(--one-warning)}
 
 .main{background:var(--one-canvas);display:flex;flex-direction:column;min-width:0;flex:1;overflow:hidden}
 .main-h{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--one-surface);border-bottom:1px solid var(--one-surface-subtle);flex-wrap:wrap;row-gap:8px}
@@ -256,6 +258,13 @@ body[data-resizing] *{user-select:none!important}
   flex:0 1 auto;width:auto;field-sizing:content;min-width:8ch;max-width:min(520px,55%);padding:2px 4px;border-radius:var(--one-radius-control)}
 .main-h .name + .badge{margin-left:-4px}
 .main-h .sep{width:1px;align-self:stretch;margin:2px 4px;background:var(--one-surface-subtle);flex:none}
+.mh-title{display:flex;align-items:center;gap:10px;flex:1 1 260px;min-width:0}
+.tb{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.mnav{display:none}
+.drag-hint-touch{display:none;align-items:center;justify-content:center;gap:4px;padding:8px 0 0;font:var(--one-type-body-sm);color:var(--one-fg-muted);text-align:center}
+.drag-hint-touch .ico{width:14px;height:14px;flex:none}
+
+
 [data-theme="dark"] .main-h .sep{background:var(--one-border)}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .skip{position:absolute;left:8px;top:-40px;z-index:90;padding:8px 12px;background:var(--one-accent);color:var(--one-accent-on);
@@ -330,6 +339,44 @@ span[data-tip]{text-decoration:underline dotted;text-underline-offset:3px;text-d
 .node-t{font:var(--one-type-body-md-medium);margin-top:2px}
 .node-d{font:var(--one-type-body-sm);color:var(--one-fg-muted);margin-top:2px}
 .node-n{position:absolute;right:10px;top:8px;font:var(--one-type-caption);color:var(--one-fg-subtle)}
+/* Sequential actions: a step pill, a grip to drag, and a drop line while reordering. */
+.node-step{position:absolute;right:10px;top:8px;display:inline-flex;align-items:center;height:20px;padding:0 8px;
+  border:1px solid var(--one-border);border-radius:var(--one-radius-pill);font:var(--one-type-label);color:var(--one-fg-muted);background:var(--one-surface)}
+.node[draggable="true"]{padding-left:30px}
+.node-grip{position:absolute;left:8px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--one-fg-subtle);cursor:grab}
+.node-grip .ico{width:16px;height:16px}
+.node.is-dragging{opacity:.45}
+.node.drop-before{box-shadow:0 -3px 0 0 var(--one-accent)}
+.node.drop-after{box-shadow:0 3px 0 0 var(--one-accent)}
+.pan-sub{display:block;font:var(--one-type-body-sm);color:var(--one-fg-muted);margin-top:1px}
+.pan-h .pan-title{display:flex;flex-direction:column;min-width:0}
+.drag-hint{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 0 0;font:var(--one-type-body-sm);color:var(--one-fg-muted)}
+.drag-hint .ico{width:14px;height:14px}
+/* Event sources / action targets: an explicit either-or instead of an empty list meaning "all". */
+.src-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.src-opt{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;text-align:left;cursor:pointer;
+  border:1px solid var(--one-border);border-radius:var(--one-radius-container);background:var(--one-surface);color:var(--one-fg);font:inherit}
+.src-opt:hover{background:var(--one-control-hover)}
+.src-opt[aria-checked="true"]{border-color:var(--one-accent);background:var(--one-accent-soft)}
+.src-dot{flex:none;width:16px;height:16px;margin-top:1px;border-radius:50%;border:1px solid var(--one-selection-outline);background:var(--one-editor-bg);position:relative}
+.src-opt[aria-checked="true"] .src-dot{border-color:var(--one-accent);background:var(--one-accent)}
+.src-opt[aria-checked="true"] .src-dot::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--one-accent-on)}
+.src-txt{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.src-txt b{font:var(--one-type-body-md-medium)}
+.src-txt span{font:var(--one-type-body-sm);color:var(--one-fg-muted)}
+.src-opt .badge{flex:none;margin-left:auto}
+.badge .ico{width:12px;height:12px}
+/* "Needs action" cards: the cause plus the next step */
+.issue{display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-radius:var(--one-radius-container);
+  background:var(--one-warning-bg);color:var(--one-warning-text);border:1px solid color-mix(in srgb,var(--one-warning) 40%,transparent)}
+.issue-h{display:flex;align-items:center;gap:8px;font:var(--one-type-body-md-medium)}
+.issue-h .ico{width:16px;height:16px;flex:none;color:var(--one-warning-icon)}
+.issue p{margin:0;font:var(--one-type-body-sm)}
+.issue ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.issue li{display:flex;align-items:flex-start;gap:8px;font:var(--one-type-body-sm)}
+.issue li span{flex:1;min-width:0}
+.issue .btn{align-self:flex-start}
+.issue li .btn{flex:none;min-height:24px;padding:2px 8px}
 .node.start .node-k{color:var(--one-nav-selected-text)}
 .arrow{display:flex;justify-content:center;align-items:center;height:28px;color:var(--one-fg-subtle);position:relative}
 .arrow::before{content:"";position:absolute;top:0;bottom:14px;width:1px;background:var(--one-border)}
@@ -437,6 +484,62 @@ dialog.dialog::backdrop{background:var(--one-scrim)}
 .cat-grid{display:flex;flex-direction:column;gap:2px}
 
 .demo .seg{margin-top:6px}
+
+/* ── phones and narrow windows: one pane at a time + bottom bar ── */
+@media (max-width: 760px){
+  .shell{display:block;position:relative;height:calc(100dvh - 44px - 60px)}
+  .splitter{display:none}
+  .shell > .side,.shell > .main,.shell > .insp{width:100%!important;height:100%;display:none}
+  body[data-mview="list"] .shell > .side,
+  body[data-mview="flow"] .shell > .main,
+  body[data-mview="insp"] .shell > .insp{display:flex}
+  .insp .pane-b{overflow:auto}
+  .mnav{display:flex;position:fixed;left:0;right:0;bottom:0;height:60px;z-index:60;
+    background:var(--one-surface);border-top:1px solid var(--one-border);padding:0 4px env(safe-area-inset-bottom)}
+  .mnav button{flex:1;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+    border:0;background:transparent;color:var(--one-fg-muted);font:var(--one-type-label);cursor:pointer}
+  .mnav button .ico{width:22px;height:22px}
+  .mnav button[aria-current="page"]{color:var(--one-nav-selected-text)}
+  .mnav button[aria-current="page"]::before{content:"";position:absolute;top:0;left:25%;right:25%;height:3px;border-radius:0 0 3px 3px;background:var(--one-selected-indicator)}
+  .mnav .dot{position:absolute;top:8px;left:calc(50% + 8px);width:8px;height:8px;border-radius:50%;background:var(--one-warning)}
+  .appbar{gap:8px;padding:0 8px}
+  .brand{display:none}
+  .langsel{width:auto;min-width:0}
+  .main-h{flex-direction:column;align-items:stretch;gap:8px;padding:10px 12px}
+  .main-h .name{flex:1 1 0;min-width:0;max-width:none;field-sizing:fixed;width:auto}
+  .mh-title{flex:none;flex-wrap:wrap}
+  .tb{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:6px;margin:0 -12px;padding:0 12px 2px}
+  .tb::-webkit-scrollbar{display:none}
+  .tb .btn{flex:none}
+  .main-top{display:none}
+  .flow{padding:12px}
+  .flow.is-cols{flex-direction:column;align-items:stretch}
+  .flow .pan,.flow.is-cols .pan{width:100%;max-width:none;min-width:0}
+  .flow.is-cols .pan-link{align-self:center;transform:rotate(90deg);padding:0}
+  .branches{grid-template-columns:1fr}
+  dialog.dialog{width:100vw;max-width:100vw;min-width:0;height:100dvh;max-height:100dvh;margin:0;border:0;border-radius:0}
+  dialog.dialog[open]{display:flex;flex-direction:column}
+  .dlg-b{flex:1;max-height:none}
+  .dlg-f{position:sticky;bottom:0;background:var(--one-dialog)}
+  .toasts{bottom:76px;width:calc(100vw - 24px)}
+  .toast{width:100%}
+  .cbx-pop{max-width:calc(100vw - 16px)}
+}
+/* touch screens: bigger targets, no mouse-only drag handles */
+@media (pointer: coarse){
+  .btn{min-height:40px}
+  .btn-icon{width:40px}
+  .btn-sm{min-height:36px}
+  .field,.cbx-btn,.langsel{height:40px}
+  .mrow{padding:12px}
+  .chip{height:32px}
+  .chip-x{width:32px;height:32px}
+  .add-slot{width:36px;height:36px}
+  .cbx-opt{padding:10px 12px}
+  .node-grip,.drag-hint{display:none}
+  .node[draggable="true"]{padding-left:15px}
+  .drag-hint-touch{display:flex}
+}
 </style>
 </head>
 <body>
@@ -452,6 +555,7 @@ dialog.dialog::backdrop{background:var(--one-scrim)}
     aria-valuenow="300" aria-valuemin="256" aria-valuemax="520"></div>
   <aside class="pane insp" id="insp"></aside>
 </div>
+<nav class="mnav" id="mnav"></nav>
 <dialog class="dialog" id="dlg"></dialog>
 <div class="menu" id="menu" hidden></div>
 <div class="cbx-pop" id="cbxpop" hidden></div>
@@ -488,7 +592,7 @@ const TR = {
   extraSettings:["Дополнительные настройки","Additional settings"],
   aboutMacro:["Сопутствующая информация","Related information"],
   params:["Параметры","Parameters"],
-  inspHint:["Наведите на описание — увидите макрокоманду целиком.","Hover the description to see the whole macro."],
+  inspHint:["Наведите на описание или коснитесь его — увидите макрокоманду целиком.","Hover or tap the description to see the whole macro."],
   yes:["Да","Yes"], no:["Нет","No"],
   nodeParams:["Параметры выбранного узла","Selected node parameters"],
   editCascade:["Изменить тип, объекты и событие…","Change type, objects and event…"],
@@ -542,7 +646,7 @@ const TR = {
   clickNode:["Выберите узел на схеме, чтобы править параметры.","Select a node in the recipe to edit its parameters."],
   emptyList:["Нет макрокоманд в этой выборке","No macros in this filter"],
   resetFilter:["Сбросить фильтр","Reset filter"],
-  incomplete:["Неполное","Incomplete"], inMenuShort:["в меню","in menu"],
+  incomplete:["Требует действия","Needs action"], inMenuShort:["в меню","in menu"],
   leaveTitle:["Несохранённые изменения","Unsaved changes"],
   leaveBody:["Сохранить изменения в «{0}» перед переключением?","Save changes to “{0}” before switching?"],
   leave:["Не сохранять","Don't save"], stay:["Остаться","Stay"],
@@ -563,7 +667,26 @@ const TR = {
   noCond:["Нет условий — запуск только вручную","No conditions — manual start only"],
   sources:["Источники события","Event sources"],
   sourcesHint:["Макрос стартует, если событие пришло от любого выбранного объекта.","The macro starts when the event comes from any of the selected objects."],
-  anyObject:["Любой объект этого типа","Any object of this type"],
+  anyObject:["Все объекты типа","All objects of the type"],
+  srcAll:["Все объекты типа","All objects of the type"],
+  srcAllHint:["Макрокоманда запустится для всех объектов выбранного типа","The macro starts for every object of the selected type"],
+  srcSome:["Выбранные объекты","Selected objects"],
+  srcSomeHint:["Макрокоманда запустится только для выбранных объектов","The macro starts only for the selected objects"],
+  tgtInit:["Объект, инициировавший запуск","Object that triggered the macro"],
+  tgtInitHint:["Реакция выполнится для объекта — источника события","The action runs for the object that raised the event"],
+  tgtSomeHint:["Реакция выполнится для каждого выбранного объекта","The action runs for every selected object"],
+  errNoObjects:["Выберите хотя бы один объект или переключитесь на «{0}»","Select at least one object or switch to “{0}”"],
+  issueNoActions:["Не добавлены действия","No actions added"],
+  issueNoActionsHint:["Макрокоманда ничего не сделает.","The macro will do nothing."],
+  issueBadParams:["Некорректные параметры","Invalid parameters"],
+  showNode:["Показать","Show"],
+  actsSequential:["Выполняются последовательно сверху вниз","Run one after another, top to bottom"],
+  step:["Шаг {0}","Step {0}"],
+  dragHint:["Перетащите, чтобы изменить порядок · Alt+↑/↓ с клавиатуры","Drag to reorder · Alt+↑/↓ from the keyboard"],
+  condOrderNA:["Порядок условий не влияет на запуск: они соединены через ИЛИ","Condition order does not matter: they are OR-ed"],
+  dragHintTouch:["Выберите шаг и меняйте порядок кнопками ↑/↓ на панели","Select a step and reorder it with the ↑/↓ buttons in the toolbar"],
+  mList:["Список","List"], mFlow:["Схема","Recipe"], mInsp:["Настройки","Settings"],
+  mNavAria:["Разделы экрана","Screen sections"],
   addObjects:["Выбрать объекты…","Select objects…"],
   pickObjects:["Объекты-источники","Source objects"],
   selectedN:["Выбрано: {0}","Selected: {0}"],
@@ -676,6 +799,7 @@ const S = {
   dirty: false, hist: [], histI: -1,
   insert: null, menu: null, dlg: null, pending: null, cbx: null,
   tips: {}, tipN: 0, loaded: {},
+  mview: "flow",            // which pane a phone shows: list | flow | insp
   sideW: PANEL.side.def, inspW: PANEL.insp.def, rs: null
 };
 
@@ -699,6 +823,9 @@ const ICO = {
   rows:'<rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/>',
   cols:'<rect x="4" y="4" width="6" height="16" rx="1.5"/><rect x="14" y="4" width="6" height="16" rx="1.5"/>',
   check:'<path d="m5 13 4 4L19 7"/>',
+  list:'<path d="M8 6h13M8 12h13M8 18h13"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/>',
+  sliders:'<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>',
+  grip:'<circle cx="9" cy="6" r="1.4"/><circle cx="15" cy="6" r="1.4"/><circle cx="9" cy="12" r="1.4"/><circle cx="15" cy="12" r="1.4"/><circle cx="9" cy="18" r="1.4"/><circle cx="15" cy="18" r="1.4"/>',
   up:'<path d="M12 19V5M5 12l7-7 7 7"/>',
   down:'<path d="M12 5v14M19 12l-7 7-7-7"/>',
   undo:'<path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-4"/>',
@@ -938,13 +1065,25 @@ function closeCbx(){
 function isActPick(){ return !!(S.dlg && S.dlg.purpose==="reaction"); }
 function pickedObjects(){ return (S.dlg && S.dlg.objects) || []; }
 function setPickedObjects(arr){ if(S.dlg) S.dlg.objects = arr; }
+/* Scope is an explicit choice: "all objects of the type" (conditions) or "initiator" (actions)
+   versus "selected objects". An empty selection no longer silently means "all". */
+function defaultScope(purpose){ return purpose==="reaction" ? "init" : "all"; }
+function scopeOf(d){ return (d && d.scope) || defaultScope(d && d.purpose); }
+function scopeFromObjects(purpose, objs){
+  const real = (objs||[]).filter(x=>x!=="initiator");
+  return real.length ? "some" : defaultScope(purpose);
+}
 function togglePick(v){
-  const acts = isActPick();
-  if(v==="*" || v==="initiator"){ setPickedObjects(acts?["initiator"]:[]); return; }
   const list = pickedObjects().filter(x=>x!=="initiator");
   const i = list.indexOf(v);
   if(i>=0) list.splice(i,1); else list.push(v);
-  setPickedObjects(acts && !list.length ? ["initiator"] : list);
+  setPickedObjects(list);
+}
+function scopeError(d){
+  if(!d || objTypeMeta(d.type).noObject) return "";
+  if(scopeOf(d)!=="some") return "";
+  if(pickedObjects().filter(x=>x!=="initiator").length) return "";
+  return Tf("errNoObjects", d.purpose==="reaction" ? T("tgtInit") : T("srcAll"));
 }
 function cbxMatch(...parts){
   const q = (S.cbx && S.cbx.q || "").trim().toLowerCase();
@@ -954,10 +1093,7 @@ function cbxMatch(...parts){
 function cbxChosen(){
   if(!S.cbx || !S.dlg) return [];
   const kind = S.cbx.kind;
-  if(kind==="obj"){
-    const picked = pickedObjects();
-    return picked.length ? picked : [isActPick()?"initiator":"*"];
-  }
+  if(kind==="obj") return pickedObjects();
   return [kind==="type" ? (S.dlg.type||"") : (S.dlg.item||"")];
 }
 function cbxOpts(){
@@ -976,8 +1112,6 @@ function cbxOpts(){
   }
   const type = S.dlg.type;
   if(kind==="obj"){
-    const special = forActs ? {id:"initiator", label:T("initiatorObj")} : {id:"*", label:T("anyObject")};
-    if(cbxMatch(special.label)) out.push(special);
     objectsOf(type).forEach(o=>{
       const label = S.lang==="en"?o.en:o.ru;
       if(cbxMatch(label, o.id, o.ru, o.en)) out.push({id:o.id, label, hint:o.id});
@@ -1094,7 +1228,8 @@ function applyCbx(v){
   }
   if(kind==="type"){
     d.type = v;
-    d.objects = d.purpose==="reaction" ? ["initiator"] : [];
+    d.objects = [];
+    d.scope = defaultScope(d.purpose);
     const first = d.purpose==="reaction" ? actsOf(v)[0] : eventsOf(v)[0];
     d.item = first?first.id:"";
     d.params = {};
@@ -1113,23 +1248,37 @@ function cbxBtn(kind, where, id, label, empty, field){
 }
 /* Chips list the picked objects; the labelled button is the only way to open the list,
    so it can never be mistaken for a chip's remove cross. */
-function objPicker(label, hint){
-  const ids = pickedObjects();
-  const empty = isActPick() ? T("initiatorObj") : T("anyObject");
-  const chips = ids.length
-    ? ids.map(oid=>`<span class="chip"><span title="${esc(objLab(oid))}">${esc(objLab(oid))}</span>
+function objPicker(label){
+  const d = S.dlg;
+  const acts = isActPick();
+  const scope = scopeOf(d);
+  const ids = pickedObjects().filter(x=>x!=="initiator");
+  const wide = acts ? ["init", T("tgtInit"), T("tgtInitHint")] : ["all", T("srcAll"), T("srcAllHint")];
+  const some = ["some", T("srcSome"), acts ? T("tgtSomeHint") : T("srcSomeHint")];
+  const opt = ([v, title, hint])=>{
+    const on = scope===v;
+    const badge = v==="some" && ids.length ? `<span class="badge badge-info">${esc(Tf("selectedN", ids.length))}</span>` : "";
+    return `<button type="button" class="src-opt" role="radio" aria-checked="${on}" tabindex="${on?0:-1}"
+      data-act="scope" data-v="${v}"><span class="src-dot"></span>
+      <span class="src-txt"><b>${esc(title)}</b><span>${esc(hint)}</span></span>${badge}</button>`;
+  };
+  let body = "";
+  if(scope==="some"){
+    const chips = ids.map(oid=>`<span class="chip"><span title="${esc(objLab(oid))}">${esc(objLab(oid))}</span>
         <button type="button" class="chip-x" data-act="rmPick" data-dev="${esc(oid)}"
-          aria-label="${esc(T("del"))}" title="${esc(T("del"))}">×</button></span>`).join("")
-    : `<span class="chip chip-empty"><span>${esc(empty)}</span></span>`;
-  /* Plain div wrapper: a label element would forward stray clicks to the first chip's cross. */
-  return `<div class="stack" style="gap:4px"><span class="label">${esc(label)}</span>
-    <div class="picker">
-      <div class="chips-box">${chips}</div>
+          aria-label="${esc(T("del"))}" title="${esc(T("del"))}">×</button></span>`).join("");
+    const err = scopeError(d);
+    /* Plain div wrapper: a label element would forward stray clicks to the first chip's cross. */
+    body = `<div class="picker">
+      ${ids.length ? `<div class="chips-box">${chips}</div>` : ""}
       <button type="button" class="btn btn-outline btn-sm picker-add" data-act="cbxOpen" data-kind="obj"
         data-where="dlg" data-id="" aria-haspopup="listbox"
         aria-label="${esc(label+": "+T("addObjects"))}">${icon("plus")}${esc(T("addObjects"))}</button>
-    </div>
-    <div class="helper">${esc(hint)} · ${esc(Tf("selectedN", ids.length))}</div>
+    </div>${errBlock(err)}`;
+  }
+  return `<div class="stack" style="gap:6px"><span class="label" id="scopelbl">${esc(label)}</span>
+    <div class="src-opts" role="radiogroup" aria-labelledby="scopelbl">${opt(wide)}${opt(some)}</div>
+    ${body}
   </div>`;
 }
 
@@ -1277,9 +1426,8 @@ function listOfAct(id){
 function moveNode(dir){
   const m = cur(); if(!m) return;
   const sel = selection(m);
-  let list = null, id = "";
-  if(sel.kind==="act"){ id = sel.act.id; list = listOfAct(id); }
-  else if(sel.kind==="cond"){ id = sel.cond.id; list = (m.conditions||[]).some(c=>c.id===id) ? m.conditions : waitListOf(id); }
+  if(sel.kind!=="act") return;
+  const id = sel.act.id, list = listOfAct(id);
   if(!list) return;
   const i = list.findIndex(x=>x.id===id), j = i+dir;
   if(i<0 || j<0 || j>=list.length) return;
@@ -1287,7 +1435,21 @@ function moveNode(dir){
   const tmp = list[i]; list[i] = list[j]; list[j] = tmp;
   S.dirty = snap()!==S.saved[m.id];
   render();
-  say(`${sel.kind==="act"?T("actions"):T("start")}: ${Tf("nodePos", j+1, list.length)}`);
+  say(`${actLab(sel.act.kind)}: ${Tf("step", j+1)}`);
+}
+/* Drag-and-drop reorders within one list only (root, or a single Wait branch). */
+function dropAct(srcId, dstId, after){
+  const m = cur(); if(!m || srcId===dstId) return;
+  const list = listOfAct(srcId);
+  if(!list || list!==listOfAct(dstId)) return;
+  remember();
+  const src = list.splice(list.findIndex(a=>a.id===srcId), 1)[0];
+  const j = list.findIndex(a=>a.id===dstId);
+  list.splice(after ? j+1 : j, 0, src);
+  S.node = srcId;
+  S.dirty = snap()!==S.saved[m.id];
+  render();
+  say(`${actLab(src.kind)}: ${Tf("step", list.indexOf(src)+1)}`);
 }
 function waitListOf(condId){
   const m = cur(); let out = null;
@@ -1296,9 +1458,8 @@ function waitListOf(condId){
 }
 function canMove(m, dir){
   const sel = selection(m);
-  let list = null, id = "";
-  if(sel.kind==="act"){ id = sel.act.id; list = listOfAct(id); }
-  else if(sel.kind==="cond"){ id = sel.cond.id; list = (m.conditions||[]).some(c=>c.id===id) ? m.conditions : waitListOf(id); }
+  if(sel.kind!=="act") return false;          // conditions are OR-ed: their order means nothing
+  const id = sel.act.id, list = listOfAct(id);
   if(!list) return false;
   const i = list.findIndex(x=>x.id===id), j = i+dir;
   return i>=0 && j>=0 && j<list.length;
@@ -1352,6 +1513,32 @@ function macroErrors(m){
   });
   return out;
 }
+/* Everything that keeps a macro from being finished, each with its own next step. */
+function macroIssues(m){
+  const out = [];
+  if(!m) return out;
+  if(!(m.actions||[]).length){
+    out.push({code:"noActions", title:T("issueNoActions"), text:T("issueNoActionsHint")});
+  }
+  const bad = [];
+  if(m.type==="cycle"){
+    const e = fieldError("heartbeat", m.heartbeat||"");
+    if(e) bad.push({text:`${T("heartbeat")} — ${e}`, node:"start"});
+  }
+  walkActs(m.actions||[], a=>{
+    const p = a.params||{};
+    ["timeout","url","to"].forEach(k=>{
+      if(p[k]!=null && p[k]!==""){
+        const e = fieldError(k, p[k]);
+        if(e) bad.push({text:`${actLab(a.kind)} — ${e}`, node:a.id});
+      }
+    });
+  });
+  if(bad.length) out.push({code:"params", title:T("issueBadParams"), items:bad});
+  return out;
+}
+function needsAction(m){ return macroIssues(m).length>0; }
+
 function dlgErrors(d){
   const out = {};
   if(!d || d.purpose!=="reaction") return out;
@@ -1464,7 +1651,20 @@ function filtered(){
 }
 
 /* ── render ─────────────────────────────────────────────── */
+/* A full re-render replaces the DOM; put keyboard focus back on the same control,
+   so Enter/Space keeps working where the user left off. */
+function focusKey(el){
+  if(!el || !el.dataset || !el.dataset.act) return "";
+  const parts = ["act","id","v","k","branch","after","dev","type"].map(k=> el.dataset[k]!=null ? `[data-${k}="${CSS.escape(el.dataset[k])}"]` : "");
+  return `[data-act="${CSS.escape(el.dataset.act)}"]${parts.slice(1).join("")}`;
+}
 function render(){
+  const ae = document.activeElement;
+  const fk = ae && ae.closest && ae.closest("#main,#side,#insp,#appbar,#mnav") ? focusKey(ae.closest("[data-act]")) : "";
+  renderInner();
+  if(fk){ const el = document.querySelector(fk); if(el) el.focus({preventScroll:true}); }
+}
+function renderInner(){
   closeCbx();
   hideTip();
   S.tips = {}; S.tipN = 0;
@@ -1473,8 +1673,19 @@ function render(){
   document.title = T("macros")+" — "+T("brand");
   const h1 = document.getElementById("pagetitle"); if(h1) h1.textContent = T("macros");
   const sk = document.getElementById("skip"); if(sk) sk.textContent = T("skipToFlow");
-  renderAppbar(); renderSide(); renderMain(); renderInsp();
+  renderAppbar(); renderSide(); renderMain(); renderInsp(); renderMnav();
+  document.body.dataset.mview = S.mview;
   applyPanels();
+}
+
+/* Phones show one pane at a time; this bar switches between them (hidden on desktop). */
+function renderMnav(){
+  const m = cur();
+  const warn = m && (needsAction(m) || S.dirty);
+  const item = (v, ic, k, dot)=>`<button type="button" data-act="mview" data-v="${v}" ${S.mview===v?'aria-current="page"':""}>
+    ${icon(ic)}<span>${esc(T(k))}</span>${dot?'<span class="dot" aria-hidden="true"></span>':""}</button>`;
+  document.getElementById("mnav").innerHTML = item("list","list","mList") + item("flow","rows","mFlow") + item("insp","sliders","mInsp", warn);
+  document.getElementById("mnav").setAttribute("aria-label", T("mNavAria"));
 }
 
 function renderAppbar(){
@@ -1502,7 +1713,7 @@ function renderSide(){
   } else {
     body = `<div class="side-list" role="listbox" aria-label="${esc(T("macros"))}">${list.map(m=>{
       const sel = m.id===S.selId;
-      const alarm = isIncomplete(m);
+      const alarm = needsAction(m);
       return `<button type="button" class="mrow ${m.mode==="never"?"is-never":""} ${alarm?"is-alarm":""}" role="option"
         aria-selected="${sel}" tabindex="${sel?0:-1}" data-act="sel" data-id="${m.id}">
         <div class="grow">
@@ -1546,12 +1757,10 @@ function slot(afterId, branch){
   return `<div class="arrow"><button type="button" class="add-slot" tabindex="-1" data-act="addSlot" data-after="${afterId||""}" data-branch="${branch||"root"}" aria-label="${esc(T("addAction"))}">${icon("plus")}</button></div>`;
 }
 
-function condNode(c, idx, total){
+function condNode(c){
   const ds = (c.devices||[]).map(objLab).filter(Boolean);
   const tip = ds.length>3 ? tipAttr(T("sources"), ds) : "";
-  const pos = total>1 ? `<span class="node-n">${esc(Tf("nodePos", idx, total))}</span>` : "";
   return `<button type="button" class="node start ${S.node==="cond:"+c.id?"is-sel":""}" data-act="node" data-id="cond:${c.id}">
-    ${pos}
     <div class="node-k">${esc(objTypeName(condTypeOf(c)))}</div>
     <div class="node-t">${esc(evLab(c.event))}</div>
     <div class="node-d"><span${tip} tabindex="0">${esc(condSources(c))}</span></div>
@@ -1563,11 +1772,13 @@ function renderNode(a, selected, idx, total){
   const spec = ACTS.find(x=>x.id===a.kind);
   const tgts = objTypeMeta(actTypeOf(a)).noObject ? [] : targetsOf(a).map(objLab).filter(Boolean);
   const tip = tgts.length>3 ? tipAttr(T("objects"), tgts) : "";
-  const pos = total>1 ? `<span class="node-n">${esc(Tf("nodePos", idx, total))}</span>` : "";
-  let inner = `${pos}<div class="node-k">${esc(T(spec?spec.g:"g_cam"))}</div>
-    <div class="node-t">${esc(tx.title)}</div>
+  const pos = `<span class="node-step">${esc(Tf("step", idx))}</span>`;
+  const grip = total>1 ? `<span class="node-grip" aria-hidden="true" title="${esc(T("dragHint"))}">${icon("grip")}</span>` : "";
+  let inner = `${grip}${pos}<div class="node-k">${esc(T(spec?spec.g:"g_cam"))}</div>
+    <div class="node-t" style="padding-right:64px">${esc(tx.title)}</div>
     ${tx.desc?`<div class="node-d"><span${tip} tabindex="0">${esc(tx.desc)}</span></div>`:""}`;
-  let html = `<button type="button" class="node ${selected?"is-sel":""}" data-act="node" data-id="${a.id}">${inner}</button>`;
+  let html = `<button type="button" class="node ${selected?"is-sel":""}" data-act="node" data-id="${a.id}"
+    ${total>1?`draggable="true" data-drag="${a.id}"`:""}>${inner}</button>`;
   if(a.kind==="prog.waitE"){
     const wl = a.waitEvents||[];
     const evs = wl.map((c,i)=>
@@ -1595,6 +1806,10 @@ function renderList(list, branch){
     out += renderNode(a, S.node===a.id, i+1, list.length);
     out += slot(a.id, branch);
   });
+  if(list.length>1){
+    out += `<div class="drag-hint">${icon("grip")}<span>${esc(T("dragHint"))}</span></div>
+      <div class="drag-hint-touch">${icon("up")}${icon("down")}<span>${esc(T("dragHintTouch"))}</span></div>`;
+  }
   return `<div class="recipe">${out}</div>`;
 }
 
@@ -1658,15 +1873,18 @@ function renderMain(){
   const off = (on, why)=> on ? "" : `aria-disabled="true" title="${esc(why)}"`;
   el.innerHTML = `
     <div class="main-h">
+      <div class="mh-title">
       ${S.dirty?'<span class="dirty-dot" title="'+esc(T("unsaved"))+'"></span>':""}
       <input class="name" data-act="rename" value="${esc(macroName(m))}" title="${esc(macroName(m))}" aria-label="${esc(T("macros"))}">
       <span class="badge ${typeBadge(m.type)}">${esc(typeLab(m.type))}</span>
-      <span class="grow"></span>
+      ${needsAction(m)?`<span class="badge badge-warning">${icon("alert")}${esc(T("incomplete"))}</span>`:""}
+      </div>
+      <div class="tb" role="toolbar" aria-label="${esc(T("macros"))}">
       <button class="btn btn-icon btn-subtle" data-act="undo" ${off(S.histI>0, T("undoBtn"))} title="${esc(T("undoBtn"))} · Ctrl+Z" aria-label="${esc(T("undoBtn"))}">${icon("undo")}</button>
       <button class="btn btn-icon btn-subtle" data-act="redo" ${off(S.histI<S.hist.length-1, T("redoBtn"))} title="${esc(T("redoBtn"))} · Ctrl+Y" aria-label="${esc(T("redoBtn"))}">${icon("redo")}</button>
       <span class="sep"></span>
-      <button class="btn btn-icon btn-outline" data-act="moveNode" data-v="-1" ${off(canMove(m,-1), T("moveUp"))} title="${esc(T("moveUp"))} · Alt+↑" aria-label="${esc(T("moveUp"))}">${icon("up")}</button>
-      <button class="btn btn-icon btn-outline" data-act="moveNode" data-v="1" ${off(canMove(m,1), T("moveDown"))} title="${esc(T("moveDown"))} · Alt+↓" aria-label="${esc(T("moveDown"))}">${icon("down")}</button>
+      <button class="btn btn-icon btn-outline" data-act="moveNode" data-v="-1" ${off(canMove(m,-1), sel.kind==="cond"?T("condOrderNA"):T("moveUp"))} title="${esc(T("moveUp"))} · Alt+↑" aria-label="${esc(T("moveUp"))}">${icon("up")}</button>
+      <button class="btn btn-icon btn-outline" data-act="moveNode" data-v="1" ${off(canMove(m,1), sel.kind==="cond"?T("condOrderNA"):T("moveDown"))} title="${esc(T("moveDown"))} · Alt+↓" aria-label="${esc(T("moveDown"))}">${icon("down")}</button>
       <button class="btn btn-outline" data-act="editNode" ${off(sel.canEdit, sel.editTitle)} title="${esc(sel.editTitle)}">${esc(T("edit"))}</button>
       <button class="btn btn-outline" data-act="dupNode" ${off(sel.kind==="act"||sel.kind==="cond", T("pickNode"))} title="${esc(T("duplicate"))}">${icon("copy")}</button>
       <button class="btn btn-outline" data-act="delNode" ${off(sel.canDel, sel.delTitle)} title="${esc(sel.delTitle)}">${icon("trash")}${esc(T("delNodeBtn"))}</button>
@@ -1674,6 +1892,7 @@ function renderMain(){
       <button class="btn btn-outline" data-act="revert" ${off(S.dirty, T("revertHint"))} title="${esc(T("revertHint"))}">${esc(T("revertBtn"))}</button>
       <button class="btn btn-primary" data-act="save"
         ${off(S.dirty && !macroErrors(m).length, macroErrors(m)[0] || T("saved"))}>${esc(T("save"))}</button>
+      </div>
     </div>
     <div class="main-top">
       <div class="seg" role="group" aria-label="${esc(T("flowView"))}">
@@ -1690,7 +1909,8 @@ function renderMain(){
       </section>
       <div class="pan-link" aria-hidden="true">${icon("chevron")}</div>
       <section class="pan pan-do">
-        <div class="pan-h">${esc(T("actions"))}<span class="grow"></span>
+        <div class="pan-h"><span class="pan-title">${esc(T("actions"))}
+          ${(m.actions||[]).length>1?`<span class="pan-sub">${esc(T("actsSequential"))}</span>`:""}</span><span class="grow"></span>
           <button class="btn btn-subtle btn-sm" data-act="addSlot" data-after="" data-branch="root">${icon("plus")}${esc(T("addAction"))}</button>
         </div>
         <div class="pan-b">${renderList(m.actions, "root")}</div>
@@ -1817,10 +2037,18 @@ function renderInsp(){
     return;
   }
   let info = "";
-  macroErrors(m).forEach(e=> info += banner("danger", e));
+  macroIssues(m).forEach(is=>{
+    if(is.code==="noActions"){
+      info += `<div class="issue" role="alert"><div class="issue-h">${icon("alert")}${esc(is.title)}</div>
+        <p>${esc(is.text)}</p>
+        <button class="btn btn-primary" data-act="addSlot" data-after="" data-branch="root">${icon("plus")}${esc(T("addAction"))}</button></div>`;
+    } else {
+      info += `<div class="issue" role="alert"><div class="issue-h">${icon("alert")}${esc(is.title)}</div>
+        <ul>${is.items.map(x=>`<li><span>${esc(x.text)}</span>
+          <button class="btn btn-outline" data-act="node" data-id="${esc(x.node)}">${esc(T("showNode"))}</button></li>`).join("")}</ul></div>`;
+    }
+  });
   if(S.dirty) info += banner("warn", T("unsaved"));
-  if(isIncomplete(m)) info += banner("danger", T("noActions"),
-    `<button class="link" data-act="addSlot" data-after="" data-branch="root">${esc(T("addAction"))}</button>`);
   if(m.mode==="never") info += banner("info", T("neverHint"));
   if(m.type==="cycle") info += banner("info", T("overlap"));
   const hints = [];
@@ -2000,7 +2228,7 @@ function createMenu(x,y){
 }
 
 function catalogDlg(){
-  S.dlg = {kind:"cascade", purpose:"reaction", mode:"add", type:"camera", objects:["initiator"],
+  S.dlg = {kind:"cascade", purpose:"reaction", mode:"add", type:"camera", objects:[], scope:"init",
     item:"cam.record", params:{}};
   cascadeDlg();
 }
@@ -2014,8 +2242,8 @@ function actDlg(id){
   const list = listOfAct(a.id) || [];
   const i = list.findIndex(x=>x.id===a.id);
   S.dlg = {kind:"cascade", purpose:"reaction", mode:"edit", actId:a.id, type,
-    objects: tgts.length?tgts:["initiator"], item:a.kind, params,
-    posText: list.length>1 ? `${T("actions")} ${Tf("nodePos", i+1, list.length)}` : ""};
+    objects: tgts.filter(x=>x!=="initiator"), scope: scopeFromObjects("reaction", tgts), item:a.kind, params,
+    posText: list.length>1 ? `${Tf("step", i+1)} ${Tf("nodePos", i+1, list.length).replace(/^\d+\s*/,"")}` : ""};
   cascadeDlg();
 }
 
@@ -2027,7 +2255,8 @@ function eventDlg(condId, waitId){
   const list = c ? ((m && (m.conditions||[]).some(x=>x.id===c.id)) ? m.conditions : (waitListOf(c.id)||[])) : [];
   const i = c ? list.findIndex(x=>x.id===c.id) : -1;
   S.dlg = {kind:"cascade", purpose:"event", mode: c?"edit":"add", condId: c?c.id:"", waitId: waitId||"", type,
-    objects: c ? [...(c.devices||[])] : [], item: c ? c.event : (first?first.id:""),
+    objects: c ? [...(c.devices||[])] : [], scope: scopeFromObjects("event", c ? c.devices : []),
+    item: c ? c.event : (first?first.id:""),
     threshold: c?c.threshold:null, value: c?c.value:null, trend: c?c.trend:null,
     posText: list.length>1 ? `${T("start")} ${Tf("nodePos", i+1, list.length)}` : ""};
   cascadeDlg();
@@ -2044,11 +2273,7 @@ function cascadeDlg(){
     <div class="helper">${esc(T("cascadeHint"))}</div>
     <div class="stack" style="gap:4px"><span class="label">${esc(T("objType"))}</span>
       ${cbxBtn("type","dlg","", objTypeName(d.type), "", T("objType"))}</div>`;
-  if(!tmeta.noObject){
-    body += isAct
-      ? objPicker(T("objects"), T("targetsHint"))
-      : objPicker(T("sources"), T("sourcesHint"));
-  }
+  if(!tmeta.noObject) body += objPicker(isAct ? T("objects") : T("sources"));
   body += `<div class="stack" style="gap:4px"><span class="label">${esc(isAct?T("reactionKind"):T("eventKind"))}</span>
       ${cbxBtn(itemKind,"dlg","", itemLab, itemEmpty, isAct?T("reactionKind"):T("eventKind"))}</div>
   </div>`;
@@ -2058,6 +2283,7 @@ function cascadeDlg(){
     ? (isAct?T("editReaction"):T("editStart"))
     : (isAct?T("reactions"):T("setStart"));
   const errs = Object.values(dlgErrors(d));
+  if(scopeError(d)) errs.push(scopeError(d));
   const blocked = !d.item || errs.length>0;
   openDlg(`<div class="dlg-h">${esc(title)}${d.posText?` <span class="muted" style="font:var(--one-type-body-sm)">· ${esc(d.posText)}</span>`:""}</div>
     <div class="dlg-b">${body}</div>
@@ -2066,6 +2292,11 @@ function cascadeDlg(){
       <button class="btn btn-outline" data-act="closeDlg">${esc(T("cancel"))}</button>
       <button class="btn btn-primary" data-act="applyCascade" ${blocked?`aria-disabled="true" title="${esc(T("errFix"))}"`:""}>${esc(d.mode==="edit"?T("apply"):T("add"))}</button>
     </div>`);
+}
+
+function dlgTargets(d){
+  const real = (d.objects||[]).filter(x=>x!=="initiator");
+  return scopeOf(d)==="some" && real.length ? real : ["initiator"];
 }
 
 function condExtrasFrom(d, c){
@@ -2077,8 +2308,9 @@ function condExtrasFrom(d, c){
 
 function applyCondDlg(){
   const m = cur(), d = S.dlg; if(!m || !d) return;
+  if(scopeError(d)) return;
   remember();
-  const devices = (d.objects||[]).slice();
+  const devices = scopeOf(d)==="some" ? (d.objects||[]).filter(x=>x!=="initiator") : [];
   if(d.mode==="edit"){
     const c = condById(d.condId);
     if(c){ c.type=d.type; c.event=d.item; c.devices=devices; condExtrasFrom(d, c); S.node="cond:"+c.id; }
@@ -2105,10 +2337,7 @@ function applyActDlg(){
   remember();
   replaceActKind(a, d.item);
   Object.assign(a.params, d.params||{});
-  if(!objTypeMeta(actTypeOf(a)).noObject){
-    const objs = (d.objects||[]).length ? d.objects : ["initiator"];
-    setTargets(a, objs);
-  }
+  if(!objTypeMeta(actTypeOf(a)).noObject) setTargets(a, dlgTargets(d));
   S.node = a.id;
   closeDlg();
   S.dirty = snap()!==S.saved[m.id];
@@ -2160,8 +2389,9 @@ function confirmDel(){
 }
 
 function selectMacro(id, force){
-  if(S.selId===id) return;
+  if(S.selId===id){ if(S.mview==="list"){ S.mview="flow"; render(); } return; }
   if(S.dirty && !force){ confirmLeave(id); return; }
+  S.mview = "flow";         // on a phone, picking a macro opens its recipe
   S.selId = id; S.node=firstNode(S.macros.find(x=>x.id===id)); S.dirty=false;
   S.hist=[snap()]; S.histI=0;
   S.saved[id] = S.saved[id] ?? snap();
@@ -2225,10 +2455,31 @@ document.addEventListener("click", ev=>{
   if(act==="cbxPick"){ applyCbx(t.dataset.v); return; }
   if(act==="cbxRetry"){ if(S.cbx){ S.cbx.failed=false; S.cbx.loading=false; paintCbx(false); } return; }
   if(act==="applyCascade"){
-    const d = S.dlg; if(!d || !d.item) return;
+    const d = S.dlg; if(!d || !d.item || scopeError(d)) return;
     if(d.purpose!=="reaction") applyCondDlg();
     else if(d.mode==="edit") applyActDlg();
-    else addPickedAct(d.item, d.objects, d.params);
+    else addPickedAct(d.item, dlgTargets(d), d.params);
+    return;
+  }
+  if(act==="scope"){
+    const d = S.dlg; if(!d) return;
+    const v = t.dataset.v;
+    if(v===scopeOf(d)) return;
+    if(v==="some"){
+      d.objects = (d.stash||[]).slice();
+    } else {
+      d.stash = (d.objects||[]).filter(x=>x!=="initiator");
+      d.objects = [];
+    }
+    d.scope = v;
+    cascadeDlg();
+    /* choosing "selected objects" with nothing picked yet opens the list right away */
+    if(v==="some" && !pickedObjects().length){
+      const btn = document.querySelector('#dlg .picker-add');
+      if(btn) openCbx(btn);
+    } else {
+      const r = document.querySelector(`#dlg .src-opt[data-v="${v}"]`); if(r) r.focus();
+    }
     return;
   }
   if(act==="rmPick"){
@@ -2246,6 +2497,12 @@ document.addEventListener("click", ev=>{
     localStorage.setItem("macros-theme", S.theme); render(); return;
   }
   if(act==="flow"){ S.flow=t.dataset.v; localStorage.setItem("macros-flow", S.flow); render(); return; }
+  if(act==="mview"){
+    S.mview = t.dataset.v; render();
+    const pane = document.getElementById(S.mview==="list"?"side":S.mview==="insp"?"insp":"main");
+    if(pane) pane.scrollTop = 0;
+    return;
+  }
   if(act==="resetQ"){ S.q=""; S.type="all"; render(); return; }
   if(act==="createMenu"){ createMenu(ev.clientX, ev.clientY); return; }
   if(act==="create"){ hideMenu(); createMacro(t.dataset.type); return; }
@@ -2430,6 +2687,42 @@ document.addEventListener("focusout", ev=>{
   if(ev.target.closest && ev.target.closest("[data-tip]")) hideTipSoon();
 });
 
+/* ── drag-and-drop of actions ───────────────────────────── */
+let dragId = "";
+function clearDrop(){ document.querySelectorAll(".drop-before,.drop-after").forEach(n=>n.classList.remove("drop-before","drop-after")); }
+document.addEventListener("dragstart", ev=>{
+  const n = ev.target.closest && ev.target.closest(".node[data-drag]"); if(!n) return;
+  dragId = n.dataset.drag;
+  ev.dataTransfer.effectAllowed = "move";
+  ev.dataTransfer.setData("text/plain", dragId);
+  n.classList.add("is-dragging");
+});
+document.addEventListener("dragover", ev=>{
+  if(!dragId) return;
+  const n = ev.target.closest && ev.target.closest(".node[data-drag]"); if(!n || n.dataset.drag===dragId) { clearDrop(); return; }
+  if(listOfAct(n.dataset.drag)!==listOfAct(dragId)) { clearDrop(); return; }
+  ev.preventDefault();
+  const r = n.getBoundingClientRect();
+  clearDrop();
+  n.classList.add(ev.clientY > r.top + r.height/2 ? "drop-after" : "drop-before");
+});
+document.addEventListener("drop", ev=>{
+  if(!dragId) return;
+  const n = ev.target.closest && ev.target.closest(".node[data-drag]");
+  if(n && n.dataset.drag!==dragId){
+    ev.preventDefault();
+    const after = n.classList.contains("drop-after");
+    const src = dragId; dragId = "";
+    clearDrop();
+    dropAct(src, n.dataset.drag, after);
+  }
+});
+document.addEventListener("dragend", ()=>{
+  dragId = "";
+  clearDrop();
+  document.querySelectorAll(".is-dragging").forEach(n=>n.classList.remove("is-dragging"));
+});
+
 document.addEventListener("input", ev=>{
   const tq=ev.target.closest("[data-act=q]");
   if(tq){ S.q=tq.value;
@@ -2492,6 +2785,13 @@ document.addEventListener("keydown", ev=>{
     if(tip && !tip.hidden){ hideTip(); return; }
     if(S.cbx){ closeCbx(); return; }
     hideMenu(); closeDlg(); return;
+  }
+  const radio = ev.target.closest && ev.target.closest(".src-opt");
+  if(radio && ["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(ev.key)){
+    ev.preventDefault();
+    const other = [...radio.parentElement.querySelectorAll(".src-opt")].find(b=>b!==radio);
+    if(other) other.click();
+    return;
   }
   if(ev.altKey && (ev.key==="ArrowUp" || ev.key==="ArrowDown")){
     ev.preventDefault(); moveNode(ev.key==="ArrowUp" ? -1 : 1); return;
